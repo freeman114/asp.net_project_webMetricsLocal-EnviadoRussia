@@ -1,0 +1,640 @@
+/* Scss Document */
+
+
+$map-heat:(
+	 "0": #F0F0F0,
+	 "1": #E1EAEF,
+	 "2": #D3E5EE,
+	 "3": #C5E0ED,
+	 "4": #B6DBEC,
+	 "5": #A8D6EC,
+	 "6": #9AD0EB,
+	 "7": #8BCBEA,
+	 "8": #7DC6E9,
+	 "9": #61BCE8,
+	"10": #61BCE8,
+	"11": #58AFE1,
+	"12": #50A2DA,
+	"13": #4795D3,
+	"14": #3F88CC,
+	"15": #367BC5,
+	"16": #2E6EBF,
+	"17": #2561B8,
+	"18": #1D54B1,
+	"19": #1447AA,
+	"20": #042D9D
+);
+
+$map-heat2:(
+	"0": #F0F0F0,
+	"1": #D3E5EE,
+	"2": #B6DBEC,
+	"3": #9AD0EB,
+	"4": #61BCE8,
+	"5": #61BCE8,
+	"6": #51A4DB,
+	"7": #428CCF,
+	"8": #3274C2,
+	"9": #235CB6,
+	"10": #042D9D
+);
+
+
+
+
+
+
+.map-area{
+	
+	@extend %p-relative;
+	@extend %display-block;
+	/*min-height: 500px;*/
+	max-width: 654px;  
+	margin: 0 auto; 
+	
+	#svg-brazil{
+		@extend %basic-animation;
+	}
+	
+	/*#svg-brazil path { 
+		fill:#bfbfbf;
+	}*/
+    /*#svg-brazil text { 
+		fill:#fff; 
+		font: normal 14px "Open Sans";
+		cursor:pointer;
+	}*/
+    #svg-brazil a{ 
+		@extend %bloquear;
+		@extend %text-decoration-none;
+		///text-decoration:none;
+		cursor: default;
+		/*&:before{
+			content: attr(data-title);
+			
+		}*/
+	}
+	#svg-brazil a:hover{
+		/*&:before{
+			content: attr(data-title);
+			
+		}*/
+		
+		path{ 
+			@extend %text-decoration-none;
+			////cursor:pointer; 
+			///text-decoration:none;
+			cursor: default;
+			////fill: $hover-gray !important;
+			
+			@extend %basic-animation;
+		}
+	}
+	
+    /*#svg-brazil a:hover path,
+	#svg-brazil a:hover path.circle/ *,
+	
+	#svg-brazil a.active:hover path,
+	#svg-brazil a.active:hover .circle,
+	
+	#svg-brazil a.active-0:hover path,
+	#svg-brazil a.active-0:hover .circle* /{ 
+		fill:#dd957b !important;
+	}*/
+	
+	
+}
+
+
+
+$ind-height: 3.75rem;
+$ind-height-992: 3.15rem;
+$ind-height-768: 3rem;
+$ind-height-small: 2.5rem;
+
+
+
+.map-container{
+	
+	[data-heatmap=""] path{
+		fill: #dedede;
+	}
+	[data-heatmap="0"] path{
+		fill: map-get($map-heat, "0") !important;
+	}
+	
+	.indicator[data-heatmap=""] .circle-region,
+	.indicator[data-heatmap=""] span:before,
+	.indicator[data-heatmap=""] span:after{
+		background-color: #dedede;
+	}
+	.indicator[data-heatmap="0"] .circle-region,
+	.indicator[data-heatmap="0"] span:before,
+	.indicator[data-heatmap="0"] span:after{
+		background-color: map-get($map-heat, "0") !important;
+	}
+	
+	//// niveis do mapa
+	///$map-level: 20; /*** 1 a 100 ****/
+	$map-level: 20; /*** 1 a 10 ****/
+	$interval: 5;
+
+	@for $i from 1 through $map-level{
+		
+		$lvl: $i * $interval;
+		
+		[data-heatmap="#{$lvl}"] path{
+			fill: map-get($map-heat, #{$i}) !important;
+		}
+		
+		.indicator[data-heatmap="#{$lvl}"] .circle-region,
+		.indicator[data-heatmap="#{$lvl}"] span:before,
+		.indicator[data-heatmap="#{$lvl}"] span:after{
+			background-color: map-get($map-heat, #{$i}) !important;;
+		}
+	}
+	
+	
+	.map-col{
+		max-width: 100%;
+		///max-width: 500px;
+	}
+
+	.map-area{
+		max-width: 500px;
+	}
+	
+	.circle-region{
+		@extend %basic-animation;
+		
+		@extend %display-flex;
+		@extend %font-bold;
+		@extend %color-white;
+		@extend %border-radius-200;
+		@extend %p-relative;
+		@extend %text-uppercase;
+		
+		@extend %justify-content-center;
+		@extend %align-items-center;
+		
+		/*height: 60px;
+		width: 60px;*/
+		/*height: $ind-height;
+		width: $ind-height;*/
+		
+		///background-color: #8bcbea;
+		///position: relative;
+		z-index: 4;
+	}
+	
+	span.line{
+		@extend %basic-animation;
+		
+		@extend %display-flex;
+		@extend %align-items-center;
+		@extend %p-absolute;
+		
+		/*height: $ind-height;
+		right: 97%;*/
+		///left: -65%;
+		///top: 0%;
+		
+		
+		&:before,
+		&:after{
+			@extend %content;
+			///@extend %p-absolute;
+			border: solid 1px #fff;
+
+			///background-color: #8bcbea;
+			
+			display: inline-flex;
+			width: 100%;
+			position: relative;
+		}
+
+		&:before{ //// circle
+			@extend %border-radius-200;
+			width: 13px;
+			height: 12px;
+			z-index: 1;
+
+			/*top: -0.25rem;
+			left: -0.85rem;*/
+			///left: -0.7rem;
+		}
+		&:after{ //// line
+			@extend %left-right-0;
+			
+			margin-left: -1px;
+			height: 6px;
+			border-left: none;
+			z-index: 2;
+		}
+	}
+	
+	
+	
+	
+	.percentage{
+		@extend %basic-animation;
+		
+		@extend %display-flex;
+		@extend %bg-yellow;
+		@extend %color-gray;
+		@extend %font-bold;
+		@extend %border-radius-10;
+		@extend %text-center;
+		
+		@extend %justify-content-center;
+		@extend %align-items-center;
+		
+		
+		padding-left: 8px;
+		padding-right: 8px;
+		margin-left: 8px;
+		margin-right: 8px;
+	}
+	
+	.cities{
+		///@extend %basic-animation;
+		
+		ul{
+			@extend %list-none;
+			@extend %padding-left-0;
+			
+			margin-left: 20px;
+			
+			li{
+				@extend %font-300;
+				///@extend %font-300-s768;
+				
+				line-height: 1.22;
+				
+				&:first-child{
+					@extend %font-500;
+					///@extend %font-500-s768;
+				}
+			}
+		}
+	}
+	
+	
+	.indicator-container{
+		@extend %display-flex;
+		@extend %flex-column;
+		@extend %justify-content-start;
+		///@include flexType(justify-content, space-between);
+		
+		////height: 40rem;
+		/*max-width: -webkit-max-content;
+		max-width: max-content;*/
+		@extend %max-content;
+		
+		width: auto;
+	}
+	.indicator{
+		@extend %display-flex;
+		
+		margin-top: 0.5rem;
+    	margin-bottom: 0.5rem;
+		
+		
+		 &.map-n,
+		&.map-ne,
+		&.map-co,
+		&.map-se,
+		 &.map-s{ span.line{ left: 2rem; }}
+		
+		
+		.circle-region{
+			@extend %font-16;
+			///@extend %font-20-s1200;
+			///@extend %font-24-s1500;
+			
+			height: $ind-height-small;
+			width: $ind-height-small;
+		}
+		
+		span.line{
+			height: $ind-height-small;
+			right: 96%;
+			///left: -100%;
+		}
+		
+		.percentage{
+			@extend %font-20;
+			///@extend %font-40-s1200;
+			
+			width: ($ind-height-small * 2);
+			height: $ind-height-small;
+		}
+		
+		.cities{
+			ul{
+				margin-left: 16px;
+
+				li{
+					@extend %font-16;
+					///@extend %font-18-s1500;
+				}
+			}
+		}
+		
+	}
+	
+	
+	
+	@include mobile-480{
+		.indicator{
+			@extend %display-inline-block-r480;
+			
+			.circle-region{
+				@extend %display-inline-flex-r480;
+				
+				width: 2.75rem;
+				height: 2.75rem;
+			}
+			
+			.percentage{
+				@extend %display-inline-flex-r480;
+				
+				height: 2.75rem;
+			}
+			
+			.cities{
+				@extend %display-block-r480;
+				
+				margin-top: 0.5rem;
+			}
+		}
+	}
+	
+	
+	@include tablet{
+		.map-col{
+			max-width: 41.666667%;
+			///max-width: 500px;
+		}
+		
+		/*.map-area{
+			max-width: 500px;
+		}*/
+		
+		.legenda{
+			width: 80%;
+		}
+		
+		.indicator-container{
+			///height: 40rem;
+			max-width: 580px;
+			///margin-right: -3rem;
+			@include flexType(justify-content, center);
+			
+			width: 100%;
+		}
+		.indicator{
+
+			margin-top: 0;
+    		margin-bottom: 12px;
+
+			 /*&.map-n,
+			&.map-ne,
+			&.map-co,
+			&.map-se,
+			 &.map-s{ span.line{ left: 2rem; }}*/
+
+
+			.circle-region{
+				@extend %font-14-s768;
+
+				height: $ind-height-768;
+				width: $ind-height-768;
+			}
+
+			span.line{
+				height: $ind-height-768;
+				///right: 96%;
+				
+			}
+
+			.percentage{
+				@extend %font-20-s768;
+
+				width: ($ind-height-768 * 2) - 1rem;
+				height: $ind-height-768;
+			}
+
+			.cities{
+				ul{
+					///margin-left: 16px;
+					
+					li{
+						@extend %font-14-s768;
+					}
+				}
+			}
+
+		}
+	}
+	
+	
+	@include notebook{
+		
+		.map-col{
+			///max-width: 41.666667%;
+			max-width: 500px;
+		}
+		
+		/*.map-area{
+			max-width: 500px;
+		}*/
+		
+		/*.legenda{
+			width: 80%;
+		}*/
+		
+		.indicator-container{
+			height: 40rem;
+			///max-width: 580px;
+			///margin-right: -3rem;
+			@include flexType(justify-content, flex-start);
+		}
+		.indicator{
+
+			margin-top: 3%;
+    		margin-bottom: 1.5%;
+
+			 &.map-n{ span.line{ left: -14.5rem; }}
+			&.map-ne{ span.line{ left: -5.5rem; }}
+			&.map-co{ span.line{ left: -17rem; }}
+			&.map-se{ span.line{ left: -11rem; }}
+			 &.map-s{ span.line{ left: -15rem; }}
+
+
+			.circle-region{
+				@extend %font-16-s992;
+
+				height: $ind-height-992;
+				width: $ind-height-992;
+			}
+
+			span.line{
+				height: $ind-height-992;
+				///right: 96%;
+				
+			}
+
+			.percentage{
+				@extend %font-24-s992;
+
+				width: ($ind-height-992 * 2) - 1rem;
+				height: $ind-height-992;
+			}
+
+			.cities{
+				ul{
+					///margin-left: 16px;
+					
+					li{
+						@extend %font-16-s992;
+					}
+				}
+			}
+
+		}
+		
+	}
+	
+	
+	
+	@include desktop{
+		
+		/*.map-col{
+			///max-width: 41.666667%;
+			///max-width: 500px;
+		}
+		
+		.map-area{
+			max-width: 500px;
+		}*/
+		
+		/*.legenda{
+			width: 80%;
+		}*/
+		
+		.indicator-container{
+			///height: 40rem;
+			///max-width: 580px;
+			margin-right: -3rem;
+		}
+		.indicator{
+
+			/*margin-top: 3%;
+    		margin-bottom: 1.5%;
+
+			 &.map-n{ span.line{ left: -14.5rem; }}
+			&.map-ne{ span.line{ left: -5.5rem; }}
+			&.map-co{ span.line{ left: -17rem; }}
+			&.map-se{ span.line{ left: -11rem; }}
+			 &.map-s{ span.line{ left: -15rem; }}*/
+
+
+			.circle-region{
+				@extend %font-18-s1200;
+
+				///height: $ind-height;
+				///width: $ind-height;
+			}
+
+			/*span.line{
+				///height: $ind-height;
+				right: 96%;
+				
+			}*/
+
+			.percentage{
+				@extend %font-30-s1200;
+
+				width: ($ind-height * 2) - 1.50rem;
+				///height: $ind-height;
+			}
+
+			/*.cities{
+				ul{
+					///margin-left: 20px;
+				}
+			}*/
+
+		}
+		
+	}
+	
+	
+	
+	
+	@include desktop-1500{
+		
+		.map-col{
+			max-width: 100%;
+		}
+		
+		.map-area{
+			max-width: 654px;  
+		}
+		
+		
+		.indicator-container{
+			///height: 40rem;
+			max-width: 620px;
+			margin-right: 0rem;
+		}
+		.indicator{
+
+			margin-top: 6%;
+			margin-bottom: 3.2%;
+
+			 &.map-n{ span.line{ left: -21.5rem; }}
+			&.map-ne{ span.line{ left: -9.5rem; }}
+			&.map-co{ span.line{ left: -24rem; }}
+			&.map-se{ span.line{ left: -13rem; }}
+			 &.map-s{ span.line{ left: -22rem; }}
+
+
+			.circle-region{
+				@extend %font-24-s1500;
+
+				height: $ind-height;
+				width: $ind-height;
+			}
+
+			span.line{
+				height: $ind-height;
+				///right: 96%;
+			}
+
+			.percentage{
+				@extend %font-40-s1500;
+				
+				width: ($ind-height * 2);
+				height: $ind-height;
+			}
+
+			.cities{
+				ul{
+					margin-left: 20px;
+
+					li{
+						@extend %font-18-s1500;
+					}
+				}
+			}
+
+		}
+		
+		
+		
+	}
+	
+	
+}

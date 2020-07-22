@@ -1,0 +1,39 @@
+
+.carousel .col-md-2{
+  display: inline-block;
+  margin-left:-3px;
+  padding:1vw 3vw;
+}
+.carousel .col-md-2 img{
+  width:100%;
+  height:auto;
+}
+
+.carousel .carousel-item
+{
+  text-align: left;
+}
+
+.carousel .carousel-control-next-icon:after
+{
+  content: '\f054';
+  font-weight: 900;
+  font-family: "Font Awesome 5 Free";
+  font-size: 1rem;
+  color: #333;
+  box-shadow: 0 0 5px 1px #fff;
+}
+
+.carousel .carousel-control-prev-icon:after {
+  content: '\f053';
+  font-weight: 900;
+  font-family: "Font Awesome 5 Free";
+  font-size: 1rem;
+  color: #333;
+  box-shadow: 0 0 5px 1px #fff;
+}
+
+.carousel-control-next, .carousel-control-prev
+{
+  width:2%;
+}

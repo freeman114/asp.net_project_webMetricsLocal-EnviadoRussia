@@ -1,0 +1,2277 @@
+﻿@model webMetrics.Models.Metricas
+
+@{
+    Layout = null;
+    ViewBag.Title = "Influencers Inc.";
+
+    var faixa1 = 100000;
+    var faixa2 = 500000;
+
+    var valor1 = 5.9;
+    var valor2 = 5.9;
+    var valor0 = 2.1;
+}
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Influencers Inc</title>
+
+    <link rel="stylesheet" href="~/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/node_modules/@@fortawesome/fontawesome-free/css/all.css">
+    <link rel="stylesheet" href="~/resources/assets/styles/fonts.css">
+    <link rel="stylesheet" href="~/resources/assets/styles/global.css">
+    <link rel="stylesheet" href="~/resources/assets/styles/mobile.css">
+
+    <script src="~/js/maps.js"></script>
+    <script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.bundle.min.js"></script>
+    <script>
+        if (location.protocol != 'https:') {
+            location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+        }
+    </script>
+
+    <link rel="stylesheet" href="~/css/consulta.css">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/heatmap.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+    <style>
+        .help-list {
+            list-style: none;
+            padding-left: .5rem;
+        }
+
+            .help-list li {
+                position: relative;
+                line-height: 1.5;
+                margin-bottom: 2rem;
+            }
+
+                .help-list li:before {
+                    width: 24px;
+                    height: 24px;
+                    left: -30px;
+                    top: -4px;
+                    content: '';
+                    position: absolute;
+                    display: block;
+                    background-image: url('/images/marker-help.png');
+                    background-position: left center;
+                    background-repeat: no-repeat;
+                }
+    </style>
+
+    <style>
+        body {
+            font-family: Arial;
+        }
+
+        /* Style the tab */
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+        }
+
+            /* Style the buttons inside the tab */
+            .tab button {
+                background-color: inherit;
+                float: left;
+                border: none;
+                outline: none;
+                cursor: pointer;
+                padding: 14px 16px;
+                transition: 0.3s;
+                font-size: 17px;
+            }
+
+                /* Change background color of buttons on hover */
+                .tab button:hover {
+                    background-color: #ddd;
+                }
+
+                /* Create an active/current tablink class */
+                .tab button.active {
+                    background-color: #ccc;
+                }
+
+        /* Style the tab content */
+        .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+    </style>
+
+</head>
+
+<body class="bg-light">
+    <div class="row bg-white card-resume fixed w-100 m-0 p-0 shadow-sm" id="row-fixed" style="display:none;">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row d-flex align-items-center py-2" id="row-info">
+                        <div class="col-md-2 col-2 order-1">
+                            @if (Model != null)
+                            {
+                                var imgProfile = Model.inf.ProfilePicture;
+                                <img width="75%" src="@imgProfile" alt="logo" onerror="this.onerror=null;this.src='/images/no-photo-icon.jpg'">
+                            }
+                        </div>
+                        <div class="col-md-8 col-6 order-2 pl-0 pl-md-3 pr-0 pr-md-3">
+                            <h4 class="mb-0" style="font-weight:600">@Model.inf.NomeCompleto</h4>
+                            <span>@@@Model.inf.UserName</span><br class="d-block">
+                            <span>
+                                @Model.inf.SocialContext
+                            </span>
+                        </div>
+                        <div class="col-md-2 col-2 order-3 order-md-3 pr-md-1 ml-md-auto">
+                            <ul class="navbar-nav flex-row ml-auto justify-content-between align-items-right">
+                                <li class="nav-item">
+                                    <span>POWERFULL</span><!--<span class="text-danger float-right">?</span>--><br>
+                                    @{
+                                        var comentarioscurtidas = Model.inf.Powerful;//Model.MediaCurtidas+Model.inf.MediaComentarios;
+                                    }
+                                    @if (Model.inf.Aprovado == 2)
+                                    {
+                                        <span onclick="inverter(this);" style='height:25px' class="badge badge-success d-block">
+                                            <h5 class="mb-0 p-0">@comentarioscurtidas.ToString()</h5>
+                                        </span>
+                                    }
+                                    else if (Model.inf.Aprovado == 1)
+                                    {
+                                        <span onclick="inverter(this);" style='height:25px' class="badge badge-warning d-block">
+                                            <h5 class="mb-0 p-0">@comentarioscurtidas.ToString()</h5>
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span onclick="inverter(this);" style='height:25px' class="badge badge-danger d-block">
+                                            <h5 class="mb-0 p-0">@comentarioscurtidas.ToString()</h5>
+                                        </span>
+                                    }
+                                    <br />
+                                    <a href="javascript:;" class="nav-link btn btn-sm btn-success text-white py-0 px-2" onclick="window.print();">
+                                        IMPRIMIR
+                                    </a>
+                                    <br />
+                                    <a class="navbar-brand" href="/relatorios/historicometricas">
+                                        <img src="~/images/voltar.png" style="height:25px" alt="voltar">
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
+                                       aria-haspopup="true" aria-expanded="false">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                                        <a class="dropdown-item" href="javascript:window.close()">Sair</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-5 mt-md-3 mb-5" id="profile">
+
+        <div class="row">
+            <div class="pr-md-0 pr-3 col-md-10 mx-auto col-12 order-2 order-md-1" id="printdivs">
+
+                <div class="row d-flex align-items-center" id="row-info">
+                    <div class="col-md-2 col-2 order-1">
+                        @if (Model != null)
+                        {
+                            var imgProfile = Model.inf.ProfilePicture;
+                            <img width="100%" src="@imgProfile" alt="logo" onerror="this.onerror=null;this.src='/images/no-photo-icon.jpg'">
+                        }
+                        <!--<img width="100%" src="~/resources/assets/images/thumb1.png" alt="logo">-->
+                    </div>
+                    <div class="col-md-8 col-6 order-2 pl-0 pl-md-3 pr-0 pr-md-3">
+                        <h4 class="mb-0 mt-md-2" style="font-weight:600">@Model.inf.NomeCompleto</h4>
+                        <span>@@@Model.inf.UserName</span><br class="d-block">
+                        <span>
+                            @Model.inf.SocialContext
+                        </span>
+                    </div>
+
+                    <div class="col-md-2 col-4 order-3 order-md-5 pr-md-3 ml-md-auto">
+                        <span>POWERFULL</span><!--<span class="text-danger float-right">?</span>--><br>
+                        @{
+                            var valorPercent = Convert.ToDouble(Model.inf.Powerful) / Convert.ToDouble(Model.inf.Seguidores);
+                            var Percent = Math.Round(Convert.ToDouble(valorPercent * 100)).ToString() + " %";
+                        }
+                        @if (Model.inf.Aprovado == 2)
+                        {
+                            <span class="badge badge-success d-block"><h5 class="mb-0 p-0 title-percentage">@Percent.ToString()</h5></span>
+                        }
+                        else if (Model.inf.Aprovado == 1)
+                        {
+                            <span class="badge badge-warning d-block"><h5 class="mb-0 p-0 title-percentage">@Percent.ToString()</h5></span>
+                        }
+                        else
+                        {
+                            <span class="badge badge-danger d-block"><h5 class="mb-0 p-0 title-percentage">@Percent.ToString()</h5></span>
+                        }
+                        <!--<span class="badge badge-danger d-block mt-1"><h4 class="mb-0 p-0">0,61%</h4></span>-->
+                    </div>
+                </div>
+
+                <div class="row mt-md-3 mt-3 mb-md-2 mb-3">
+                    <div class="col-md col-6 pr-0 mb-3 mb-md-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative text-uppercase">
+                            <span class="text-muted">Seguidores</span>
+                            <h4 class="mb-0 mt-2">@Model.inf.Seguidores.ToString("N0")</h4>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 pr-md-0 mb-3 mb-md-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative text-uppercase">
+                            <span class="text-muted">Seguindo</span>
+                            <h4 class="mb-0 mt-2">@Model.inf.Seguindo.ToString("N0")</h4>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 pr-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative text-uppercase">
+                            <span class="text-muted"> <span class="text-primary float-left">▲</span>  Média de engajamento</span>
+                            <h4 class="mb-0 mt-2">@Model.inf.Engajamento.ToString("n0")</h4>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 pr-md-3">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative text-uppercase">
+                            <span class="text-muted"> <span class="text-primary float-left">▲</span> Média de alcance</span>
+                            <h4 class="mb-0 mt-2">@Model.inf.avgPostReach.ToString("n0")</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-md-2 mt-2 mb-md-2 mb-3">
+                    <div class="col-md col-6 pr-0 mb-3 mb-md-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative text-uppercase">
+                            <span class="text-muted">Views de perfil</span><br />
+                            <small>@Model.inf.PeriodProfileViews</small>
+                            <h4 class="mb-0 mt-2">@Model.inf.ProfileViews.ToString("N0")</h4>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 pr-md-0 mb-3 mb-md-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative text-uppercase">
+                            <span class="text-muted">REACH</span><br />
+                            <small>@Model.inf.PeriodReach</small>
+                            <h4 class="mb-0 mt-2">@Model.inf.Reach.ToString("N0")</h4>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 pr-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative text-uppercase">
+                            <span class="text-muted"> <span class="text-primary float-left">▲</span>  Média de impressões</span><br />
+                            <small>@Model.inf.PeriodImpressions</small>
+                            <h4 class="mb-0 mt-2">@Model.inf.Impressions.ToString("N0")</h4>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 pr-md-3">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative text-uppercase">
+                            <span class="text-muted"> <span class="text-primary float-left">▲</span> Audiência / Crescimento</span>
+                            <small>@ViewBag.GrowthWeekPeriod</small>
+                            @if (ViewBag.GrowthWeek != "")
+                            {
+                                <h4 class="mb-0 mt-2" id="GrowthWeek" onclick="inverte('GrowthWeekPercent');">
+                                    @ViewBag.GrowthWeek
+                                </h4>
+
+                                <h4 class="mb-0 mt-2" id="GrowthWeekPercent" style="display:none" onclick="inverte('GrowthWeek');">
+                                    @ViewBag.GrowthWeekPercent
+                                </h4>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    function inverte(obj) {
+                        document.getElementById('GrowthWeekPercent').style.display = 'none';
+                        document.getElementById('GrowthWeek').style.display = 'none';
+                        document.getElementById(obj).style.display = 'block';
+                    }
+                </script>
+                <div class="row mt-md-3 mt-3">
+                    <div class="col">
+                        <h3 class="">SUMÁRIO</h3>
+                    </div>
+                </div>
+
+                <div class="row mt-md-2 mt-2 mb-md-2 mb-3">
+                    <div class="col-md col-6 pr-0 mb-3 mb-md-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative text-uppercase">
+                            <span class="text-muted">Média de stories</span>
+                            <h4 class="mb-0 mt-2">@ViewBag.MediaStories</h4>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 pr-md-0 mb-3 mb-md-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative text-uppercase">
+                            <span class="text-muted">% Vídeos no stories</span>
+                            <h4 class="mb-0 mt-2">@ViewBag.mediaStoryVideo.ToString("n0")%</h4>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 pr-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative text-uppercase">
+                            <span class="text-muted">% Fotos no stories</span>
+                            <h4 class="mb-0 mt-2">@ViewBag.mediaStoryImage.ToString("n0")%</h4>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 pr-md-3">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative text-uppercase text-center">
+                            <a href="javascript:;" data-target="#AjudaModal" data-toggle="modal" class="text-warning" style="font-size:39px;">
+                                <i class="fa fa-question-circle"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-md-2 mt-2 mb-md-2 mb-3">
+                    <div class="col-md col-6 pr-0 mb-3 mb-md-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative text-uppercase">
+                            <span class="text-muted">Posts</span>
+                            <h4 class="mb-0 mt-2">@Model.inf.Posts</h4>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 pr-md-0 mb-3 mb-md-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative text-uppercase">
+                            <span class="text-muted">Avg.posts diário</span>
+                            <h4 class="mb-0 mt-2">@string.Format("{0:N}", (Model.inf.Posts / 30.25))</h4>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 pr-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative text-uppercase">
+                            <span class="text-muted"> Avg. posts semanal</span>
+                            <h4 class="mb-0 mt-2">@string.Format("{0:N}", (Model.inf.Posts / 4.25))</h4>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 pr-md-3">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative text-uppercase">
+                            <span class="text-muted">Avg. posts mensal</span>
+                            <h4 class="mb-0 mt-2">@Model.inf.Posts.ToString("n0")</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-md-2 mt-2 mb-md-2 mb-3">
+                    <div class="col-md col-6 pr-0 mb-3 mb-md-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative text-uppercase">
+                            <span class="text-muted">Total de likes</span>
+                            <h4 class="mb-0 mt-2">@Model.inf.Curtidas.ToString("n0")</h4>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 pr-md-0 mb-3 mb-md-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative text-uppercase">
+                            <span class="text-muted">Média de likes / Post</span>
+                            <h4 class="mb-0 mt-2">@Math.Round(Model.inf.MediaCurtidas, 4).ToString("n0")</h4>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 pr-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative text-uppercase">
+                            <span class="text-muted"> Total de comentários</span>
+                            <h4 class="mb-0 mt-2">@ViewBag.infComentariosTotal.ToString("n0")</h4>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 pr-md-3">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative text-uppercase">
+                            <span class="text-muted">Média comentários / Post</span>
+                            <h4 class="mb-0 mt-2">@Math.Round(Model.inf.MediaComentarios, 4).ToString("n0")</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-md-2 mt-2 mb-md-2 mb-3">
+                    <div class="col-md col-6 pr-0 mb-3 mb-md-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative text-uppercase">
+                            <span class="text-muted">Seguindo / Seguidores</span>
+                            <h4 class="mb-0 mt-2">@Math.Round(Model.inf.SeguindoSeguidores, 4)</h4>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 pr-md-0 mb-3 mb-md-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative text-uppercase">
+                            <span class="text-muted">Interações Stories</span>
+                            <h4 class="mb-0 mt-2">@ViewBag.infRepliesTotal.ToString("n0")</h4>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 pr-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative text-uppercase">
+                            <span class="text-muted">% Vídeos post no feed</span>
+                            <h4 class="mb-0 mt-2">@ViewBag.mediaMidiasVideo.ToString("n0")%</h4>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 pr-md-3">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative text-uppercase">
+                            <span class="text-muted">% Fotos post no feed</span>
+                            <h4 class="mb-0 mt-2">@ViewBag.mediaMidiasImage.ToString("n0")%</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-md-2 mt-2 mb-md-2 mb-3">
+                    <div class="col-md-3 col-6 pr-0 mb-3 mb-md-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative text-uppercase">
+                            <span class="text-muted">Homens / Seguidores</span>
+                            <h4 class="mb-0 mt-2">@ViewBag.PercentM%</h4>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6 pl-md-2 pr-md-1 mb-3 mb-md-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative text-uppercase">
+                            <span class="text-muted">Mulheres / Seguidores</span>
+                            <h4 class="mb-0 mt-2">@ViewBag.PercentF%</h4>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-12 pl-md-1 mb-6 mb-md-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative text-uppercase">
+                            <span class="text-muted">Estado / Cities - TOP</span>
+                            <h5 class="mb-0 mt-2">@ViewBag.PercentCities</h5>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row mt-md-2 mt-2 mb-md-2 mb-3">
+                    <div class="col-md-3 col-6 pr-0 mb-3 mb-md-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative text-uppercase">
+                            <span class="text-muted">PHANTOM FOLLOWERS</span>
+                            <h4 class="mb-0 mt-2">0</h4>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6 pl-md-2 pr-md-1 mb-3 mb-md-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative text-uppercase">
+                            <span class="text-muted">PHANTOM LIKES</span>
+                            <h4 class="mb-0 mt-2">0</h4>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-12 pl-md-1 mb-6 mb-md-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative text-uppercase">
+                            <span class="text-muted">AUTOMATIC OR CHANGE COMMENTS</span>
+                            <h5 class="mb-0 mt-2">0</h5>
+                        </div>
+                    </div>
+                </div>
+
+                @if (Model.inf.LstInstaEmotionalResume != null)
+                {
+                    @if (Model.inf.LstInstaEmotionalResume.Count() > 0)
+                    {
+
+                        <div class="row mt-md-3 mt-4">
+                            <div class="col">
+                                <h3 class="">EMOTIONAL PROFILE ANALYSIS <a href="javascript:;" class="text-warning" data-toggle="modal" data-target="#emotionalProfileAnalysisModal"><i class="fa fa-question-circle"></i></a></h3>
+                            </div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-md position-relative" style="min-height:350px;width:350px;flex:350px;max-width:350px;">
+                                <div class="flex-wrapper position-relative" style="width:350px;">
+                                    <!--<div id="chartEmotional">
+
+                        </div>-->
+
+                                    <div class="col-md position-relative" style="min-height:350px;width:350px;flex:350px;max-width:350px;">
+                                        <div class="flex-wrapper position-relative" style="width:350px;">
+                                            @foreach (var item in Model.inf.LstInstaEmotionalResume)
+                                            {
+                                                @if (item.UserName == "RAIVA")
+                                                {
+                                                    <div class="chart1">
+                                                        <svg viewBox="0 0 36 36" class="circular-chart orange">
+                                                            <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                            <path class="circle" stroke-dasharray="@item.Engagemer, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                            <text x="19.5" y="3.2" class="percentage">@item.Engagemer%</text>
+                                                        </svg>
+                                                    </div>
+                                                }
+
+                                                @if (item.UserName == "SURPRESA")
+                                                {
+                                                    <div class="chart2">
+                                                        <svg viewBox="0 0 36 36" class="circular-chart green">
+                                                            <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                            <path class="circle" stroke-dasharray="@item.Engagemer, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                            <text x="19.5" y="2.8" class="percentage">@item.Engagemer%</text>
+                                                        </svg>
+                                                    </div>
+                                                }
+
+                                                @if (item.UserName == "TRISTEZA")
+                                                {
+                                                    <div class="chart3">
+                                                        <svg viewBox="0 0 36 36" class="circular-chart bluegreen">
+                                                            <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                            <path class="circle" stroke-dasharray="@item.Engagemer, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                            <text x="19.4" y="2.8" class="percentage">@item.Engagemer%</text>
+                                                        </svg>
+                                                    </div>
+                                                }
+
+                                                @if (item.UserName == "ALEGRIA")
+                                                {
+                                                    <div class="chart4">
+                                                        <svg viewBox="0 0 36 36" class="circular-chart blue">
+                                                            <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                            <path class="circle" stroke-dasharray="@item.Engagemer, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                            <text x="19" y="2.6" class="percentage">@item.Engagemer%</text>
+                                                        </svg>
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md">
+                                @foreach (var item in Model.inf.LstInstaEmotionalResume)
+                                {
+                                    @if (item.UserName == "ALEGRIA")
+                                    {
+                                        <div class="row m-0">
+                                            <div class="col-md-6 col-12 mx-auto">
+                                                <div class="rounded border border-primary text-primary">
+                                                    <div class="row m-0 d-flex align-items-center">
+                                                        <div class="col-3 text-center px-0">
+                                                            <i class="far fa-smile" style="font-size:36px;"></i>
+                                                        </div>
+                                                        <div class="col-9 pl-0 text-left">
+                                                            <h2 class="mb-0">@item.Engagemer.ToString("n0")%</h2>
+                                                            <h5 class="text-left">Posts Naturalidade</h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    @if (item.UserName == "TRISTEZA")
+                                    {
+                                        <div class="row m-0 mt-2">
+                                            <div class="col-md-6 col-12 mx-auto">
+                                                <div class="rounded border border-bluegreen text-bluegreen">
+                                                    <div class="row m-0 d-flex align-items-center">
+                                                        <div class="col-3 text-center">
+                                                            <i class="far fa-frown" style="font-size:36px;"></i>
+                                                        </div>
+                                                        <div class="col-9 pl-0 text-left">
+                                                            <h2 class="mb-0">@item.Engagemer.ToString("n0")%</h2>
+                                                            <h5 class="text-left">Posts Medo</h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    @if (item.UserName == "SURPRESA")
+                                    {
+                                        <div class="row m-0 mt-2">
+                                            <div class="col-md-6 col-12 mx-auto">
+                                                <div class="rounded border border-green text-green">
+                                                    <div class="row m-0 d-flex align-items-center">
+                                                        <div class="col text-center px-0">
+                                                            <i class="far fa-surprise" style="font-size:36px;"></i>
+                                                        </div>
+                                                        <div class="col-9 pl-0 text-left">
+                                                            <h2 class="mb-0">@item.Engagemer.ToString("n0")%</h2>
+                                                            <h5 class="text-left">Posts Surpreso/a</h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    @if (item.UserName == "RAIVA")
+                                    {
+                                        <div class="row m-0 mt-2">
+                                            <div class="col-md-6 col-12 mx-auto">
+                                                <div class="rounded border border-orange text-orange">
+                                                    <div class="row m-0 d-flex align-items-center">
+                                                        <div class="col-3 text-center">
+                                                            <i class="far fa-angry" style="font-size:36px;"></i>
+                                                        </div>
+                                                        <div class="col-9 pl-0 text-left">
+                                                            <h2 class="mb-0">@item.Engagemer.ToString("n0")%</h2>
+                                                            <h5 class="text-left">Posts Raiva</h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+
+                        <div class="row mt-md-3 mt-4">
+                            <div class="col">
+                                <h3 class="">EMOTIONAL RESUME <a href="javascript:;" class="text-warning" data-toggle="modal" data-target="#emotionalResumeModal"><i class="fa fa-question-circle"></i></a></h3>
+                            </div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-md-6 col-11 ml-3 ml-md-0">
+                                <div class="row">
+                                    @foreach (var item in Model.inf.LstInstaEmotionalResume)
+                                    {
+                                        @if (item.UserName == "ALEGRIA")
+                                        {
+                                            <div class="col-md-6 col-12 pr-md-0 mb-3">
+                                                <div class="rounded border border-primary text-primary">
+                                                    <div class="row m-0 d-flex align-items-center">
+                                                        <div class="col-3 text-center px-0">
+                                                            <i class="far fa-smile" style="font-size:36px;"></i>
+                                                        </div>
+                                                        <div class="col-9 pl-0 text-left">
+                                                            <h2 class="mb-0">@item.Reach.ToString("n0")</h2>
+                                                            <h5 class="text-left">Posts Naturalidade</h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+
+                                        @if (item.UserName == "TRISTEZA")
+                                        {
+                                            <div class="col-md-6 col-12 mb-3">
+                                                <div class="rounded border border-bluegreen text-bluegreen">
+                                                    <div class="row m-0 d-flex align-items-center">
+                                                        <div class="col-3 text-center">
+                                                            <i class="far fa-frown" style="font-size:36px;"></i>
+                                                        </div>
+                                                        <div class="col-9 pl-0 text-left">
+                                                            <h2 class="mb-0">@item.Reach.ToString("n0")</h2>
+                                                            <h5 class="text-left">Posts Medo</h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+
+                                        @if (item.UserName == "SURPRESA")
+                                        {
+                                            <div class="col-md-6 col-12 pr-md-0 mb-3">
+                                                <div class="rounded border border-green text-green">
+                                                    <div class="row m-0 d-flex align-items-center">
+                                                        <div class="col text-center px-0">
+                                                            <i class="far fa-surprise" style="font-size:36px;"></i>
+                                                        </div>
+                                                        <div class="col-9 pl-0 text-left">
+                                                            <h2 class="mb-0">@item.Reach.ToString("n0")</h2>
+                                                            <h5 class="text-left">Posts Surpreso/a</h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+
+                                        @if (item.UserName == "RAIVA")
+                                        {
+                                            <div class="col-md-6 col-12 mb-3">
+                                                <div class="rounded border border-orange text-orange">
+                                                    <div class="row m-0 d-flex align-items-center">
+                                                        <div class="col-3 text-center">
+                                                            <i class="far fa-angry" style="font-size:36px;"></i>
+                                                        </div>
+                                                        <div class="col-9 pl-0 text-left">
+                                                            <h2 class="mb-0">@item.Reach.ToString("n0")</h2>
+                                                            <h5 class="text-left">Posts Raiva</h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+
+                @if (Model != null)
+                {
+                    if (Model.inf.LstTopAndBotton != null && (Model.inf.LstTopAndBotton.Count() > 0))
+                    {
+
+                        <div class="row mt-5" id="TopBotton">
+                            <div class="col">
+                                <h3 class="">TOP POST AND WORST POST</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card border-0">
+                                    <div class="table-responsive">
+                                        <table class="table-sm table table-hover text-center mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>Post</th>
+                                                    <th>Impressions</th>
+                                                    <th>Reach</th>
+                                                    <th>Engagement</th>
+                                                    <th>Saved</th>
+                                                    <th>Engagement%</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.inf.LstTopAndBotton)
+                                                {
+                                                    <tr>
+                                                        <td class="align-middle">
+                                                            @if (item.Imagens != null)
+                                                            {
+                                                                foreach (var itImagens in item.Imagens)
+                                                                {
+                                                                    <img onerror="this.onerror=null;this.src='/images/no-photo-icon.jpg'" src="@Html.DisplayFor(modelItem => itImagens)"
+                                                                         width="48" />
+                                                                }
+                                                            }
+                                                        </td>
+                                                        <td class="align-middle">@Html.DisplayFor(modelItem => item.UserName)</td>
+                                                        <td class="align-middle">@Html.DisplayFor(modelItem => item.Impressions)</td>
+                                                        <td class="align-middle">@Html.DisplayFor(modelItem => item.Reachs)</td>
+                                                        <td class="align-middle">@Html.DisplayFor(modelItem => item.Engagements)</td>
+                                                        <td class="align-middle">@Html.DisplayFor(modelItem => item.Saveds)</td>
+
+                                                        <td class="align-middle">
+                                                            @{
+                                                                var engaj =
+                                                                Math.Round((
+                                                                Convert.ToDouble(item.Reach) /
+                                                                Convert.ToDouble(Model.inf.Seguidores)
+                                                                ) * 100, 4);
+                                                            }
+                                                            @if (Convert.ToDouble(engaj) <
+                                                          (Model.inf.Seguidores < faixa1 ? valor1 : (Model.inf.Seguidores < faixa2 ? valor2 : valor0))
+                                                          )
+                                                            {
+                                                                <span class="badge badge-danger d-block">
+                                                                    <h5 class="mb-0 p-0">
+                                                                        @Html.Raw(engaj) %
+                                                                    </h5>
+                                                                </span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="badge badge-success d-block">
+                                                                    <h5 class="mb-0 p-0">
+                                                                        + @Html.Raw(engaj) %
+                                                                    </h5>
+                                                                </span>
+                                                            }
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+
+                @if (Model != null)
+                {
+                    if (Model.inf.LstInstaTags != null)
+                    {
+                        <!-- Tags -->
+                        <div class="row mt-5" id="tagsenionedBy">
+                            <div class="col">
+                                <h3 class="">TAGS - MENTIONED BY</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card border-0">
+                                    <div class="table-responsive">
+
+                                        <table class="table-sm table table-hover text-center mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>Mencionado por</th>
+                                                    <th>Engajamento do post</th>
+                                                    <th>Engajamento %</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.inf.LstInstaTags)
+                                                {
+                                                    <tr>
+                                                        <td class="align-middle">
+                                                            @if (item.Imagens != null)
+                                                            {
+                                                                foreach (var itImagens in item.Imagens)
+                                                                {
+                                                                    <img onerror="this.onerror=null;this.src='/images/no-photo-icon.jpg'" src="@Html.DisplayFor(modelItem => itImagens)"
+                                                                         width="48" />
+                                                                }
+                                                            }
+                                                        </td>
+                                                        <td class="align-middle">@@@Html.DisplayFor(modelItem => item.UserName)</td>
+                                                        <td class="align-middle">@item.Reach.ToString("n0")</td>
+                                                        <td class="align-middle">
+                                                            @{
+                                                                var engaj =
+                                                                Math.Round((
+                                                                Convert.ToDouble(item.Reach) /
+                                                                Convert.ToDouble(Model.inf.Seguidores)
+                                                                ) * 100, 4);
+                                                            }
+                                                            @if (Convert.ToDouble(engaj) <
+                                                          (Model.inf.Seguidores < faixa1 ? valor1 : (Model.inf.Seguidores < faixa2 ? valor2 : valor0))
+                                                          )
+                                                            {
+                                                                <span class="badge badge-danger d-block">
+                                                                    <h5 class="mb-0 p-0">
+                                                                        @Html.Raw(engaj) %
+                                                                    </h5>
+                                                                </span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="badge badge-success d-block">
+                                                                    <h5 class="mb-0 p-0">
+                                                                        + @Html.Raw(engaj) %
+                                                                    </h5>
+                                                                </span>
+                                                            }
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+
+                @if (Model != null)
+                {
+                    if (Model.inf.LstInstaMentions != null)
+                    {
+                        <!-- Hastags -->
+                        <div class="row mt-5" id="mentions">
+                            <div class="col">
+                                <h3 class="">TAGGED BRAND AND INFLUENCER BY MENTION</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card border-0">
+                                    <div class="table-responsive">
+                                        <table class="table-sm table table-hover text-center mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>Mention</th>
+                                                    <th>Impressions</th>
+                                                    <th>Reach</th>
+                                                    <th>Engagement</th>
+                                                    <th>Saved</th>
+                                                    <th>Engajamento %</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.inf.LstInstaMentions)
+                                                {
+                                                    <tr>
+                                                        <td class="align-middle">
+                                                            @if (item.Imagens != null)
+                                                            {
+                                                                foreach (var itImagens in item.Imagens)
+                                                                {
+                                                                    <img onerror="this.onerror=null;this.src='/images/no-photo-icon.jpg'" src="@Html.DisplayFor(modelItem => itImagens)"
+                                                                         width="48" />
+                                                                }
+                                                            }
+                                                        </td>
+                                                        <td class="align-middle">@@@Html.DisplayFor(modelItem => item.UserName)</td>
+                                                        <td class="align-middle">@Html.DisplayFor(modelItem => item.Impressions)</td>
+                                                        <td class="align-middle">@Html.DisplayFor(modelItem => item.Reachs)</td>
+                                                        <td class="align-middle">@Html.DisplayFor(modelItem => item.Engagements)</td>
+                                                        <td class="align-middle">@Html.DisplayFor(modelItem => item.Saveds)</td>
+                                                        <td class="align-middle">
+                                                            @{
+                                                                var engaj =
+                                                                Math.Round((
+                                                                Convert.ToDouble(item.Reach) /
+                                                                Convert.ToDouble(Model.inf.Seguidores)
+                                                                ) * 100, 4);
+                                                            }
+                                                            @if (Convert.ToDouble(engaj) <
+                                                          (Model.inf.Seguidores < faixa1 ? valor1 : (Model.inf.Seguidores < faixa2 ? valor2 : valor0))
+                                                          )
+                                                            {
+                                                                <span class="badge badge-danger d-block">
+                                                                    <h5 class="mb-0 p-0">
+                                                                        @Html.Raw(engaj) %
+                                                                    </h5>
+                                                                </span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="badge badge-success d-block">
+                                                                    <h5 class="mb-0 p-0">
+                                                                        + @Html.Raw(engaj) %
+                                                                    </h5>
+                                                                </span>
+                                                            }
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+
+                @if (Model != null)
+                {
+                    if (Model.inf.LstInstaHashs != null && (Model.inf.LstInstaHashs.Count() > 0))
+                    {
+                        <!-- Hastags -->
+                        <div class="row mt-5" id="hashtags">
+                            <div class="col">
+                                <h3 class="">HASHTAGS</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card border-0">
+                                    <div class="table-responsive">
+                                        <table class="table-sm table table-hover text-center mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>Hashtag</th>
+                                                    <th>Impressions</th>
+                                                    <th>Reach</th>
+                                                    <th>Engagement</th>
+                                                    <th>Saved</th>
+                                                    <th>Engajamento %</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.inf.LstInstaHashs)
+                                                {
+                                                    <tr>
+                                                        <td class="align-middle">
+                                                            @if (item.Imagens != null)
+                                                            {
+                                                                foreach (var itImagens in item.Imagens)
+                                                                {
+                                                                    <img onerror="this.onerror=null;this.src='/images/no-photo-icon.jpg'" src="@Html.DisplayFor(modelItem => itImagens)"
+                                                                         width="48" />
+                                                                }
+                                                            }
+                                                        </td>
+                                                        <td class="align-middle">#@Html.DisplayFor(modelItem => item.UserName)</td>
+                                                        <td class="align-middle">@Html.DisplayFor(modelItem => item.Impressions)</td>
+                                                        <td class="align-middle">@Html.DisplayFor(modelItem => item.Reachs)</td>
+                                                        <td class="align-middle">@Html.DisplayFor(modelItem => item.Engagements)</td>
+                                                        <td class="align-middle">@Html.DisplayFor(modelItem => item.Saveds)</td>
+                                                        <td class="align-middle">
+                                                            @{
+                                                                var engaj =
+                                                                Math.Round((
+                                                                Convert.ToDouble(item.Reach) /
+                                                                Convert.ToDouble(Model.inf.Seguidores)
+                                                                ) * 100, 4);
+                                                            }
+                                                            @if (Convert.ToDouble(engaj) <
+                                                          (Model.inf.Seguidores < faixa1 ? valor1 : (Model.inf.Seguidores < faixa2 ? valor2 : valor0))
+                                                          )
+                                                            {
+                                                                <span class="badge badge-danger d-block">
+                                                                    <h5 class="mb-0 p-0">
+                                                                        @Html.Raw(engaj) %
+                                                                    </h5>
+                                                                </span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="badge badge-success d-block">
+                                                                    <h5 class="mb-0 p-0">
+                                                                        + @Html.Raw(engaj) %
+                                                                    </h5>
+                                                                </span>
+                                                            }
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+
+                @if (Model != null)
+                {
+                    if (Model.inf.LstInstaMidias != null && (Model.inf.LstInstaMidias.Count() > 0))
+                    {
+
+                        <!-- Recent media-->
+                        <div class="row mt-5" id="recent">
+                            <div class="col">
+                                <h3 class="">RECENT MEDIA</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card border-0">
+                                    <div class="table-responsive">
+                                        <table class="table-sm table table-hover text-center mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>Descrição</th>
+                                                    <th>Impressions</th>
+                                                    <th>Reach</th>
+                                                    <th>Engagement</th>
+                                                    <th>Saved</th>
+                                                    <th>Engajamento %</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.inf.LstInstaMidias)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            @if (item.Imagens != null)
+                                                            {
+                                                                foreach (var itImagens in item.Imagens)
+                                                                {
+                                                                    <img onerror="this.onerror=null;this.src='/images/no-photo-icon.jpg'" src="@Html.DisplayFor(modelItem => itImagens)"
+                                                                         width="48" />
+                                                                }
+                                                            }
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.UserName)
+                                                        </td>
+                                                        <td class="align-middle">@Html.DisplayFor(modelItem => item.Impressions)</td>
+                                                        <td class="align-middle">@Html.DisplayFor(modelItem => item.Reachs)</td>
+                                                        <td class="align-middle">@Html.DisplayFor(modelItem => item.Engagements)</td>
+                                                        <td class="align-middle">@Html.DisplayFor(modelItem => item.Saveds)</td>
+                                                        <td>
+                                                            @{
+                                                                var engaj =
+                                                                Math.Round((
+                                                                Convert.ToDouble(item.Reach) /
+                                                                Convert.ToDouble(Model.inf.Seguidores)
+                                                                ) * 100, 4);
+                                                            }
+                                                            @if (Convert.ToDouble(engaj) <
+                                                          (Model.inf.Seguidores < faixa1 ? valor1 : (Model.inf.Seguidores < faixa2 ? valor2 : valor0))
+                                                          )
+                                                            {
+                                                                <span class="badge badge-danger d-block">
+                                                                    <h5 class="mb-0 p-0">
+                                                                        @Html.Raw(engaj) %
+                                                                    </h5>
+                                                                </span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="badge badge-success d-block">
+                                                                    <h5 class="mb-0 p-0">
+                                                                        + @Html.Raw(engaj) %
+                                                                    </h5>
+                                                                </span>
+                                                            }
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+
+                @if (Model != null)
+                {
+                    if (Model.inf.LstInstaStory != null)
+                    {
+
+                        <div class="row mt-5" id="stories">
+                            <div class="col">
+                                <h3 class="">STORIES</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card border-0">
+                                    <div class="table-responsive">
+                                        <table class="table-sm table table-hover text-center mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>Date</th>
+                                                    <th>Exits</th>
+                                                    <th>Impressions</th>
+                                                    <th>Replies</th>
+                                                    <th>TapsBack</th>
+                                                    <th>TapsForward</th>
+                                                    <th>Engagement</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.inf.LstInstaStory)
+                                                {
+                                                    <tr>
+                                                        <td class="align-middle">
+                                                            @if (item.Imagens != null)
+                                                            {
+                                                                foreach (var itImagens in item.Imagens)
+                                                                {
+                                                                    <a class="nav-link text-muted px-0"
+                                                                       href="javascript:getImage('@Html.DisplayFor(modelItem => itImagens)','@Html.DisplayFor(modelItem => item.Id)');">
+                                                                        <img onerror="this.onerror=null;this.src='/images/no-photo-icon.jpg'" src="@Html.DisplayFor(modelItem => itImagens)" width="48" />
+                                                                    </a>
+                                                                }
+                                                            }
+                                                        </td>
+                                                        <td>@Html.DisplayFor(modelItem => item.Date)</td>
+                                                        <td>@Html.DisplayFor(modelItem => item.ExitsValue)</td>
+                                                        <td>@Html.DisplayFor(modelItem => item.ImpressionsValue)</td>
+                                                        <td>@Html.DisplayFor(modelItem => item.RepliesValue)</td>
+                                                        <td>@Html.DisplayFor(modelItem => item.TapsBackValue)</td>
+                                                        <td>@Html.DisplayFor(modelItem => item.TapsForwardValue)</td>
+                                                        <td>@Html.DisplayFor(modelItem => item.ReachValue)</td>
+                                                        <td>
+                                                            @{
+                                                                var engaj =
+                                                                Math.Round((
+                                                                Convert.ToDouble(item.ReachValue) /
+                                                                Convert.ToDouble(Model.inf.Seguidores)
+                                                                ) * 100, 4);
+                                                            }
+                                                            @if (Convert.ToDouble(engaj) <
+                                                          (Model.inf.Seguidores < faixa1 ? valor1 : (Model.inf.Seguidores < faixa2 ? valor2 : valor0))
+                                                          )
+                                                            {
+                                                                <span class="badge badge-danger d-block">
+                                                                    <h5 class="mb-0 p-0">
+                                                                        @Html.Raw(engaj) %
+                                                                    </h5>
+                                                                </span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="badge badge-success d-block">
+                                                                    <h5 class="mb-0 p-0">
+                                                                        + @Html.Raw(engaj) %
+                                                                    </h5>
+                                                                </span>
+                                                            }
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+
+                @if (Model != null)
+                {
+                    if (ViewBag.GrowthData != "[]")
+                    {
+
+                        <div class="row mt-5" id="stories">
+                            <div class="col">
+                                <h3><img src="~/images/instagram.png" width="25" /> FOLLOWERS GROWTH</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div id="containerGrowth" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                            </div>
+                        </div>
+                    }
+                }
+
+                @if (Model != null && (ViewBag.BestHourCoordenates != "[]"))
+                {
+                    <div class="row mt-5" id="stories">
+                        <div class="col">
+                            <h3><img src="~/images/instagram.png" width="25" />  BEST TIME TO POST STORIES - REACH</h3>
+                            <p>
+                                <br /><h4>Your stories reach the most followers when you post on @ViewBag.BestDay at @ViewBag.BestTime h.</h4>
+                            </p>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div id="containerBestHourReach" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                        </div>
+                    </div>
+
+                }
+
+                <p></p>
+                <div class="tab">
+                    <button id='btnGender' class="tablinksA" onclick="openCity(event, 'Gender', 'A')">GENDER AND AGE</button>
+                    <button class="tablinksA" onclick="openCity(event, 'GenderChart', 'A')">CHART</button>
+                </div>
+
+                @if (Model != null)
+                {
+                    if (Model.inf.LstAge != null && (Model.inf.LstAge.Count != 0))
+                    {
+                        <div id="Gender" class="tabcontentA">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card border-0">
+                                        <div class="table-responsive">
+                                            <table class="table-sm table table-hover text-center mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Gender and Age</th>
+                                                        <th>Reach</th>
+                                                        <th>Engagement</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in Model.inf.LstAge)
+                                                    {
+                                                        <tr>
+                                                            <td class="align-middle">@Html.DisplayFor(modelItem => item.UserName)</td>
+                                                            <td class="align-middle">@Html.DisplayFor(modelItem => item.Reach)</td>
+                                                            <td class="align-middle">
+                                                                @{
+                                                                    var engaj = Math.Round(item.Engagemer, 4);
+                                                                }
+                                                                @if (Convert.ToDouble(engaj) < (Model.inf.Seguidores < faixa1 ? valor1 : (Model.inf.Seguidores < faixa2 ? valor2 : valor0)))
+                                                                {
+                                                                    <span class="badge badge-danger d-block">
+                                                                        <h5 class="mb-0 p-0">
+                                                                            @Html.Raw(engaj) %
+                                                                        </h5>
+                                                                    </span>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <span class="badge badge-success d-block">
+                                                                        <h5 class="mb-0 p-0">
+                                                                            + @Html.Raw(engaj) %
+                                                                        </h5>
+                                                                    </span>
+                                                                }
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="GenderChart" class="tabcontentA">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card border-0">
+                                        <div id="container" style="min-width: 810px; max-width: 850px; height: 400px; margin: 0 auto"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+
+                <p></p>
+                <div class="tab">
+                    <button id='btnCities' class="tablinksC" onclick="openCity(event, 'Cities', 'C')">CITIES - RANKING</button>
+                    <button class="tablinksC" onclick="openCity(event, 'CitiesChart', 'C')">CHART</button>
+                </div>
+
+                @if (Model != null)
+                {
+                    if (Model.inf.LstCities != null && (Model.inf.LstCities.Count != 0))
+                    {
+                        <div id="Cities" class="tabcontentC">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card border-0">
+                                        <div class="table-responsive">
+                                            <table class="table-sm table table-hover text-center mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>City</th>
+                                                        <th>Reach</th>
+                                                        <th>Engagement</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in Model.inf.LstCities)
+                                                    {
+                                                        <tr>
+                                                            <td class="align-middle">@Html.DisplayFor(modelItem => item.UserName)</td>
+                                                            <td class="align-middle">@Html.DisplayFor(modelItem => item.Reach)</td>
+                                                            <td class="align-middle">
+                                                                @{
+                                                                    var engaj = Math.Round(item.Engagemer, 4);
+                                                                }
+                                                                @if (Convert.ToDouble(engaj) < (Model.inf.Seguidores < faixa1 ? valor1 : (Model.inf.Seguidores < faixa2 ? valor2 : valor0)))
+                                                                {
+                                                                    <span class="badge badge-danger d-block">
+                                                                        <h5 class="mb-0 p-0">
+                                                                            @Html.Raw(engaj) %
+                                                                        </h5>
+                                                                    </span>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <span class="badge badge-success d-block">
+                                                                        <h5 class="mb-0 p-0">
+                                                                            + @Html.Raw(engaj) %
+                                                                        </h5>
+                                                                    </span>
+                                                                }
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="CitiesChart" class="tabcontentC">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card border-0">
+                                        <div id="chart_cities" style="width: 900px; height: 500px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+
+            </div>
+        </div>
+
+        <div class="modal fade" id="story-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content modal-content-center rounded-3 border-0" style="background-color:#424242;">
+                    <div class="modal-header pb-0 border-0 text-center position-absolute w-100 z-index-top">
+                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </div>
+
+                    <div id="divPreviewStory" class="modal-body p-0 text-center">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Modal Sumário -->
+    <div class="modal fade" id="sumarioModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">SUMÁRIO</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.<br><br>
+
+                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Emotional Resume -->
+    <div class="modal fade" id="emotionalResumeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Emotional Resume</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.<br><br>
+
+                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal EMOTIONAL PROFILE ANALYSIS  -->
+    <div class="modal fade" id="emotionalProfileAnalysisModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">EMOTIONAL PROFILE ANALYSIS</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.<br><br>
+
+                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Ajuda -->
+    <div class="modal fade" id="AjudaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">SOBRE CONSULTA by Influencers Metrics</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-12 px-md-4">
+
+                            <br class="d-block">
+
+                            <h5 class="text-secondary font-weight-bold">INFLUENCERS METRICS - INSTAGRAM INSIGHTS - GLOSSÁRIO</h5>
+
+                            <br class="d-block">
+
+                            <img style="width:100%;" src="~/images/ajuda.jpg" alt="ajuda">
+
+                            <ul class="help-list ml-md-4 ml-3 mr-2 mt-3">
+
+                                <li>
+                                    <b>SEGUIDORES: </b> É a quantidade definida de pessoas que o seguem
+                                </li>
+
+                                <li>
+                                    <b>SEGUINDO:</b> É a quantidade de pessoas que você esta seguindo
+                                </li>
+
+                                <li>
+
+                                    <b>MÉDIA DE ENGAJAMENTO NA INFLUENCERS METRICS:</b> É a média
+                                    de pessoas que engajaram-se com suas publicações nos últimos 7 dias. Os valores de engajamento
+                                    mensuram pessoas que realmente prendem-se as suas publicações, calculando não o total de
+                                    curtidas + comentários + view relacionados ao número de seguidores. E sim, views completas +
+                                    recorrência de interações com publicações.
+
+                                    <br class="d-block"><br class="d-block">
+
+                                    <img style="width:600px;max-width:100%;" src="/images/ex_post.png" alt="exemplo">
+
+                                    <br class="d-block"><br class="d-block">
+
+
+                                    * Descobrimos engajamento fake muito usados e combinados através de grupos de whats app.
+                                    Além de medirmos recorrência de comentários, likes e views. Mensuramos também troca de
+                                    comentários sem conteúdo entre amigos e através de sistemas de automatização de
+                                    comentários.
+
+                                </li>
+
+                                <li>
+                                    <b>MÉDIA DE ALCANCE NA INFLUENCERS METRICS:</b> É a média de
+                                    pessoas que foram alcançadas com suas publicações nos últimos 7 dias.
+
+                                    * A taxa de alcance de uma determinada postagem é o número de pessoas que viram a
+                                    postagem dividida pelo seu número de seguidores.
+
+                                    * A taxa média de alcance por postagem é a taxa média de alcance de todas as suas postagens
+                                    publicadas no período de tempo selecionado.
+
+                                </li>
+
+                                <li>
+                                    <b>VIEWS DE PERFIL:</b> Indica quantas vezes o seu perfil foi
+                                    visitado nos últimos 7 dias.
+
+                                </li>
+
+                                <li>
+                                    <b>REACH:</b> É a quantidade total de pessoas alcançadas nos
+                                    últimos 7 dias.
+
+                                </li>
+
+                                <li>
+                                    <b>MÉDIA DE IMPRESSÕES:</b> As impressões são um número de vezes
+                                    que sua postagem é visualizada. Uma pessoa pode ver sua postagem várias vezes e ser contada a cada vez.
+
+                                    <br class="d-block"><br class="d-block">
+
+                                    Por exemplo: 200 pessoas veem sua postagem uma vez e 100 pessoas veem sua postagem
+                                    duas vezes, portanto, sua postagem teve 400 impressões.
+
+                                    <br class="d-block"><br class="d-block">
+
+                                    * As impressões médias de uma história são as impressões divididas pelo alcance. Ou seja, o
+                                    número médio de visualizações dividido pelos espectadores para essa história.
+
+                                </li>
+
+                                <li>
+                                    <b>AUDIÊNCIA / CRESCIMENTO:</b> Mede a evolução de influência dos últimos 7 dias.
+                                </li>
+
+                                <li>
+                                    <b>MÉDIA STORIES:</b> Média de conteúdo postado no stories das últimas 24 horas para frente.
+                                </li>
+
+                                <li>
+                                    <b>% VIDEO NO STORIES:</b> % de conteúdo vídeos postados no stories das últimas 24 horas
+                                    para frente.
+                                </li>
+
+                                <li>
+                                    <b>% FOTOS NO STORIES:</b> % de conteúdo fotos postadas no stories das últimas 24 horas
+                                    para frente.
+                                </li>
+
+                                <li>
+                                    <b>POSTS:</b> Quantidade de posts dos últimos 7 dias.
+                                </li>
+
+                                <li>
+                                    <b>AVG POSTS DIÁRIOS:</b> Média de postagens diárias.
+                                </li>
+
+                                <li>
+                                    <b>AVG POSTS SEMANAL:</b> Média de postagem por semana.
+                                </li>
+
+                                <li>
+                                    <b>AVG POSTS MENSAL:</b> Média de posts mensal.
+                                </li>
+
+                                <li>
+                                    <b>TOTAL DE LIKES:</b> Total de likes dos últimos 7 dias.
+                                </li>
+
+                                <li>
+                                    <b>MÉDIA DE LIKES / POST:</b> Médias de likes dos últimos 7 dias.
+                                </li>
+
+                                <li>
+                                    <b>TOTAL DE COMENTÁRIOS:</b> Total de comentários dos últimos 7 dias.
+                                </li>
+
+                                <li>
+                                    <b>MÉDIA DE COMENTÁRIOS / POST:</b> É a média de comentários por post. Por exemplo: nos
+                                    últimos 30 dias, fiz 5 posts e coletei 200 comentários. Minha média de comentários é 40.
+                                </li>
+
+                                <li>
+                                    <b>SEGUINDO / SEGUIDORES:</b> Número de pessoas que esta seguindo e número de pessoas
+                                    que o seguem o perfil.
+                                </li>
+
+                                <li>
+                                    <b>INTERAÇÕES STORIES:</b> Número de interações com conteúdos postados no stories, seja foto
+                                    ou video. Os tipos de interações são, comentários, perguntas, tags, mentions e
+                                    compartilhamentos.
+                                </li>
+
+                                <li>
+                                    <b>% VIDEOS POST NO FEED:</b> % de vídeos postados no feed nos últimos 7 dias.
+                                </li>
+
+                                <li>
+                                    <b>% FOTOS POST NO FEED:</b> % de fotos postadas no feed nos últimos 7 dias.
+                                </li>
+
+                                <li>
+                                    <b>EMOTIONAL PROFILE:</b> Através de learn machine conseguimos mensurar tipos de emoções
+                                    a cada post e também de forma geral para que possa ser analisado para determinadas marcas,
+                                    esportes, produtos e serviços.
+
+                                    <br class="d-block"><br class="d-block">
+
+                                    <img src="/images/emotional.png" alt="emotional">
+                                </li>
+
+                                <li>
+                                    <b>TOP POST AND WORST POST:</b> Melhor post e pior post, com relação ao pior e melhor
+                                    número de engajamento + alcance.
+
+                                    <br class="d-block"><br class="d-block">
+
+                                    <img class="img-fluid" src="/images/options_help.png" alt="emotional">
+
+                                </li>
+
+                                <b>POST:</b> Conteúdo criado e postado no feed do instagram.
+
+                                <br class="d-block">
+                                <br class="d-block">
+
+                                IMPRESSIONS:</b> As impressões são um número de vezes que sua postagem é visualizada. Uma
+                                pessoa pode ver sua postagem várias vezes e ser contada a cada vez.
+                                Por exemplo: 200 pessoas veem sua postagem uma vez e 100 pessoas veem sua postagem
+                                duas vezes, portanto, sua postagem teve 400 impressões.
+                                Por exemplo: em 9 de junho, meu perfil e meus posts reuniram 58 393 impressões.
+
+                                <br class="d-block">
+                                <br class="d-block">
+
+                                REACH:</b> Alcance refere-se ao número de pessoas diferentes que veem sua postagem. Uma
+                                pessoa pode ver sua postagem 5 vezes, mas é contada apenas uma vez em direção a Reach.
+                                Por exemplo: se 100 pessoas diferentes virem sua postagem duas vezes, seu alcance nessa
+                                postagem ainda será 100.
+
+                                <br class="d-block">
+                                <br class="d-block">
+
+                                ENGAGEMENT:</b> A taxa de engajamento é baseada nos gostos, comentários e salvamentos *
+                                divididos pelo número de seguidores no momento da postagem.
+
+                                <br class="d-block">
+                                <br class="d-block">
+
+                                SAVED:</b> O número médio de salva suas postagens reunidas durante o período de tempo
+                                selecionado.
+                                Por exemplo: nos últimos 30 dias, fiz 5 posts e coletei 30 saves.
+
+                                <br class="d-block">
+                                <br class="d-block">
+
+                                <li>
+                                    <b>HASHTAGS:</b> A hashtag é uma palavra-chave precedida pelo
+                                    símbolo #, que as pessoas incluem em suas mensagens. Essencialmente, ela faz com que o conteúdo do seu post seja
+                                    acessível a todas as pessoas com interesses semelhantes, mesmo que eles não sejam seus
+                                    seguidores ou fãs. Por exemplo, digamos que você seja um fã da Apple e que você esteja
+                                    pensando em comprar um iPhone 6. Ao pesquisar por “#iPhone6″ em qualquer rede social irá
+                                    mostrar os posts e fotos de todos os usuários que usaram “#iPhone6″ em suas mensagens.
+
+                                    <br class="d-block"><br class="d-block">
+
+                                    <img class="img-fluid" src="/images/hashtag.png" alt="hashtag">
+
+                                </li>
+
+                                REACH:</b> Alcance refere-se ao número de pessoas diferentes que veem sua postagem. Uma
+                                pessoa pode ver sua postagem 5 vezes, mas é contada apenas uma vez em direção a Reach.
+                                Por exemplo: se 100 pessoas diferentes virem sua postagem duas vezes, seu alcance nessa
+                                postagem ainda será 100.
+
+                                <br class="d-block">
+                                <br class="d-block">
+
+                                ENGAGEMENT:</b> A taxa de engajamento é baseada nos gostos, comentários e salvamentos *
+                                divididos pelo número de seguidores no momento da postagem.
+
+                                <br class="d-block">
+                                <br class="d-block">
+
+                                SAVED:</b> O número médio de salva suas postagens reunidas durante o período de tempo
+                                selecionado.
+                                Por exemplo: nos últimos 30 dias, fiz 5 posts e coletei 30 saves.
+
+                                <br class="d-block">
+                                <br class="d-block">
+
+                                <li>
+                                    <b>RECENT MEDIA:</b> Veja sua mídia mais recente. Novos filtros foram adicionados nos ícones
+                                    quadrado e relógio no canto superior direito do gráfico. O ícone quadrado permite filtrar sua
+                                    Hashtag Impressions Reach Engagement Saved Engajamento %
+                                    mídia por tipo de conteúdo: todos, foto, vídeo, carrossel. O ícone de relógio permite que você
+                                    filtre sua mídia por meio de métricas de engajamento: curtidas, comentários, engajamento,
+                                    impressões, alcance, visualizações, salvamentos.O número de visualizações agora é indicado
+                                    abaixo dos vídeos.
+
+                                    <br class="d-block"><br class="d-block">
+
+                                    <img class="img-fluid" src="/images/description.png" alt="description">
+
+                                </li>
+
+                                DESCRIÇÃO:</b> É a descrição da mídia postada.
+
+                                <br class="d-block">
+                                <br class="d-block">
+
+                                IMPRESSIONS:</b> As impressões são um número de vezes que sua postagem é visualizada. Uma
+                                pessoa pode ver sua postagem várias vezes e ser contada a cada vez.
+                                Por exemplo: 200 pessoas veem sua postagem uma vez e 100 pessoas veem sua postagem
+                                duas vezes, portanto, sua postagem teve 400 impressões.
+                                Por exemplo: em 9 de junho, meu perfil e meus posts reuniram 58 393 impressões.
+
+                                <br class="d-block">
+                                <br class="d-block">
+                                REACH:</b> Alcance refere-se ao número de pessoas diferentes que veem sua postagem. Uma
+                                pessoa pode ver sua postagem 5 vezes, mas é contada apenas uma vez em direção a Reach.
+                                Por exemplo: se 100 pessoas diferentes virem sua postagem duas vezes, seu alcance nessa
+                                postagem ainda será 100.
+
+                                <br class="d-block">
+                                <br class="d-block">
+                                ENGAGEMENT:</b> A taxa de engajamento é baseada nos gostos, comentários e salvamentos *
+                                divididos pelo número de seguidores no momento da postagem.
+
+                                <br class="d-block">
+                                <br class="d-block">
+                                SAVED:</b> O número médio de salva suas postagens reunidas durante o período de tempo
+                                selecionado.
+                                Por exemplo: nos últimos 30 dias, fiz 5 posts e coletei 30 saves.
+
+                                <br class="d-block">
+                                <br class="d-block">
+
+                                <img class="img-fluid" src="/images/stories.png" alt="description">
+
+                                <br class="d-block">
+                                <br class="d-block">
+
+                                DATE:</b> Data em que foi feito o video no stories.
+
+                                <br class="d-block">
+                                <br class="d-block">
+                                EXITS:</b> A taxa de saída está levando em consideração:
+                                - os usuários que fecharam o aplicativo enquanto visualizam sua mídia
+                                - os usuários que clicaram na cruz (X) no canto superior direito das histórias
+                                - os usuários que saíram da mídia que leva a voltar ao seu feed principal
+
+                                <br class="d-block">
+                                <br class="d-block">
+                                IMPRESSIONS:</b> As impressões são um número de vezes que sua postagem é visualizada. Uma
+                                pessoa pode ver sua postagem várias vezes e ser contada a cada vez.
+                                Por exemplo: 200 pessoas veem sua postagem uma vez e 100 pessoas veem sua postagem
+                                duas vezes, portanto, sua postagem teve 400 impressões.Por exemplo: em 9 de junho, meu perfil e meus posts reuniram 58 393 impressões.
+
+                                <br class="d-block">
+                                <br class="d-block">
+                                REPLIES:</b> Quantas vezes ou porcentagem a história foto ou vídeo foi replicada.
+
+                                <br class="d-block">
+                                <br class="d-block">
+                                TAPS BACK:</b> É tanto o número de usuários que voltam a mídia sem completar a visualização por
+                                inteiro do vídeo, como o número de toques para ver a foto ou o vídeo anterior. (mesmo usuário).
+                                Esta funcionalidade permite que você entenda se os usuários assistem à sua história até o final
+                                ou se saem antes que ela termine, ajudando também a calcularmos a taxa de saída em uma
+                                história, que é o número de saídas dividido pelo número de impressões.
+
+                                <br class="d-block">
+                                <br class="d-block">
+                                TAPS FORWARD:</b> É o número de usuários que avançam a mídia sem ter a visualização completa
+                                do vídeo, como, o número de toques para ver a próxima foto ou vídeo (mesmo usuário)
+                                . Esta funcionalidade permite que você entenda se os usuários assistem à sua história até o final
+                                ou se avançam antes que ela termine.
+
+                                <br class="d-block">
+                                <br class="d-block">
+                                ENGAGEMENT:</b> A fórmula da taxa de conclusão de uma história é o engajamento. Ele permite
+                                que você entenda qual porcentagem de usuários assistiu à sua história até o final = complete
+                                views.
+
+                                <br class="d-block">
+                                <br class="d-block">
+
+                                <li>
+                                    <b>GENDER AND AGE:</b> Descubra o gênero e faixa etária de seus seguidores. Por exemplo:
+                                    37,3% dos meus seguidores têm entre 35 e 44 anos, e 48,1% dos meus seguidores são
+                                    homens.
+
+                                </li>
+
+                                <li>
+                                    <b>CITIES RANKING:</b> Descubra a melhor cidade de engajamento através da quantidade de
+                                    pessoas engajadas com o seu conteúdo.
+
+                                    <br class="d-block"><br class="d-block">
+                                    MELHOR HORA DE POSTAR<br class="d-block">
+                                    Descubra quando suas postagens acionam o maior engajamento. Quanto mais escuro o
+                                    quadrado, melhor o engajamento é. Novos filtros foram adicionados ao ícone do ER no canto
+                                    superior direito do gráfico: exibir impressões, mostrar alcance.
+                                    Por exemplo: nos últimos três meses, minha mídia alcança o maior número de seguidores
+                                    quando eu postar às sextas-feiras às 17h.
+
+                                    <br class="d-block"><br class="d-block">
+                                    CLIQUES DE E-MAIL<br class="d-block">
+                                    O volume de toques para enviar e-mails para sua empresa no seu perfil do Instagram durante o
+                                    período de tempo selecionado.
+
+                                    <br class="d-block"><br class="d-block">
+                                    EMAIL CLICK RATE<br class="d-block">
+                                    Essa porcentagem representa o número de toques para enviar por e-mail para sua empresa
+                                    dividido pelo número total de visualizações de perfil durante o período de tempo selecionado.
+                                    Por exemplo: meu endereço de e-mail foi gravado 23 vezes nos últimos 30 dias. Meus perfis
+                                    foram vistos 35 945 vezes nos últimos 30 dias. A taxa de cliques do meu e-mail é de 0,06%.
+
+                                    <br class="d-block"><br class="d-block">
+                                    OBTER DIREÇÕES CLIQUE<br class="d-block">
+                                    no volume de toques para obter rotas para sua empresa a partir do
+                                    seu perfil do Instagram durante o período de tempo selecionado.
+
+                                    <br class="d-block"><br class="d-block">
+                                    OBTENHA DIREÇÕES CLICK RATE<br class="d-block">
+                                    Essa porcentagem representa o número de toques para obter rotas para sua empresa, dividido
+                                    pelo número total de visualizações de perfil durante o período de tempo selecionado.
+                                    Por exemplo: meu botão Obter direções foi tocado 147 vezes nos últimos 30 dias. O meu perfil
+                                    foi visto 35 945 vezes nos últimos 30 dias. A taxa de cliques do Get Get Directions é de 0,41%.
+
+                                    <br class="d-block"><br class="d-block">
+                                    IDIOMAS DOS SEUS SEGUIDORES<br class="d-block">
+                                    Descubra os idiomas mais comuns entre seus seguidores.
+                                    Por exemplo: 7.93% dos meus seguidores falam espanhol. Representa 56 680 pessoas.
+
+                                    <br class="d-block"><br class="d-block">
+                                    TAXA DE ALCANCE<br class="d-block">
+                                    A taxa de alcance de uma determinada postagem é o número de pessoas que viram a postagem
+                                    dividida pelo seu número de seguidores no momento da postagem.
+                                    Por exemplo: meu post chegou a 2 mil pessoas e eu tinha 20 mil seguidores no momento da
+                                    postagem. Minha taxa de alcance é de 10%.
+
+                                    <br class="d-block"><br class="d-block">
+                                    TAXA DE VISITA<br class="d-block">
+                                    A taxa de visualização é o número de vezes que o vídeo foi visualizado, dividido pelo número de
+                                    impressões que a postagem recebeu.
+                                    Nota: alguém pode ver sua postagem, mas não necessariamente assistiu ao vídeo. Isso contaria
+                                    como uma impressão, mas não como uma visualização.
+
+                                    <br class="d-block"><br class="d-block">
+                                    WEBSITE CLICK<br class="d-block">
+                                    O número de toques no site em seu perfil do Instagram durante o período selecionado.
+
+                                    <br class="d-block"><br class="d-block">
+                                    WEBSITE CLICK RATE
+                                    Essa porcentagem representa o número de toques no website em seu perfil dividido pelo número
+                                    total de visualizações de perfil durante o período de tempo selecionado.
+
+                                </li>
+
+                            </ul>
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 pl-4 pl-md-5 ml-2">
+                            <p>Adquira já o seu plano de consulta ! </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @{
+        var _comentarioscurtidas = Model.inf.Powerful; //Model.inf.MediaCurtidas+Model.inf.MediaComentarios;
+        var valorTexto = @comentarioscurtidas.ToString();
+    }
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDIDcw3VuLRqxv9TY9Xf0sLjHcf3fQSsW4&libraries=places&callback=getLocation" async defer></script>
+    <script src="~/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="~/node_modules/popper.js/dist/umd/popper.min.js"></script>
+    <script src="~/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/node_modules/chart.js/dist/Chart.min.js"></script>
+    <script src="~/node_modules/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="~/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="~/node_modules/popper.js/dist/umd/popper.min.js"></script>
+    <script src="~/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <script>
+        var markers = [];
+        InitMarkers(markers);
+
+	function getImage(url, id)
+	{
+		var html = "";
+		if(url.indexOf("VIDEO.jpg") > -1) {
+			id = id + ".MP4";
+			url = url.replace('VIDEO.jpg', id);
+			html = "<video id='vidStory' controls='' autoplay='' src='" + url + "' name='media' height='540px'><source type='video/mp4'></video>";
+
+			$("#divPreviewStory").html(html);
+			$("#story-modal").modal()
+
+			$("#vidStory")[0].load();
+		}else
+		{
+			var html="";
+			html = "<img onerror=\"this.src='/images/no-photo-icon.jpg'\" id='imgStory' alt='' src='" + url + "' height='540px'>";
+
+			$("#divPreviewStory").html(html);
+			$("#story-modal").modal()
+		}
+	}
+
+	// Age categories
+	var categories = ['13-17', '18-24', '25-34', '35-44', '45-54', '55-64', '65+'
+	];
+
+    {
+        Highcharts.chart('container', {
+            chart: {
+                type: 'bar'
+            },
+            title: {
+                text: 'View age and gender'
+            },
+            subtitle: {
+                text: ''
+            },
+            xAxis: [{
+                categories: categories,
+                reversed: false,
+                labels: {
+                    step: 1
+                }
+            }, { // mirror axis on right side
+                opposite: true,
+                reversed: false,
+                categories: categories,
+                linkedTo: 0,
+                labels: {
+                    step: 1
+                }
+            }],
+            yAxis: {
+                title: {
+                    text: null
+                },
+                labels: {
+                    formatter: function () {
+                        return Math.abs(this.value) + '';
+                    }
+                }
+            },
+
+            plotOptions: {
+                series: {
+                    stacking: 'normal'
+                }
+            },
+
+            tooltip: {
+                formatter: function () {
+                    return '<b>' + this.series.name + ', age ' + this.point.category + '</b><br/>' +
+                        'Engagement: ' + Highcharts.numberFormat(Math.abs(this.point.y), 0);
+                }
+            },
+
+            series: [{
+                name: 'Male',
+                data: [@ViewBag.listaArrayM]
+            }, {
+                name: 'Female',
+                data: [@ViewBag.listaArrayF]
+            }]
+        });
+    }
+
+     google.charts.load('current', {
+       'packages': ['geochart'],
+       // Note: you will need to get a mapsApiKey for your project.
+       // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
+       'mapsApiKey': 'AIzaSyDIDcw3VuLRqxv9TY9Xf0sLjHcf3fQSsW4'
+     });
+     google.charts.setOnLoadCallback(drawMarkersMap);
+
+      function drawMarkersMap() {
+      var data = google.visualization.arrayToDataTable(@Html.Raw(ViewBag.LstCitiesArray));
+
+      var options = {
+        region: ['BR','BS'],
+        displayMode: 'markers',
+        colorAxis: {colors: ['red', 'green']}
+      };
+
+      var chart = new google.visualization.GeoChart(document.getElementById('chart_cities'));
+      chart.draw(data, options);
+    };
+
+	valorPercent =  @valorTexto/@Model.inf.Seguidores;
+	Percent= Math.round(valorPercent*100) + ' %';
+	valor=@valorTexto;
+	lado=1;
+	function inverter(obj)
+	{
+		if (lado==1){
+			lado=0;
+			obj.innerHTML = '<h5 class="mb-0 p-0">' + Percent+ '</h5>';
+		}
+		else
+		{
+			lado=1;
+			obj.innerHTML = '<h5 class="mb-0 p-0">' + valor + '</h5>';
+		}
+	}
+
+	function openCity(evt, cityName, est) {
+	  var i, tabcontent, tablinks;
+	  tabcontent = document.getElementsByClassName("tabcontent" + est);
+	  for (i = 0; i < tabcontent.length; i++) {
+		tabcontent[i].style.display = "none";
+	  }
+
+	  tablinks = document.getElementsByClassName("tablinks"+ est);
+	  for (i = 0; i < tablinks.length; i++) {
+		tablinks[i].className = tablinks[i].className.replace(" active", "");
+	  }
+
+	  document.getElementById(cityName).style.display = "block";
+	  evt.currentTarget.className += " active";
+	}
+
+	document.getElementById("btnCities").click();
+	document.getElementById("btnGender").click();
+
+  $(window).scroll(function(){
+    if($(window).width() > 992)
+    {
+      if($(window).scrollTop() > 100)
+      {
+        $('#row-fixed').show();
+        $('#row-fixed').addClass('t-0');
+
+      }
+      else
+      {
+        $('#row-fixed').hide();
+        $('#row-fixed').removeClass('t-0');
+      }
+    }
+    else
+    {
+      if($(window).scrollTop() > 15)
+      {
+        $('#row-fixed').show();
+        $('#row-fixed').addClass('t-0');
+
+      }
+      else
+      {
+        $('#row-fixed').hide();
+        $('#row-fixed').removeClass('t-0');
+      }
+    }
+  });
+
+  $('#sidebar a').click(function(){
+    $('html, body').animate({
+      scrollTop: $( $.attr(this, 'data-link') ).offset().top - 100
+    }, 500);
+    return false;
+  });
+
+      function RenderEmotionalChart()
+      {
+	    var options = {
+                chart: {
+                    height: 350,
+                    type: 'radialBar',
+                },
+                plotOptions: {
+                    radialBar: {
+                        offsetY: -30,
+                        startAngle: 0,
+                        endAngle: 270,
+                        hollow: {
+                            margin: 1,
+                            size: '30%',
+                            background: 'transparent',
+                            image: undefined,
+                        },
+                        dataLabels: {
+                            name: {
+                                show: false,
+
+                            },
+                            value: {
+                                show: false,
+                            }
+                        }
+                    }
+                },
+                colors: ['#1ab7ea', '#0084ff', '#39539E', '#0077B5'],
+                series: [@ViewBag.EmotionalResume],
+                labels: ['NATURALIDADE', 'MEDO', 'RAIVA', 'SURPRESA'],
+                legend: {
+                    show: true,
+                    floating: true,
+                    fontSize: '10px',
+                    position: 'right',
+                    offsetX: 170,
+                    offsetY: 10,
+                    labels: {
+                        useSeriesColors: true,
+                    },
+                    markers: {
+                        size: 0
+                    },
+                    formatter: function(seriesName, opts) {
+                        return seriesName + ":  " + opts.w.globals.series[opts.seriesIndex]
+                    },
+                    itemMargin: {
+                        horizontal: 1,
+                    }
+                },
+                responsive: [{
+                    breakpoint: 480,
+                    options: {
+                        legend: {
+                            show: false
+                        }
+                    }
+                }]
+            }
+
+           var chart = new ApexCharts(
+                document.querySelector("#chartEmotional"),
+                options
+            );
+            chart.render();
+          
+          var categGrow = "@Html.Raw(@ViewBag.GrowthCategoria)";
+          
+         if (categGrow.length > 0) {
+                  Highcharts.chart('containerGrowth', {
+                  chart: {
+                      type: 'line'
+                      },
+                      title: {
+                      text: 'Followers Growth'
+                      },
+                      subtitle: {
+                      text: 'Source: InfluencersMetrics'
+                      },
+                      xAxis: {
+                      categories: [@Html.Raw(@ViewBag.GrowthCategoria)]
+                      },
+                      yAxis: {
+                      title: {
+                          text: 'Followers'
+                          }
+                      },
+                      plotOptions: {
+                      line: {
+                          dataLabels: {
+                              enabled: true
+                              },
+                              enableMouseTracking: false
+                          }
+                      },
+                      series: [{
+                      name: 'Follower growth',
+                          data: [@Html.Raw(@ViewBag.GrowthData)]
+                      }]
+                  });
+
+                  Highcharts.chart('containerBestHourReach', {
+                  chart: {
+                      type: 'heatmap',
+                          marginTop: 40,
+                          marginBottom: 80,
+                          plotBorderWidth: 1
+                      },
+
+                      title: {
+                      text: 'Best hour reach - by story'
+                      },
+
+                      xAxis: {
+                      categories: ['00h', '01h', '02h', '03h', '04h', '05h', '06h', '07h', '08h', '09h', '10h', '11h', '12h', '13h', '14h', '15h', '16h', '17h', '18h', '19h', '20h', '21h', '22h', '23h']
+                      },
+
+                      yAxis: {
+                      categories: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                          title: null
+                      },
+
+                      colorAxis: {
+                      min: 0,
+                          minColor: '#FFFFFF',
+                          maxColor: Highcharts.getOptions().colors[0]
+                      },
+
+                      legend: {
+                      align: 'right',
+                          layout: 'vertical',
+                          margin: 0,
+                          verticalAlign: 'top',
+                          y: 25,
+                          symbolHeight: 280
+                      },
+
+                      tooltip: {
+                      formatter: function () {
+                              return '<b> at ' + this.series.xAxis.categories[this.point.x] + '</b> <br><b>' +
+                                  this.point.value + '</b> reach on <br><b>' + this.series.yAxis.categories[this.point.y] + '</b>';
+                          }
+                      },
+
+                      series: [{
+                      name: 'Sales per employee',
+                          borderWidth: 1,
+                          data: @ViewBag.BestHourCoordenates,
+                          dataLabels: {
+                          enabled: true,
+                              color: '#000000'
+                          }
+                      }]
+                  });
+              }
+      }
+
+        RenderEmotionalChart();
+
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        (function () {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/5ca9005553f1e453fb8c767a/default';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+    </script>
+</body>
+</html>

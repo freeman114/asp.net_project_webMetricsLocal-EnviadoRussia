@@ -1,0 +1,114 @@
+﻿@{
+    ViewData["Title"] = "Checagem de disastres";
+    ViewData["Page"] = "DisasterCheck";
+    Layout = "_LayoutManagement";
+}
+
+<section class="container-fluid container-big py-2">
+
+    <h1 class="font-black mt-5 mb-1  text-center">
+        Disaster check
+    </h1>
+    <p class="mb-5 text-uppercase text-center">O que é?</p>
+
+    <p class="font-300 mb-4">No cenário social, político e econômico atual se torna ainda mais necessário aprofundar nossas pesquisas de Influenciadores Digitais.</p>
+
+    <p class="font-300 mb-4">Além de buscar números, conteúdo e relevância, precisamos olhar cuidadosamente para as publicações e interações em todo o período de uso das redes sociais, afim de tentar evitar futuros desconfortos por atitudes que não condizem com os valores da marca.</p>
+
+    <p class="font-300 mb-4">Fazemos uma pesquisa através de machine learning nas redes dos influenciadores, buscamos desde problemas morais até vínculo com outras marcas e todo tipo de questões que acreditamos poder gerar polêmica, sempre levando em conta a campanha que vamos trabalhar.</p>
+
+
+    <h3 class="font-500 text-center font-light-blue">Base para a análise</h3>
+
+
+    <div class="row microcard normal min-h-140">
+        <div class="col-lg-3 col-md-4 d-flex align-items-center">
+            <span class="value m-0 ml-lg-5 ml-md-4 ml-4 pt-3 pt-md-0 text-nowrap">
+                <i class="fas fa-check-circle icon-big font-green"></i>
+                Boa
+            </span>
+        </div>
+        <div class="col d-flex align-items-center">
+            <ul class="my-2 px-5 py-4 p-md-2">
+                <li>Nenhum envolvimento negativo com os ambientes do dicionário de palavras que foi determinado pela marca;</li>
+                <li>Nenhum envolvimento com concorrentes nos últimos 2 meses.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row microcard normal min-h-140">
+        <div class="col-lg-3 col-md-4 d-flex align-items-center">
+            <span class="value m-0 ml-lg-5 ml-md-4 ml-4 pt-3 pt-md-0 text-nowrap">
+                <i class="fas fa-exclamation-circle icon-big font-yellow"></i>
+                Atenção
+            </span>
+        </div>
+        <div class="col d-flex align-items-center">
+            <ul class="my-2 px-5 py-4 p-md-2">
+                <li>Envolvimento negativo nos últimos 3 anos com ambientes do dicionário de palavras que foi determinado pela marca;</li>
+                <li>Envolvimento com marcas concorrentes nos últimos 2 anos;</li>
+                <li>Expressar opiniões negativas sobre empresas do mesmo nicho de mercado</li>
+                <li>Ter opiniões políticas radicais e/ou tom agressivo;</li>
+                <li>Falar de drogas e/ou álcool em excesso.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row microcard normal min-h-140">
+        <div class="col-lg-3 col-md-4 d-flex align-items-center">
+            <span class="value m-0 ml-lg-5 ml-md-4 ml-4 pt-3 pt-md-0 text-nowrap">
+                <i class="fas fa-times-circle icon-big font-red"></i>
+                Vetado
+            </span>
+        </div>
+        <div class="col d-flex align-items-center">
+            <ul class="my-2 px-5 py-4 p-md-2">
+                <li>Envolvimento negativo nos últimos 3 anos com ambientes do dicionário de palavras que foi determinado pela marca;</li>
+                <li>Envolvimento com marcas concorrentes nos últimos 2 anos;</li>
+                <li>Expressar opiniões negativas sobre empresas do mesmo nicho de mercado</li>
+                <li>Criticar a marca publicamente;</li>
+                <li>Vínculo com partidos políticos;</li>
+                <li>Fazer apologia explícita à álcool e/ou drogas;</li>
+                <li>Conteúdo sexual explícito;</li>
+                <li>Ser acusado de algum crime.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="d-block w-100 my-2 my-md-5"></div>
+
+    <div class="my-3">
+        <div class="row justify-content-center">
+            <div class="col-lg-3 col-md-4">
+                <h3 class="font-500 font-light-blue mb-3 pr-lg-5">Palavras ou frases:</h3>
+            </div>
+            <div class="col-lg-9 col-md-8">
+                <div class="form-group py-2">
+                    <p>Indique as palavras ou frases a serem buscadas:</p>
+                    <textarea class="form-control" id="tarea001" rows="5"></textarea>
+                    <p class="font-italic font-300 pt-2 mb-0">Exemplo: Conteúdo Racial, Feminino, Geográfico, Social - Econômico, Político, LGBTQ+, Corporal, Religioso, Etário, etc.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="my-3">
+        <div class="row justify-content-center">
+            <div class="col-lg-3 col-md-4">
+                <h3 class="font-500 font-light-blue mb-3">Marcas e Empresas:</h3>
+            </div>
+            <div class="col-lg-9 col-md-8">
+                <div class="form-group py-2">
+                    <p>Indique as marcas ou empresas a serem buscadas:</p>
+                    <textarea class="form-control" id="tarea0001" rows="5"></textarea>
+                    <p class="font-italic font-300 pt-2 mb-0">Exemplo: Microsoft, Coca-Cola, Budweiser, Pão de Açúcar, Itaú, etc.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center justify-content-sm-end row-buttons my-5 pb-5">
+        <a href="#" title="" role="button" class="btn btn-secondary expanded-btn em-contrucao"> cancelar </a>
+        <a href="#" title="" role="button" class="btn btn-light-blue expanded-btn em-contrucao"> buscar </a>
+    </div>
+</section>

@@ -1,0 +1,546 @@
+﻿@{
+    ViewData["Title"] = "Buscar ";
+    ViewData["Page"] = "Busca Influenciadores";
+    Layout = "_LayoutManagement";
+    ViewBag.HideMenu = true;
+}
+@model webMetrics.Models.SearchInfluencersRequest
+<div class="page-content content-full">
+
+    <section id="gallery" class="gallery-search container-fluid">
+        <div class="container-big">
+            @*form inicio*@
+            <form id="searchingForm">
+                <header class="container-1366">
+                    <h1 class="font-black mt-5 mb-3  text-center">
+                        Encontre o influenciador ideal através de i.a. para sua campanha
+                    </h1>
+                </header>
+
+                <div class="g-filters">
+                    <div class="row">
+                        <div class="col-12 col-md px-md-3">
+                            <div class="input-group search-box">
+                                <label class="label-icon" for="search-input">
+                                    <i class="fas fa-search"></i>
+                                </label>
+                                @*<input id="search-input" type="text" class="form-control" placeholder="Busca" aria-label="Busca">*@
+                                @Html.EditorFor(a => Model.WordSearch, new { htmlAttributes = new { @id = "txtWordSearch", @class = "form-control", @type = "text", @placeholder = "Busca", @aria_label = "Busca" } })
+                                @Html.HiddenFor(a => Model.Insta, new { @id = "instagram", @value = Model.Insta })
+                                @Html.HiddenFor(a => Model.Youtube, new { @id = "youtube", @value = Model.Youtube })
+                                @Html.HiddenFor(a => Model.Twitter, new { @id = "twitter", @value = Model.Twitter })
+                                @Html.HiddenFor(a => Model.Tiktopk, new { @id = "tiktok", @value = Model.Tiktopk })
+                                @Html.HiddenFor(a => Model.Linkedin, new { @id = "linkedin", @value = Model.Linkedin })
+                                @Html.HiddenFor(a => Model.PodCasts, new { @id = "podcast", @value = Model.PodCasts })
+                                @Html.HiddenFor(a => Model.MinAge, new { @id = "minAge", @value = Model.MinAge })
+                                @Html.HiddenFor(a => Model.MaxAge, new { @id = "maxAge", @value = Model.MaxAge })
+                                @Html.HiddenFor(a => Model.GenderMale, new { @id = "genderMale", @value = Model.GenderMale })
+                                @Html.HiddenFor(a => Model.GenderFemale, new { @id = "genderFemale", @value = Model.GenderFemale })
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-clear" type="reset">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col col-md-auto">
+                            <div class="select-icon desktop-inline">
+                                <!-- este select gera um novo html
+                                    vc pode dar um id para ele encontra-lo
+                                    pelo [data-id] em um button que vai ser gerado
+                                    os options vem em uma lista dentro da class [dropdown-menu open]
+                                -->
+                                <select id="socialMediaSelect" class="selectpicker" data-width="fit" multiple>
+                                    para não trazer nenhum selecionado-
+                                    <option disabled="disabled" selected="selected" class="display-hide" data-content='<span class="hide"></span> Mídia Social'>
+                                        Mídia Social
+                                    </option>
+                                    para não trazer nenhum selecionado-
+                                    @{
+                                        if (Model.Insta)
+                                        {
+                                            <option selected data-social-media="instagram" data-content='<span class="soc-media-opt social-instagram"></span> instagram'> instagram </option>
+                                        }
+                                        else
+                                        {
+                                            <option data-social-media="instagram" data-content='<span class="soc-media-opt social-instagram"></span> instagram'> instagram </option>
+                                        }
+                                        if (Model.Youtube)
+                                        {
+                                            <option selected data-social-media="youtube" data-content='<span class="soc-media-opt social-youtube"></span> youtube'> youtube </option>
+                                        }
+                                        else
+                                        {
+                                            <option data-social-media="youtube" data-content='<span class="soc-media-opt social-youtube"></span> youtube'> youtube </option>
+                                        }
+                                        if (Model.Twitter)
+                                        {
+                                            <option selected data-social-media="twitter" data-content='<span class="soc-media-opt social-twitter"></span> twitter'> twitter </option>
+                                        }
+                                        else
+                                        {
+                                            <option data-social-media="twitter" data-content='<span class="soc-media-opt social-twitter"></span> twitter'> twitter </option>
+                                        }
+                                        if (Model.Tiktopk)
+                                        {
+                                            <option selected data-social-media="tiktok" data-content='<span class="soc-media-opt social-tiktok"></span> tiktok'> tiktok </option>
+                                        }
+                                        else
+                                        {
+                                            <option data-social-media="tiktok" data-content='<span class="soc-media-opt social-tiktok"></span> tiktok'> tiktok </option>
+                                        }
+                                        if (Model.Linkedin)
+                                        {
+                                            <option selected data-social-media="linkedin" data-content='<span class="soc-media-opt social-linkedin"></span> linkedin'> linkedin </option>
+                                        }
+                                        else
+                                        {
+                                            <option data-social-media="linkedin" data-content='<span class="soc-media-opt social-linkedin"></span> linkedin'> linkedin </option>
+                                        }
+                                        if (Model.PodCasts)
+                                        {
+                                            <option selected data-social-media="podcast" data-content='<span class="soc-media-opt social-podcast"></span> podcast'> podcast </option>
+                                        }
+                                        else
+                                        {
+                                            <option data-social-media="podcast" data-content='<span class="soc-media-opt social-podcast"></span> podcast'> podcast </option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-auto col-lg-12 filters-block">
+                            <button class="btn filters" type="button">
+                                <i class="fas fa-filter"></i>
+                            </button>
+                            <div class="mobile-filter-bar">
+                                <div class="row filters-content filter-left-divider">
+                                    <div class="col-12 col-md-4 col-xl-3">
+
+                                        <input aria-label="Localidade" class="form-control form-control-lg" placeholder="Localidade" type="text" value="">
+                                        @*<select id="porRegiao" class="form-control form-control-lg">
+                                                <option disabled="disabled" selected="selected">Localidade</option>
+                                                <option>Norte</option>
+                                                <option>Nordeste</option>
+                                                <option>Centro-Oeste</option>
+                                                <option>Sudeste</option>
+                                                <option>Sul</option>
+                                            </select>*@
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-xl">
+                                        <select id="selectMinMaxAge" class="form-control form-control-lg">
+                                            <option disabled="disabled" selected="selected">Idade</option>
+                                            @{
+                                                if (@Model.MinAge == 0 && @Model.MaxAge == 14)
+                                                {
+                                                    <option selected data-min="0" data-max="14">0 - 14</option>
+                                                }
+                                                else
+                                                {
+                                                    <option data-min="0" data-max="14">0 - 14</option>
+                                                }
+                                                if (@Model.MinAge == 15 && @Model.MaxAge == 18)
+                                                {
+                                                    <option selected data-min="15" data-max="18">15 - 18</option>
+                                                }
+                                                else
+                                                {
+                                                    <option data-min="15" data-max="18">15 - 18</option>
+                                                }
+                                                if (@Model.MinAge == 19 && @Model.MaxAge == 25)
+                                                {
+                                                    <option selected data-min="19" data-max="25">19 - 25</option>
+                                                }
+                                                else
+                                                {
+                                                    <option data-min="19" data-max="25">19 - 25</option>
+                                                }
+                                                if (@Model.MinAge == 26 && @Model.MaxAge == 35)
+                                                {
+                                                    <option selected data-min="26" data-max="35">26 - 35</option>
+                                                }
+                                                else
+                                                {
+                                                    <option data-min="26" data-max="35">26 - 35</option>
+                                                }
+                                                if (@Model.MinAge >= 35 && @Model.MaxAge == 150)
+                                                {
+                                                    <option selected data-min="35" data-max="150">mais de 35</option>
+                                                }
+                                                else
+                                                {
+                                                    <option data-min="35" data-max="150">mais de 35</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-xl">
+                                        <!-- inlcui isso para tentar não bagunçar o restante -->
+                                        <div class="select-icon desktop-inline" style="top: -32px; left: 5px;">
+                                            <!-- isso está diferente do projeto e não recomendo usar assim -->
+                                            <select id="selectGender" class="selectpicker" data-width="fit" multiple>
+                                                @{
+                                                    if (@Model.GenderMale)
+                                                    {
+                                                        <option selected data-gender="male" data-content='<span class=""></span> Masculino'> Masculino </option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option data-gender="male" data-content='<span class=""></span> Masculino'> Masculino </option>
+                                                    }
+                                                    if (@Model.GenderFemale)
+                                                    {
+                                                        <option selected data-gender="female" data-content='<span class=""></span> Feminino'> Feminino </option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option data-gender="female" data-content='<span class=""></span> Feminino'> Feminino </option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-md col-xl-auto pt-3 pt-md-0 pb-0">
+                                        <label class="heat-label" for="heat-range">
+                                            Comportamento de consumo: <span>Todos</span>
+                                        </label>
+                                        <div class="heat-bg in-building">
+                                            <input type="range" class="heat-range" min="0" max="125" id="heat-range" step="1">
+                                        </div>
+                                    </div>
+                                    <div class="col-auto accordion-action">
+                                        <a title="Mais filtros" class="btn btn-square btn-text-big btn-gray acc-plus collapsed" data-toggle="collapse" href=".more-filters" role="button" aria-expanded="false">
+                                            <span></span>
+                                            <span></span>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="collapse more-filters">
+                                    <div class="row filters-content">
+                                        <div class="filters-spacer"></div>
+                                        <div class="col col-md col-lg-4 col-xl-3 order-md-1 order-2">
+                                            <select id="language" class="form-control form-control-lg">
+                                                <option disabled="disabled" selected="selected">Linguagem</option>
+                                                <option> Inglês </option>
+                                                <option> Mandarim  </option>
+                                                <option> Espanhol  </option>
+                                                <option> Hindi  </option>
+                                                <option> Árabe  </option>
+                                                <option> Português  </option>
+                                                <option> Bengali  </option>
+                                                <option> Russo  </option>
+                                                <option> Japonês  </option>
+                                                <option> Alemão  </option>
+                                                <option> Italiano </option>
+                                                <option> Francês </option>
+                                                <option> Chinês </option>
+                                                <option> Javanês  </option>
+                                                <option> Coreano </option>
+                                                <option> Vietnamita </option>
+                                                <option> Telugo </option>
+                                                <option> Ucraniano  </option>
+                                                <option> Cantonês </option>
+                                                <option> Marati </option>
+                                                <option> Tamil </option>
+                                                <option> Turco </option>
+                                                <option> Urdu </option>
+                                                <option> Min nan (Chinês)  </option>
+                                                <option> Jinyu (Chinês)  </option>
+                                                <option> Gujarati  </option>
+                                                <option> Polaco </option>
+                                                <option> Egípcio  </option>
+                                                <option> Xiang (Chinês) </option>
+                                                <option> Hakka (Chinês) </option>
+                                                <option> Malaio  </option>
+                                                <option> Kannada </option>
+                                                <option> Oriya </option>
+                                                <option> Romeno </option>
+                                                <option> Panjabi </option>
+                                                <option> Sunda </option>
+                                                <option> Bhojpuri </option>
+                                                <option> Azerbaijão </option>
+                                                <option> Farsi </option>
+                                                <option> Argelino </option>
+                                                <option> Birmanês </option>
+                                                <option> Hauça </option>
+                                                <option> Maitili </option>
+                                                <option> Servo Croata </option>
+                                                <option> Gan (Chinês)  </option>
+                                                <option> Awadhi </option>
+                                                <option> Tailandês </option>
+                                                <option> Holandês </option>
+                                                <option> Iorubá </option>
+                                                <option> Sind </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-12 col-md-auto col-lg-12 col-xl-auto col-text col-200 mt-3 mt-sm-0 order-md-2 order-3">
+                                            <div class="group material-form d-inline-flex row">
+                                                <p class="col-12 col-sm-auto col-lg-12 col-xl-auto pl-xl-0 pt-0 pb-1 pb-xl-0">Possui e-mail?</p>
+                                                <div class="custom-control custom-radio col col-sm-auto col-lg-6 col-xl-auto">
+                                                    <input name="radio_teste" type="radio" class="custom-control-input" id="customR1" />
+                                                    <label class="custom-control-label" for="customR1">
+                                                        Sim
+                                                    </label>
+                                                </div>
+                                                <div class="custom-control custom-radio col col-sm-auto col-lg-6 col-xl-auto">
+                                                    <input name="radio_teste" type="radio" class="custom-control-input" id="customR2" />
+                                                    <label class="custom-control-label" for="customR2">
+                                                        Não
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col col-md-12 col-lg col-text filter-left-divider-lg mt-3 mt-sm-0 mb-5 mb-md-0 order-md-3 order-4">
+                                            <div class="group d-inline-flex filter-inline-input row">
+                                                <p data-sufix="-" class="pl-2 pr-0 py-0 col-12 col-xl-auto">Número de seguidores</p>
+                                                <label class="text-default col-12 col-sm-auto pr-0">De:</label>
+
+                                                @Html.EditorFor(a => Model.MinFollowers, new { htmlAttributes = new { @type = "text", @id = "txtWordSearch", @class = "input-white col" } })
+
+                                                <label class="text-default col-12 col-sm-auto pr-0">Até:</label>
+                                                @Html.EditorFor(a => Model.MaxFollowers, new { htmlAttributes = new { @type = "text", @id = "txtWordSearch", @class = "input-white col" } })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @*<p class="text-uppercase text-center py-4 my-2">Foram encontrados <span class="font-700">24 influenciadores</span> que correspondem com os parâmetros de pesquisa</p>*@
+                                    @*<p class="text-uppercase text-center py-4 my-2">@ViewBag?.searchResult?.ResultsInTime</p>*@
+                                    <div class="col-12 mb-3 mb-sm-0 order-md-4 order-5">
+                                        @*<p class="text-uppercase text-wrap text-center pt-2 pb-4 py-md-4 my-2">Foram encontrados <span class="font-700">24 influenciadores</span> que correspondem com os parâmetros de pesquisa</p>*@
+                                        @if (@ViewBag?.searchResult?.Categories != null)
+                                        {
+                                            <div class="categories">
+                                                @foreach (var item in @ViewBag?.searchResult?.Categories)
+                                                {
+                                                    <div class="item"> @item </div>
+                                                }
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- end Block filters -->
+
+                        <div class="col-12 text-center my-3">
+                            <button type="submit" title="" role="button" class="btn mx-auto btn-light-blue btn-big">Encontrar influenciador</button>
+                        </div>
+                        <div class="col-12 text-center my-3">
+                            <p class="text-uppercase text-wrap text-center pt-2 pb-4 py-md-4 my-2">@ViewBag?.searchResult?.ResultsInTime</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- grid com masonry -
+                editado para se auto ajustar ao estilo simetrico -->
+                <ul class="grid">
+
+                    @if (ViewBag.searchResult?.Influencers != null)
+                    {
+                        @foreach (var inf in ViewBag.searchResult.Influencers)
+                        {
+                            <!-- bloco completo com CAPTION-->
+                            <li class="grid-item">
+                                <div class="img-content">
+                                    <div class="tools">
+                                        <div class="input-group">
+                                            <select class="form-control">
+                                                <option selected>Clientes...</option>
+                                            </select>
+                                            <div class="input-group-append">
+                                                <button class="btn btn-yellow" type="button" data-icon-md="Salvar"><i class="fas fa-save"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a class="img-link" href="/Relatorios/InfluenciadorDetalhe?id=@inf._id">
+                                        <img alt="" src="@inf.ImageProfile" onerror="this.onerror=null;this.src='/images/no-photo-icon.jpg'" />
+                                    </a>
+                                    <div class="caption">
+                                        @switch (inf.Origin)
+                                        {
+                                            case "I":
+                                                <span class="social-instagram"></span>
+                                                break;
+                                            case "Y":
+                                                <span class="social-youtube"></span>
+                                                break;
+                                            case "T":
+                                                <span class="social-twitter"></span>
+                                                break;
+                                            case "TK":
+                                                <span class="social-tiktok"></span>
+                                                break;
+                                            case "L":
+                                                <span class="social-linkedin"></span>
+                                                break;
+                                            case "P":
+                                                <span class="social-podcast"></span>
+                                                break;
+                                        }
+                                        <h3>@("@")@inf.UserName</h3>
+                                        <div class="dados">
+                                            <p>Folowers: <span class="class-span">@(((int)@inf.Followers).ToString("N0"))</span></p>
+                                            @*<p>Eng.: <span>33,6%</span></p>*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- END bloco completo -->
+                        }
+                    }
+                    <!-- bloco completo com OPTIONS-->
+                    @*<li class="grid-item">
+                            <div class="img-content">
+                                <div class="tools">
+                                    <div class="input-group">
+                                        <select class="form-control">
+                                            <option selected>Categoria...</option>
+                                            <option value="1">Moda Feminina</option>
+                                            <option value="2">Viagem</option>
+                                            <option value="3">Games</option>
+                                        </select>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-yellow" type="button" data-icon-md="Salvar"><i class="fas fa-save"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <img alt="" src="~/content/img/testes/woman.png" />
+                                <a class="options" href="" title="???">...</a>
+                            </div>
+                        </li>*@
+                    <!-- END multiplos para exemplo-->
+                </ul>
+
+                <div id="customPagination" class="row justify-content-center py-4">
+                    @*<a title="Mais influenciadores" class="btn btn-text-big btn-yellow btn-full-auto  py-md-4 py-3">
+                            Carregar mais influenciadores
+                        </a>*@
+                    @Html.HiddenFor(a => a.CurrentPage, new { @id = "currentPage", @class = "page-button" })
+                    @if (ViewBag?.searchResult?.PaginationButtonsNameValue != null)
+                    {
+                        var currentPage = ViewBag.searchResult.CurrentPage;
+                        @foreach (var page in ViewBag.searchResult.PaginationButtonsNameValue)
+                        {
+                            @*<button title="Mais influenciadores" style="@(currentPage == page ? "font-size: -webkit-xxx-large;" : "")" type="button" class="btn btn-text-big btn-yellow btn-full-auto  py-md-4 py-3 page-button-style">
+                                    @(page)
+                                </button>*@
+                            <button title="Mais influenciadores" style="@(currentPage == page ? "font-weight: 700;" : "")" type="button" class="btn btn-yellow btn-pagination page-button-style">
+                                @(page)
+                            </button>
+
+                        }
+
+                    }
+                </div>
+            </form>
+            @*form fim*@
+        </div>
+    </section>
+</div>
+@section Style{
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" />
+}
+@section Scripts{
+    <script src="~/content/js/format-numbers.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.soc-media-opt').closest('a').on('click', function () {
+                var socialButon = $(this);
+                var liIsSelcted = $(socialButon).closest('li').hasClass('selected');
+                var textButton = socialButon.text();
+                $('#' + textButton.trim()).val(!liIsSelcted);
+                $('#searchingForm').submit();
+            });
+
+            $('#selectMinMaxAge').on('change', function () {
+                var option = $(this).find('option:selected');
+                var min = $(option).data('min');
+                var max = $(option).data('max');
+                $('#minAge').val(min);
+                $('#maxAge').val(max);
+                $('#searchingForm').submit();
+            });
+
+            $('#selectGender').on('change', function () {
+                var options = $(this).find('option');
+                $.each(options, function (index, option) {
+                    var gender = $(option).data('gender');
+                    var isSelected = $(option).prop('selected');
+                    if (gender === 'male') {
+                        $('#genderMale').val(isSelected);
+                    }
+                    if (gender === 'female') {
+                        $('#genderFemale').val(isSelected);
+                    }
+                });
+                $('#searchingForm').submit();
+            });
+
+
+            $('.counter-count').each(function () {
+                $(this).prop('Counter', 0).animate({ Counter: $(this).text() }, {
+                    duration: 2000,
+                    easing: 'swing',
+                    step: function (now) { $(this).text(Math.ceil(now)); },
+                    complete: function (now) {
+                        var format = $.number($(this).text(), 0, ',', '.');
+                        $(this).text(format);
+                    }
+                });
+            });
+
+
+            $(".class-span").each(function (i) {
+                var len = $(this).text().trim().length;
+                if (len > 180) {
+                    $(this).text($(this).text().substr(0, 180) + '...');
+                }
+            });
+
+
+            $(document).on("keypress", "input", function (e) {
+                if (e.which == 13) {
+                    $('#currentPage').val(1);
+                    this.form.submit();
+                    return false;
+                }
+            });
+            $('.page-button-style').on('click', function () {
+                var btnValue = $(this).text();
+                $('#currentPage').val(btnValue);
+                $('#searchingForm').submit();
+            });
+
+
+            $('.social-filter').on('click', function () {
+                var classSelected = 'social-filter-selected';
+                var socialNetworkingButton = $(this);
+                var check = $('input.razor-checkbox', socialNetworkingButton);
+                var isSelected = socialNetworkingButton.hasClass(classSelected);
+                if (isSelected) {
+                    socialNetworkingButton.removeClass(classSelected);
+                    check.attr('checked', false);
+                } else {
+                    socialNetworkingButton.addClass(classSelected);
+                    check.attr('checked', true);
+                }
+                $('#currentPage').val(1);
+                $('#formSearh').submit();
+            });
+
+            $('#porRegiao, #heat-range, #language, #customR1, #customR2').change(function () {
+                //alert('Em construção');
+                $('#building').modal('show');
+            });
+
+            $('.in-building').on('click', function () {
+                //alert('Em construção');
+                $('#building').modal('show');
+            });
+        });
+    </script>
+}

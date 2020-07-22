@@ -1,0 +1,102 @@
+﻿@model IEnumerable<webMetrics.Models.UsuarioAcoes>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>InfluencersMetrics</title>
+</head>
+<body>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Agencia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Usuario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Media)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tags)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stories)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataCriacao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CityTop)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AgeTop)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Agencia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Usuario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Media)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tags)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stories)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataCriacao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CityTop)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AgeTop)
+            </td>
+            <td>
+			/*
+			@Html.ActionLink("ANÁLISE COMPLETA", "ViewConsulta", "relatorios", new { id = item.UsuarioId }, 
+				new { @class = "btn btn-blue btn-sm"})
+			
+			<a class="navbar-brand" href="javascript:loadExcluir('@item.UsuarioId','c');">
+				<img src="~/images/btnExcluir.png" style="height:30px" alt="remover">													
+			</a>												
+			
+			<a class="navbar-brand" href="javascript:window.location='/facedata/novaconsulta?id=@item.UsuarioId&origem=c'">
+				<img src="~/images/novaconsulta.png" style="height:30px" alt="voltar">
+			</a>
+			*/
+        </tr>
+}
+    </tbody>
+</table>
+</body>
+</html>

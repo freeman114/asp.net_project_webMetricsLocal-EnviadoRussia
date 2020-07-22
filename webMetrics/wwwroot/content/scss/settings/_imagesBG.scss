@@ -1,0 +1,264 @@
+/* background images */
+
+	/*%bg-center{ background-position: center; }
+ %bg-no-repeat{ background-repeat: no-repeat; }
+	 %bg-cover{ background-size: cover; }
+   %bg-contain{ background-size: contain; }*/
+
+
+
+@mixin imagesResolutions($class, $root, $array) {
+    $img-root: $root;
+	$imgs: $array;
+
+	@each $varName, $varValue in $imgs {
+
+		#{$class}#{$varName}{
+
+			$imgSRC: $img-root+$varValue;
+
+			background-image: url("#{$imgSRC}.png");
+
+			@include tablet(){
+				background-image: url("#{$imgSRC}@2x.png");
+			}
+			@include notebook(){
+				background-image: url("#{$imgSRC}@3x.png");
+			}
+		}
+	}
+}
+
+
+@mixin imagesBigQuali($class, $root, $array) {
+    $img-root: $root;
+	$imgs: $array;
+
+	@each $varName, $varValue in $imgs {
+
+		#{$class}#{$varName}-best{
+
+			$imgSRC: $img-root+$varValue;
+
+			background-image: url("#{$imgSRC}@2x.png");
+			
+			@include notebook(){
+				background-image: url("#{$imgSRC}@3x.png");
+			}
+		}
+	}
+}
+
+
+
+
+@mixin flagsSVG($class, $root, $array) {
+    $img-root: $root;
+	$imgs: $array;
+
+	@each $varName, $varValue in $imgs {
+
+		#{$class}#{$varName}{
+			
+			$imgSRC: $img-root+$varValue;
+			
+			
+			@if $varValue == 'pt-br' {
+				background-image: url("#{$imgSRC}.png");
+				background-image: url("#{$imgSRC}.svg");
+
+				@include tablet(){
+					background-image: url("#{$imgSRC}@2x.png");
+					background-image: url("#{$imgSRC}.svg");
+				}
+				@include notebook(){
+					background-image: url("#{$imgSRC}@3x.png");
+					background-image: url("#{$imgSRC}.svg");
+				}	
+				
+			} @else{
+				background-image: url("#{$imgSRC}.png");
+
+				@include tablet(){
+					background-image: url("#{$imgSRC}@2x.png");
+				}
+			}
+		}
+	}
+}
+
+@mixin banners($class, $root, $array, $type) {
+    $img-root: $root;
+	$imgs: $array;
+
+	@each $varName, $varValue in $imgs {
+
+		#{$class}#{$varName}{
+
+			$imgSRC: $img-root+$varValue;
+			
+			
+			background-image: url("#{$imgSRC}-sm.#{$type}");
+			
+			/// ate 1024
+			@include tablet(){
+				background-image: url("#{$imgSRC}-md.#{$type}");
+			}
+			/// medio - 1200-1366
+			@include notebook(){
+				background-image: url("#{$imgSRC}@1x.#{$type}");
+			}
+			/// ate 1920
+			@include desktop(){
+				background-image: url("#{$imgSRC}@2x.#{$type}");
+			}
+			/// maior que 1920
+			@include desktop-4k(){
+				background-image: url("#{$imgSRC}@3x.#{$type}");
+			}
+		}
+	}
+}
+
+
+
+[class*="flag-"]{
+
+	///$flag-root: '../img/flags/';
+
+	$flags: (
+		"br": pt-br, 
+		"en": en, 
+		"es": es
+	);
+
+	@include flagsSVG( '&.flag-', $flag-root, $flags);
+}
+
+
+/// make social
+///$social-root: '../img/social/';
+$social: (
+	"instagram": 'instagram',
+	 "linkedin": 'linkedin',
+	  "podcast": 'podcast',
+	   "tiktok": 'tiktok',
+	  "twitter": 'twitter',
+	  "youtube": 'youtube'
+);
+
+@include imagesResolutions( '.social-', $social-root, $social);
+
+@include imagesBigQuali( '.social-', $social-root, $social);
+
+$social-desk-default: 36px;
+$social-tablet-default: 32px;
+$social-mobile-default: 24px;
+
+[class*="social-"]:not(.social-media){
+	
+	@extend %bg-no-repeat;
+	@extend %bg-center;
+	@extend %bg-cover;
+	
+	background-color: transparent;
+	
+	@extend %f-left;
+	
+	width: $social-mobile-default;
+	height: $social-mobile-default;
+	
+	@include tablet(){
+		width: $social-tablet-default;
+		height: $social-tablet-default;
+	}
+	@include notebook(){
+		width: $social-desk-default;
+		height: $social-desk-default;
+	}
+	
+}
+
+
+/// DEFAULT ROOT
+///$default-root: '../img/backgrounds/';
+
+
+/// make banners
+
+/// in jpg
+$b-jpg: ( 
+		"home": 'banner-home',
+  "ailearning": 'banner-ai',
+	   "login": 'banner-login',
+	  "people": 'banner-people',
+ "socialmedia": 'banner-socialmedia'
+);
+
+@include banners( '.banner-', $default-root, $b-jpg, 'jpg');
+
+// in png
+/*$b-png: ( 
+	"socialmedia": 'banner-socialmedia' 
+);
+
+@include banners( '.banner-', $default-root, $b-png, 'png');
+*/
+
+
+
+///// otimizar depois
+
+.know-plans{
+	
+	$kpValue: 'degrade_white';
+	$imgSRC_KP: $default-root+$kpValue;
+	
+	background-image: url("#{$imgSRC_KP}.jpg");
+			
+	/// ate 1024
+	@include tablet(){
+		background-image: url("#{$imgSRC_KP}@2x.jpg");
+	}
+	/// medio - 1200-1366
+	@include notebook(){
+		background-image: url("#{$imgSRC_KP}@3x.jpg");
+	}
+}
+
+
+
+
+$sysscreen: (
+	"1": 'sysscreen1',
+	"2": 'sysscreen2',
+	"3": 'sysscreen3',
+);
+
+@include imagesResolutions('.sys-', $default-root, $sysscreen);
+
+[class*="sys-"]{
+	@extend %bg-no-repeat;
+	@extend %bg-center;
+	@extend %bg-contain;
+	
+	@include mobile{
+		&:not(.container-analise){
+			background-image: initial;
+		}
+	}
+}
+
+
+$ai-img: (
+	"1": 'aiimg1'
+);
+
+@include imagesResolutions('.ai-', $default-root, $ai-img);
+
+[class*="ai-"]{
+	@extend %bg-no-repeat;
+	@extend %bg-center;
+	@extend %bg-contain;
+}
+

@@ -1,0 +1,96 @@
+﻿@{
+    ViewData["Title"] = "Social Stalker";
+    ViewData["Page"] = "SocialStalker";
+    Layout = "_LayoutM2";
+}
+
+<section class="container-fluid container-big py-2">
+
+    <h1 class="font-black my-5  text-center">
+        Social stalker listening
+        <i class="fas fa-info-circle font-yellow text-super"></i>
+    </h1>
+
+    <div class="mt-2 mb-3 mb-md-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-3 col-md-4">
+                <h3 class="font-500 font-light-blue mb-3">Palavras:</h3>
+            </div>
+            <div class="col-lg-9 col-md-8">
+                <div class="form-group py-2">
+                    <p>Indique as palavras a serem buscadas:</p>
+                    <textarea class="form-control" id="tarea001" rows="5"></textarea>
+                    <p class="font-italic font-300 pt-2 mb-0">Exemplo: “o que está acontecendo” contém as palavras “o que está” e “acontecendo”</p>
+                </div>
+                <div class="form-group py-2">
+                    <p>Indique uma frase exata para busca:</p>
+                    <textarea class="form-control" id="tarea002" rows="5"></textarea>
+                    <p class="font-italic font-300 pt-2 mb-0">Exemplo: “o que está acontecendo” contém a frase completa “o que está acontecendo”</p>
+                </div>
+                <div class="form-group py-2">
+                    <p>Indique hashtags para busca:</p>
+                    <textarea class="form-control" id="tarea003" rows="5"></textarea>
+                    <p class="font-italic font-300 pt-2 mb-0">Exemplo: “#ThrowbackThursday” contém a hashtag “#ThroubackTHursday”</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="my-3 mt-md-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-3 col-md-4">
+                <h3 class="font-500 font-light-blue mb-3">Contas:</h3>
+            </div>
+            <div class="col-lg-9 col-md-8">
+                <div class="form-group py-2">
+                    <p>Indique as contas para serem buscadas:</p>
+                    <textarea class="form-control" id="tarea0001" rows="5"></textarea>
+                    <p class="font-italic font-300 pt-2 mb-0">Exemplo: @("@")Twitter exibirá tweets enviados por @("@")Twiter</p>
+                </div>
+                <div class="form-group py-2">
+                    <p>Indique as contas mencionadas para serem buscadas:</p>
+                    <textarea class="form-control" id="tarea0002" rows="5"></textarea>
+                    <p class="font-italic font-300 pt-2 mb-0">Exemplo: @("@")Twitter exibirá tweets com menções à @("@")Twiter</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="my-3">
+        <div class="row justify-content-center">
+            <div class="col-lg-3 col-md-4">
+                <h3 class="font-500 font-light-blue mb-3">datas:</h3>
+            </div>
+            <div class="col-lg-9 col-md-8 pt-2 px-0">
+                <div class="row">
+                    <div class="col-sm-6 px-0">
+                        <div class="form-group py-2 row">
+                            <label class="text-default d-flex align-items-center col-sm-2 col-lg-auto">De:</label>
+                            <input type="date" class="input-white col my-0 mt-n1">
+                            <p class="font-italic font-300 col-lg-11 col-12 pt-2 mb-0 ml-lg-5">Formato da data: DD/MM/AAAA</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 px-0">
+                        <div class="form-group py-2 row">
+                            <label class="text-default d-flex align-items-center col-sm-2 col-lg-auto">Até:</label>
+                            <input type="date" class="input-white col my-0 mt-n1">
+                            <p class="font-italic font-300 col-lg-11 col-12 pt-2 mb-0 ml-lg-5">Formato da data: DD/MM/AAAA</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center justify-content-sm-end row-buttons my-3 my-md-5 pb-5">
+        <a  href="javascript:building();" title="" role="button" class="btn btn-secondary expanded-btn"> cancelar </a>
+        <a  href="javascript:building();" title="" role="button" class="btn btn-light-blue expanded-btn"> buscar </a>
+    </div>
+
+</section>
+@section scripts{
+}

@@ -1,0 +1,146 @@
+﻿@model webMetrics.Models.Usuario
+
+@{
+    ViewData["Title"] = "Cadastrar";
+}
+
+<div id="fb-root"></div>
+<script>
+	if (location.protocol != 'https:')
+	{
+		location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+	}
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v3.1&appId=220440968764019&autoLogAppEvents=1';
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+
+<div style="margin-top: 120px;">
+    <h4>Cadastrar usuário</h4>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <form asp-action="Cadastrar">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="UsuarioInstagram" class="control-label"></label><small> *se houver</small>
+                    <input asp-for="UsuarioInstagram" class="form-control" />
+                    <span asp-validation-for="UsuarioInstagram" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Senha" class="control-label"></label>
+                    <input asp-for="Senha" class="form-control" type="password" />
+                    <span asp-validation-for="Senha" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="Tipo" class="form-control" type="hidden" />
+                    <span asp-validation-for="Tipo" class="text-danger"></span>
+                </div>
+				<div class="form-group">
+                    <input asp-for="TokenFacebook" class="form-control" type="hidden" />
+                    <span asp-validation-for="TokenFacebook" class="text-danger"></span>
+                </div>
+				<div class="form-group">
+                    <input asp-for="UserId" class="form-control" type="hidden" />
+                    <span asp-validation-for="UserId" class="text-danger"></span>
+                </div>
+                @if (@Model.Tipo != "1")
+                {
+                    <div class="form-group">
+                        <label asp-for="NomeAgencia" class="control-label"></label>
+                        <input asp-for="NomeAgencia" class="form-control" />
+                        <span asp-validation-for="NomeAgencia" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Cidade" class="control-label"></label>
+                        <input asp-for="Cidade" class="form-control" />
+                        <span asp-validation-for="Cidade" class="text-danger"></span>
+                    </div>
+                }
+				<div class="form-group">
+                    <span class="text-danger">Ou</span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Facebook</label>
+                    <br />
+					<div class="fb-login-button" data-max-rows="1" data-size="large" 
+					data-button-type="continue_with" data-show-faces="false" 
+					data-auto-logout-link="false" data-use-continue-as="true" 
+					data-scope="email,instagram_basic,instagram_manage_insights,pages_show_list"
+					onlogin="checkLoginState();"></div>
+                    <span asp-validation-for="TokenFacebook" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" id="btnForm" value="Salvar meus dados" class="btn btn-default" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+	function loadView()
+	{
+		document.getElementById('UsuarioInstagram').value = "";
+		document.getElementById('Email').value = "";
+		document.getElementById('Senha').value = "";
+        document.getElementById('TokenFacebook').value = "";
+		document.getElementById('UserId').value = "";
+	}
+
+    function checkLoginState() {
+        FB.getLoginStatus(function (response) {
+            statusChangeCallback(response);
+        });
+    }
+
+    function statusChangeCallback(response) {
+        if (response.status == "connected") {
+			document.getElementById('UsuarioInstagram').value = "";
+			document.getElementById('Email').value = "";
+			document.getElementById('Senha').value = "";
+            document.getElementById('TokenFacebook').value = response.authResponse.accessToken;
+			document.getElementById('UserId').value = response.authResponse.userID;
+			if (response.authResponse.email !=null) 
+			{
+				document.getElementById('Email').value = response.authResponse.email;
+			}else
+			{
+				//alert('Seu email no facebook não esta compartilhado.');
+			}
+			    document.getElementById("btnForm").click();
+        }
+    }
+
+	loadView();
+</script>
+
+
+<script>
+    var message = '@ViewBag.Message';
+    if (message != "") {
+        alert(@ViewBag.Message);
+    }
+</script>
+
+	<!--Start of Tawk.to Script-->
+	<script type="text/javascript">
+		var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+		(function(){
+			var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+			s1.async=true;
+			s1.src='https://embed.tawk.to/5ca9005553f1e453fb8c767a/default';
+			s1.charset='UTF-8';
+			s1.setAttribute('crossorigin','*');
+			s0.parentNode.insertBefore(s1,s0);
+		})();
+	</script>
+	<!--End of Tawk.to Script-->

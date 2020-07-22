@@ -1,0 +1,48 @@
+﻿@model webMetrics.Models.Usuario
+
+@{
+    ViewData["Title"] = "Consultar";
+}
+
+<h2>Consultar</h2>
+
+<h4>Usuario</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Consultar">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="UsuarioInstagram" class="control-label"></label>
+                <input asp-for="UsuarioInstagram" class="form-control" />
+                <span asp-validation-for="UsuarioInstagram" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                <label asp-for="Senha" class="control-label"></label>
+                <input asp-for="Senha" type="password" class="form-control" />
+                <span asp-validation-for="Senha" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <input type="submit" value="Consultar" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+        @Html.Raw(ViewBag.jsExecutar)    
+</script>
+
+	<!--Start of Tawk.to Script-->
+	<script type="text/javascript">
+		var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+		(function(){
+			var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+			s1.async=true;
+			s1.src='https://embed.tawk.to/5ca9005553f1e453fb8c767a/default';
+			s1.charset='UTF-8';
+			s1.setAttribute('crossorigin','*');
+			s0.parentNode.insertBefore(s1,s0);
+		})();
+	</script>
+	<!--End of Tawk.to Script-->

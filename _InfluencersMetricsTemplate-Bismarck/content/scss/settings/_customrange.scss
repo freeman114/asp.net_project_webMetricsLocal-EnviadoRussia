@@ -1,0 +1,181 @@
+///input range customizing
+
+
+$thumb-height: 30px !default;
+$thumb-border-width: 2px !default;
+
+$track-height: 8px !default;
+$track-border-width: 2px !default;
+
+////reset
+
+[type='range'] {
+	-webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+	width: 100%; /* Specific width is required for Firefox. */
+	background: transparent; /* Otherwise white in Chrome */
+	
+	&:focus {
+	  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+	}
+	
+	&::-webkit-slider-thumb {
+	  -webkit-appearance: none;
+	}
+	
+	&::-ms-track {
+	  width: 100%;
+	  cursor: pointer;
+
+	  /* Hides the slider so custom styles can be added */
+	  background: transparent; 
+	  border-color: transparent;
+	  color: transparent;
+	}
+}
+
+@mixin blink{
+	@include border-radius(50%);
+	
+	background: #ffffff;
+	
+	border: none;
+	height: $thumb-height;
+	width: $thumb-height;
+	cursor: pointer;
+	margin-top: 0px;
+}
+
+
+@mixin slider{
+	@include box-shadow(none);
+	@include border-radius(200px);
+	
+	width: 100%;
+	height: 20px;
+	
+	cursor: pointer;
+}
+
+/*
+@mixin fill{
+	@include border-radius(200px);
+	
+	///@include heat-bg;
+	///background: #2a6495;
+	///border: 0.2px solid #010101;
+	border: none;
+	border-radius: 200px;
+	box-shadow: none;
+}*/
+
+
+.heat-bg{
+	position: relative;
+	height: 40px;
+	
+	&:before{
+		@include heat-bg;
+		@include border-radius(200px);
+		content: '';
+		///width: 100%;
+		left: 0;
+		right: 0;
+		height: 20px;
+		position: absolute;
+		z-index: 1;
+	}
+	input{
+		position: relative;
+		z-index: 2;
+		
+		///margin: -12px 0px 0px;
+		margin: -14px 0px 0px;
+		padding: 0px;
+		height: 44px;
+	}
+}
+
+
+//// styling
+[type='range'] {
+	
+	/***** blinks * /
+	/* Special styling for WebKit/Blink */
+	&::-webkit-slider-thumb {
+		@include blink;
+		@include box-shadow(0 5px 10px 0 rgba(8, 8, 8, 0.5));
+	  -webkit-appearance: none;
+	  ///margin-top: 0px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
+	}
+	
+	/* All the same stuff for Firefox */
+	&::-moz-range-thumb {
+		@include blink;
+		@include box-shadow(0 5px 10px 0 rgba(8, 8, 8, 0.5));
+	}
+	
+	/* All the same stuff for IE */
+	&::-ms-thumb {
+		@include blink;
+		@include box-shadow(0 3px 7px 0 rgba(8, 8, 8, 0.5));
+		///margin-top: 0px;
+		margin-left: 1px;
+		margin-right: 1px;
+		///margin-top: $track-height / 4;
+	}
+	
+	
+	/***** track * /
+	&::-webkit-slider-runnable-track {
+	  @include slider;
+		
+	  background: #3071a9;
+	  border: 0.2px solid #010101;
+	}
+	
+	&::-moz-range-track {
+	  @include slider;
+	  
+	  background: #3071a9;
+	  border: 0.2px solid #010101;
+	}*/
+	&::-ms-track {
+	  @include slider;
+	  
+	  background: transparent;
+	  border-color: transparent;
+	  border-width: 16px 0;
+	  color: transparent;
+		///margin-top: 0;
+	}
+	
+	/*
+	&::-ms-fill-lower {
+		@include fill;
+	  background: #2a6495;
+	}
+	
+	&::-ms-fill-upper {
+		@include fill;
+	  background: #3071a9;
+	}*/
+	
+	
+	
+	&:focus{
+		&:focus::-webkit-slider-runnable-track {
+		  background: #00000000 !important;
+		}
+		&:focus::-ms-fill-lower {
+		  background: #ffffff00 !important;
+		}
+		&:focus::-ms-fill-upper {
+		  background: #ffffff00 !important;
+		}
+	}
+}
+
+
+
+
+

@@ -1,0 +1,606 @@
+﻿@{
+    ViewData["Title"] = "Planos agência";
+    ViewData["Page"] = "AgencyPlans";
+    Layout = "_LayoutM2";
+}
+
+<section class="bg-white-gray">
+    <div class="container-fluid container-big limit-1366 text-center py-2">
+
+        <header>
+            <h2 class="h1 font-black mt-5"> ESCOLHA O SEU PLANO </h2>
+        </header>
+        <p class="text-uppercase container">
+            PLATAFORMA DE ANÁLISE E INFORMAÇÕES PARA TOMADA DE DECISÕES E APOIO A NEGÓCIOS E PUBLICIDADE EM REDES SOCIAIS
+        </p>
+
+        <!-- esse radio customizado reage ao [input] escondido...
+            então qualquer ação de selecionado ou não, vem do [input] e não do [label] -->
+        @*<div class="group exclusive-box-radio my-4">
+            <div class="custom-control custom-radio">
+                <input name="radio_teste" type="radio" checked class="custom-control-input" id="customR1">
+                <label class="custom-control-label" for="customR1">
+                    <span></span>
+                    Agências e Marcas
+                </label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input name="radio_teste" type="radio" class="custom-control-input" id="customR2">
+                <label class="custom-control-label" for="customR2">
+                    <span></span>
+                    Influenciadores
+                </label>
+            </div>
+        </div>*@
+
+        <p class="my-3">Tenha segurança acessando informações REAIS de influenciadores antes mesmo de contrata-los</p>
+
+    </div>
+
+    <div class="type-table striped-row price-table price-4">
+        <div class="table-header">
+            <div class="row container-big">
+                <div class="col">
+                    <div class="price-block justify-content-end align-items-start">
+                        <div class="text text-left font-500  ml-n2">
+                            Quantidade de perfis analisados
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="price-block bg-light-blue font-white">
+
+                        <div class="price" data-moeda="R$">
+                            99,
+                            <span class="cents" data-obs="por mês">
+                                00
+                            </span>
+                        </div>
+
+                        <div class="text">
+                            <span>1 PERFIL</span> social
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="price-block bg-light-blue font-white">
+
+                        <div class="price" data-moeda="R$">
+                            999,
+                            <span class="cents" data-obs="por mês">
+                                00
+                            </span>
+                        </div>
+
+                        <div class="text">
+                            <span>10 PERFIS</span> sociais
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="price-block bg-light-blue font-white">
+
+                        <div class="price" data-moeda="R$">
+                            2.799,
+                            <span class="cents" data-obs="por mês">
+                                00
+                            </span>
+                        </div>
+
+                        <div class="text">
+                            <span>30 PERFIS</span> sociais
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="price-block bg-light-blue font-white">
+
+                        <div class="price" data-moeda="R$">
+                            4.799,
+                            <span class="cents" data-obs="por mês">
+                                00
+                            </span>
+                        </div>
+
+                        <div class="text">
+                            <span>90 PERFIS</span> sociais
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="row container-big">
+                <div class="col">Resultados em tempo real</div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+            </div>
+        </div>
+        <div>
+            <div class="row container-big">
+                <div class="col">Resultados pré e pós campanhas</div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+            </div>
+        </div>
+        <div>
+            <div class="row container-big">
+                <div class="col">Powerful real de engajamento</div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+            </div>
+        </div>
+        <div>
+            <div class="row container-big">
+                <div class="col">Taxa de alcance e crescimento</div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+            </div>
+        </div>
+        <div>
+            <div class="row container-big">
+                <div class="col">Força de alcance por gênero e idade</div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+            </div>
+        </div>
+        <div>
+            <div class="row container-big">
+                <div class="col">Força de engajamento demográfico</div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+            </div>
+        </div>
+        <div>
+            <div class="row container-big">
+                <div class="col">Resultados por hashtags</div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+            </div>
+        </div>
+        <div>
+            <div class="row container-big">
+                <div class="col">Resultados de mentions e campanhas</div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+            </div>
+        </div>
+        <div>
+            <div class="row container-big">
+                <div class="col">Performance de emoções do influenciador</div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+            </div>
+        </div>
+        <div>
+            <div class="row container-big">
+                <div class="col">Cross followers e Social Listening</div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+            </div>
+        </div>
+        <div>
+            <div class="row container-big">
+                <div class="col">Lugares por onde passou x Resultados</div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+            </div>
+        </div>
+        <div>
+            <div class="row container-big">
+                <div class="col">Foto Tags</div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+            </div>
+        </div>
+        <div>
+            <div class="row container-big">
+                <div class="col">Autenticidade da audiência</div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+            </div>
+        </div>
+        <div>
+            <div class="row container-big">
+                <div class="col">Tipo de audiência</div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+            </div>
+        </div>
+        <div>
+            <div class="row container-big">
+                <div class="col">Categorias de interesse de audiência</div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+            </div>
+        </div>
+        <div>
+            <div class="row container-big">
+                <div class="col">Cidades, etnias e línguas dos seguidores</div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+            </div>
+        </div>
+        <div>
+            <div class="row container-big">
+                <div class="col">Marcas mencionadas pelo influenciador</div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+            </div>
+        </div>
+        <div>
+            <div class="row container-big">
+                <div class="col">Verificação de desastres (Disaster check)</div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+            </div>
+        </div>
+        <div>
+            <div class="row container-big">
+                <div class="col">Social stalker listening</div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+            </div>
+        </div>
+        <div>
+            <div class="row container-big">
+                <div class="col">Estimativa de valor do post</div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+                <div class="col"><i class="fas fa-check font-green"></i></div>
+            </div>
+        </div>
+
+        <div class="table-footer">
+            <div class="row container-big">
+                <div class="col"></div>
+                <div class="col">
+                    <a @(ViewBag.Plano=="2"?"style=display:none":"") href="/pagamento?tipo=0" title="" class="btn btn-light-blue expanded-btn"> contratar</a>
+                </div>
+                <div class="col">
+                    <a @(ViewBag.Plano=="1"?"style=display:none":"") href="/pagamento?tipo=1" title="" class="btn btn-light-blue expanded-btn"> contratar</a>
+                </div>
+                <div class="col">
+                    <a @(ViewBag.Plano=="1"?"style=display:none":"") href="/pagamento?tipo=2" title="" class="btn btn-light-blue expanded-btn"> contratar</a>
+                </div>
+                <div class="col">
+                    <a @(ViewBag.Plano=="1"?"style=display:none":"") href="/pagamento?tipo=3" title="" class="btn btn-light-blue expanded-btn"> contratar</a>
+                </div>
+            </div>
+        </div>
+
+    </div><!--- end table --->
+    <div class="collapse mais-planos killer-btn-collapse mt-5">
+        <div class="type-table striped-row price-table price-4">
+            <div class="table-header">
+                <div class="row container-big">
+                    <div class="col">
+                        <div class="price-block justify-content-end align-items-start">
+                            <div class="text text-left font-500  ml-n2">
+                                Quantidade de perfis analisados
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="price-block bg-light-blue font-white">
+
+                            <div class="price" data-moeda="R$">
+                                999,
+                                <span class="cents" data-obs="por ano">
+                                    00
+                                </span>
+                            </div>
+
+                            <div class="text">
+                                <span>1 PERFIL</span> social
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="price-block bg-light-blue font-white">
+
+                            <div class="price" data-moeda="R$">
+                                9.499,
+                                <span class="cents" data-obs="por mês">
+                                    00
+                                </span>
+                            </div>
+
+                            <div class="text">
+                                <span>180 PERFIS</span> sociais
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="price-block bg-light-blue font-white">
+
+                            <div class="price" data-moeda="R$">
+                                14.799,
+                                <span class="cents" data-obs="por mês">
+                                    00
+                                </span>
+                            </div>
+
+                            <div class="text">
+                                <span>300 PERFIS</span> sociais
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="price-block bg-light-blue font-white">
+
+                            <div class="price" data-moeda="R$">
+                                29.499,
+                                <span class="cents" data-obs="por mês">
+                                    00
+                                </span>
+                            </div>
+
+                            <div class="text">
+                                <span>600 PERFIS</span> sociais
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="row container-big">
+                    <div class="col">Resultados em tempo real</div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                </div>
+            </div>
+            <div>
+                <div class="row container-big">
+                    <div class="col">Resultados pré e pós campanhas</div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                </div>
+            </div>
+            <div>
+                <div class="row container-big">
+                    <div class="col">Powerful real de engajamento</div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                </div>
+            </div>
+            <div>
+                <div class="row container-big">
+                    <div class="col">Taxa de alcance e crescimento</div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                </div>
+            </div>
+            <div>
+                <div class="row container-big">
+                    <div class="col">Força de alcance por gênero e idade</div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                </div>
+            </div>
+            <div>
+                <div class="row container-big">
+                    <div class="col">Força de engajamento demográfico</div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                </div>
+            </div>
+            <div>
+                <div class="row container-big">
+                    <div class="col">Resultados por hashtags</div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                </div>
+            </div>
+            <div>
+                <div class="row container-big">
+                    <div class="col">Resultados de mentions e campanhas</div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                </div>
+            </div>
+            <div>
+                <div class="row container-big">
+                    <div class="col">Performance de emoções do influenciador</div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                </div>
+            </div>
+            <div>
+                <div class="row container-big">
+                    <div class="col">Cross followers e Social Listening</div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                </div>
+            </div>
+            <div>
+                <div class="row container-big">
+                    <div class="col">Lugares por onde passou x Resultados</div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                </div>
+            </div>
+            <div>
+                <div class="row container-big">
+                    <div class="col">Foto Tags</div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                </div>
+            </div>
+            <div>
+                <div class="row container-big">
+                    <div class="col">Autenticidade da audiência</div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                </div>
+            </div>
+            <div>
+                <div class="row container-big">
+                    <div class="col">Tipo de audiência</div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                </div>
+            </div>
+            <div>
+                <div class="row container-big">
+                    <div class="col">Categorias de interesse de audiência</div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                </div>
+            </div>
+            <div>
+                <div class="row container-big">
+                    <div class="col">Cidades, etnias e línguas dos seguidores</div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                </div>
+            </div>
+            <div>
+                <div class="row container-big">
+                    <div class="col">Marcas mencionadas pelo influenciador</div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                </div>
+            </div>
+            <div>
+                <div class="row container-big">
+                    <div class="col">Verificação de desastres (Disaster check)</div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                </div>
+            </div>
+            <div>
+                <div class="row container-big">
+                    <div class="col">Social stalker listening</div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                </div>
+            </div>
+            <div>
+                <div class="row container-big">
+                    <div class="col">Estimativa de valor do post</div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                    <div class="col"><i class="fas fa-check font-green"></i></div>
+                </div>
+            </div>
+
+
+
+            <div class="table-footer">
+                <div class="row container-big">
+                    <div class="col"></div>
+                    <div class="col">
+                        <a @(ViewBag.Plano=="1"?"style=display:none":"") href="/pagamento?tipo=4" title="" class="btn btn-light-blue expanded-btn"> contratar </a>
+                    </div>
+                    <div class="col">
+                        <a @(ViewBag.Plano=="1"?"style=display:none":"") href="/pagamento?tipo=5" title="" class="btn btn-light-blue expanded-btn"> contratar </a>
+                    </div>
+                    <div class="col">
+                        <a @(ViewBag.Plano=="1"?"style=display:none":"") href="/pagamento?tipo=6" title="" class="btn btn-light-blue expanded-btn"> contratar </a>
+                    </div>
+                    <div class="col">
+                        <a @(ViewBag.Plano=="1"?"style=display:none":"") href="/pagamento?tipo=7" title="" class="btn btn-light-blue expanded-btn"> contratar </a>
+                    </div>
+                </div>
+            </div>
+
+        </div><!--- end table --->
+    </div>
+    <div class="row justify-content-center">
+        <a title="Mais planos" class="btn btn-text-big btn-yellow limit-w100" data-toggle="collapse" href=".mais-planos" role="button" aria-expanded="false"> Ver mais planos </a>
+    </div>
+
+
+    <div class="container-fluid container-big limit-1366 vertical-center text-center py-2 mb-5">
+        <p class="my-4">Se você já tem um conta na INFLUENCERS METRICS, você terá as opções para upgrades e trocas de plano ao se logar e clicar em meu plano e conta.</p>
+
+        <p class="my-4">Para pesquisas maiores que 600 análises em tempo real por favor entre em contato com <a title="" href="" class="text-initial">contato@influencersinc.com.br</a> para este tipo de contratação ou upgrade.</p>
+    </div>
+</section>

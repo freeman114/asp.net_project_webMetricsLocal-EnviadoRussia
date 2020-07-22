@@ -1,0 +1,38 @@
+.bx_cinza_navDireita{
+	background:#f0f0f0;
+	padding:15px 30px;
+	width:24%;
+	height:max-content;
+	position: fixed;
+	top:20px;
+	z-index:9999;
+	right:15px;
+}
+.bx_cinza_navDireita ul{
+	list-style-type: none;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    float: left;
+    height: max-content;
+}
+.bx_cinza_navDireita ul li{
+	margin-bottom:16px;
+}
+.bx_cinza_navDireita ul li:last-child{
+	margin-bottom:0;
+}
+.bx_cinza_navDireita ul li a{
+	color:#000;
+	font-family:poppinsRegular;
+	letter-spacing: 3px;
+	font-weight:bold;
+}
+.bx_cinza_navDireita ul li a:hover{
+	color:#5a5a5a;
+	text-decoration:none;
+}
+.bx_cinza_navDireita ul li a i{
+	font-size:25px;
+	width: 36px;
+}

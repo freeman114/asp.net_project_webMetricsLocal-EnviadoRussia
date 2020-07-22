@@ -1,0 +1,379 @@
+/// all colors
+
+$transparent: transparent;
+$transparent-0: rgba(0,0,0,0);
+
+
+/// escalas de preto e branco
+	 $white-24: rgba(255,255,255,.24);
+	 $white-54: rgba(255,255,255,.54);
+	 $white-74: rgba(255,255,255,.74);
+	 $white-80: rgba(255,255,255,.80);
+	$white-100: rgba(255,255,255,1);
+
+	 $black-24: rgba(0,0,0,.24);
+	 $black-54: rgba(0,0,0,.54);
+	 $black-74: rgba(0,0,0,.74);
+	$black-100: rgba(0,0,0,1);
+
+
+
+
+
+//// graphic colors
+$graph: (
+	  "1": #2f6ebf,
+	  "2": #1445aa,
+	  "3": #2865ba,
+	  "4": #3a7fc8,
+	  "5": #6ba2d1,
+	  "6": #448fd0,
+	  "7": #c5ebfd, /// azul bebe
+	  "8": #f8b9f6 /// rosa
+);
+
+@each $varName, $varValue in $graph {
+	
+	%graph-font#{$varName}/*,
+	.graph-font#{$varName}*/{ color: $varValue; }
+	%graph-#{$varName},
+	.graph-#{$varName}{ background-color: $varValue; }
+}
+
+
+
+
+/// template colors
+
+$white-gray: #fbfbfb;
+
+	   $black: #1a1818;
+		$gray: #777777;
+  $light-gray: #f0f0f0;
+	   $white: #fff;
+
+  $light-blue: #61bce8;
+		$blue: #042d9d;
+	  $yellow: #ffd342;
+	   $green: #2aa745;
+		 $red: #ff0000;
+
+$colors: (
+	   "black": $black,
+		"gray": $gray,
+  "light-gray": $light-gray,
+	   "white": $white,
+
+  "light-blue": $light-blue,
+		"blue": $blue,
+	  "yellow": $yellow,
+	   "green": $green,
+		 "red": $red
+);
+
+
+
+@each $varName, $varValue in $colors {
+	
+	%color-#{$varName},
+	.font-#{$varName}{ color: $varValue; }
+	%bg-#{$varName},
+	.bg-#{$varName}{ background-color: $varValue; }
+	%border-#{$varName},
+	.border-#{$varName}{ border-color: $varValue; }
+	
+	/// !importants
+	%color-#{$varName}-IMP { color: $varValue !important; }
+	%bg-#{$varName}-IMP,
+	.bg-#{$varName}-IMP{ background-color: $varValue !important; }
+	%border-#{$varName}-IMP{ border-color: $varValue !important; }
+}
+
+
+
+
+/// hover:
+	   $hover-black: #000;
+		$hover-gray: #696969;
+  $hover-light-gray: #d3d3d3;
+	   $hover-white: #e0e0e0;
+
+  $hover-light-blue: #56a6cd /*#68caf9*/;
+		$hover-blue: /*#0e3ab2*/ /*#1441bc*/ #103db8;
+	  $hover-yellow: #ffcb21;
+	   $hover-green: #11ba35;
+		 $hover-red: #ea0000;
+
+
+$colors-hover: (
+	   "black-hover": $hover-black,
+		"gray-hover": $hover-gray,
+  "light-gray-hover": $hover-light-gray,
+	   "white-hover": $hover-white,
+  "light-blue-hover": $hover-light-blue,
+		"blue-hover": $hover-blue,
+	  "yellow-hover": $hover-yellow,
+	   "green-hover": $hover-green,
+		 "red-hover": $hover-red,
+);
+
+
+@each $varName, $varValue in $colors-hover {
+	
+	%color-#{$varName} { color: $varValue; }
+	%bg-#{$varName}{ background-color: $varValue; }
+	%border-#{$varName} { border-color: $varValue; }
+	
+	/// !importants
+	%color-#{$varName}-IMP { color: $varValue !important; }
+	%bg-#{$varName}-IMP{ background-color: $varValue !important; }
+	%border-#{$varName}-IMP { border-color: $varValue !important; }
+}
+
+
+
+
+
+//// fonts colors ---------------------------------
+
+	 %color-default, 
+	 %color-padrao{ color: $light-gray; }
+
+%color-transparent{ color: $transparent; }
+
+
+
+/*  -- escala de preto */
+	///%color-black{ color: $black; }
+ 	   %color-24{ color: $black-24; }
+ 	   %color-54{ color: $black-54; }
+ 	   %color-74{ color: $black-74 !important; }
+	  %color-100{ color: $black-100; }
+
+/*  -- escala de branco */
+	///%color-white{ color: $white; }
+	 %color-w-24{ color: $white-24; }
+	 %color-w-54{ color: $white-54; }
+	 %color-w-74{ color: $white-74; }
+	 %color-w-80{ color: $white-80; }
+ 	%color-w-100{ color: $white-100; }
+
+
+
+/* colors !importants !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+%color-default-IMP, %color-padrao-IMP{ color: $light-gray !important; }
+%color-transparent-IMP{ color: $transparent !important; }
+
+/** black*/
+///%color-black-IMP{ color: $black !important; }
+%color-24-IMP{ color: $black-24 !important; }
+%color-54-IMP{ color: $black-54 !important; }
+%color-74-IMP{ color: $black-74 !important; }
+%color-100-IMP{ color: $black-100 !important; }
+/** white*/
+///%color-white-IMP{ color: $white !important; }
+%color-w-24-IMP{ color: $white-24 !important; }
+%color-w-54-IMP{ color: $white-54 !important; }
+%color-w-74-IMP{ color: $white-74 !important; }
+%color-w-80-IMP{ color: $white-80 !important; }
+%color-w-100-IMP{ color: $white-100 !important; }
+/* !importants .................................................*/
+
+
+
+
+
+//// backgrounds colors ---------------------------------
+
+%bg-transparent, %bg-0{ background: $transparent; }
+
+%bg-white-gray, .bg-white-gray{ background-color: $white-gray; }
+
+/*  -- escala de preto */
+  ///%bg-black{ background-color: $black; }
+	%bg-b24{ background-color: $black-24; }
+	%bg-b54{ background-color: $black-54; }
+	%bg-b74{ background-color: $black-74; }
+   %bg-b100{ background-color: $black-100; }
+
+/*  -- escala de branco */
+  ///%bg-white{ background-color: $white; }
+	%bg-w24{ background-color: $white-24; }
+	%bg-w54{ background-color: $white-54; }
+	%bg-w74{ background-color: $white-74; }
+	%bg-w80{ background-color: $white-80; }
+   %bg-w100{ background-color: $white-100; }
+
+
+
+/* backgrounds !importants !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+%bg-transparent-IMP, %bg-0-IMP{ background: $transparent !important; }
+/** black */
+///%bg-black-IMP{ background-color: $black !important; }
+%bg-b24-IMP{ background-color: $black-24 !important; }
+%bg-b54-IMP{ background-color: $black-54 !important; }
+%bg-b74-IMP{ background-color: $black-74 !important; }
+%bg-b100-IMP{ background-color: $black-100 !important; }
+/** white */
+///%bg-white-IMP{ background-color: $white !important; }
+%bg-w24-IMP{ background-color: $white-24 !important; }
+%bg-w54-IMP{ background-color: $white-54 !important; }
+%bg-w74-IMP{ background-color: $white-74 !important; }
+%bg-w80-IMP{ background-color: $white-80 !important; }
+%bg-w100-IMP{ background-color: $white-100 !important; }
+/* !importants ......................................................*/
+
+
+
+
+
+/// borders
+%border-transparent, %border-0{ border-color: $transparent-0; }
+
+/*  -- escala de preto */
+  ///%border-black{ border-color: $black; }
+	%border-b24{ border-color: $black-24; }
+	%border-b54{ border-color: $black-54; }
+	%border-b74{ border-color: $black-74; }
+   %border-b100{ border-color: $black-100; }
+
+/*  -- escala de branco */
+  ///%border-white{ border-color: $white; }
+	%border-w24{ border-color: $white-24; }
+	%border-w54{ border-color: $white-54; }
+	%border-w74{ border-color: $white-74; }
+	%border-w80{ border-color: $white-80; }
+   %border-w100{ border-color: $white-100; }
+
+
+/* borders !importants !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+%border-transparent-IMP, %border-0-IMP{ border-color: $transparent !important; }
+
+/** black */
+///%border-black-IMP{ border-color: $black !important; }
+%border-b24-IMP{ border-color: $black-24 !important; }
+%border-b54-IMP{ border-color: $black-54 !important; }
+%border-b74-IMP{ border-color: $black-74 !important; }
+%border-b100-IMP{ border-color: $black-100 !important; }
+/** white */
+///%border-white-IMP{ border-color: $white !important; }
+%border-w24-IMP{ border-color: $white-24 !important; }
+%border-w54-IMP{ border-color: $white-54 !important; }
+%border-w74-IMP{ border-color: $white-74 !important; }
+%border-w80-IMP{ border-color: $white-80 !important; }
+%border-w100-IMP{ border-color: $white-100 !important; }
+/* !importants ..................................................*/
+
+
+
+
+/// gradientes
+
+%gradient-blue, 
+%gradient-blue-h{
+	background: $light-blue;
+	background: -moz-linear-gradient(left, $light-blue 0%, $blue 100%);
+	background: -webkit-linear-gradient(left, $light-blue 0%, $blue 100%);
+	background: linear-gradient(to right, $light-blue 0%, $blue 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#61bce8",endColorstr="#042d9d",GradientType=1);
+}
+
+%gradient-blue-invert, 
+%gradient-blue-h-invert{
+	background: $blue;
+	background: -moz-linear-gradient(right, $light-blue 0%, $blue 100%);
+	background: -webkit-linear-gradient(right, $light-blue 0%, $blue 100%);
+	background: linear-gradient(to left, $light-blue 0%, $blue 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#61bce8",endColorstr="#042d9d",GradientType=1);
+}
+
+%gradient-blue-v{
+	background: $light-blue;
+	background: -moz-linear-gradient(top, $light-blue 0%, $blue 100%);
+	background: -webkit-linear-gradient(top, $light-blue 0%, $blue 100%);
+	background: linear-gradient(to bottom, $light-blue 0%, $blue 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#61bce8",endColorstr="#042d9d",GradientType=1);
+}
+
+%gradient-blue-v-invert{
+	background: $blue;
+	background: -moz-linear-gradient(bottom, $light-blue 0%, $blue 100%);
+	background: -webkit-linear-gradient(bottom, $light-blue 0%, $blue 100%);
+	background: linear-gradient(to top, $light-blue 0%, $blue 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#61bce8",endColorstr="#042d9d",GradientType=1);
+}
+
+
+$heat-b1: #F0F0F0;
+$heat-b2: #61BCE8;
+$heat-b3: #042D9D;
+
+
+%blue-heat{
+	background: rgb(255,0,0);
+	background: -moz-linear-gradient(left, $heat-b1 0%, $heat-b2 50%, $heat-b3 100%);
+	background: -webkit-linear-gradient(left, $heat-b1 0%, $heat-b2 50%, $heat-b3 100%);
+	background: linear-gradient(to right, $heat-b1 0%, $heat-b2 50%, $heat-b3 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="$heat-b1",endColorstr="$heat-b3",GradientType=1);
+}
+
+
+	$heat-red: #d51313;
+ $heat-yellow: #ffd802;
+  $heat-green: #45ff00;
+
+
+%heat-gradient{
+	background: rgb(255,0,0);
+	background: -moz-linear-gradient(left, $heat-red 0%, $heat-yellow 50%, $heat-green 100%);
+	background: -webkit-linear-gradient(left, $heat-red 0%, $heat-yellow 50%, $heat-green 100%);
+	background: linear-gradient(to right, $heat-red 0%, $heat-yellow 50%, $heat-green 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="$heat-red",endColorstr="$heat-green",GradientType=1);
+}
+
+%heat-gradient-v{
+	background: rgb(255,0,0);
+	background: -moz-linear-gradient(bottom, $heat-red 0%, $heat-yellow 50%, $heat-green 100%);
+	background: -webkit-linear-gradient(bottom, $heat-red 0%, $heat-yellow 50%, $heat-green 100%);
+	background: linear-gradient(to top, $heat-red 0%, $heat-yellow 50%, $heat-green 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="$heat-red",endColorstr="$heat-green",GradientType=1);
+}
+
+@mixin heat-bg{
+	background: rgb(255,0,0);
+	background: -moz-linear-gradient(left, $heat-red 0%, $heat-yellow 50%, $heat-green 100%);
+	background: -webkit-linear-gradient(left, $heat-red 0%, $heat-yellow 50%, $heat-green 100%);
+	background: linear-gradient(to right, $heat-red 0%, $heat-yellow 50%, $heat-green 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="$heat-red",endColorstr="$heat-green",GradientType=1);
+}
+
+
+@mixin custom-blue-gradient ($deg) {
+	background: $light-blue;
+	background: -moz-linear-gradient(#{$deg}deg, $light-blue 0%, $blue 100%);
+	background: -webkit-linear-gradient(#{$deg}deg, $light-blue 0%, $blue 100%);
+	background: linear-gradient(#{$deg}deg, $light-blue 0%, $blue 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#61bce8",endColorstr="#042d9d",GradientType=1);
+}
+
+@mixin simple-gradient ($deg, $color1, $color2) {	
+	background: $color1;
+	background: -moz-linear-gradient(#{$deg}deg, $color1 0%, $color2 100%);
+	background: -webkit-linear-gradient(#{$deg}deg, $color1 0%, $color2 100%);
+	background: linear-gradient(#{$deg}deg, $color1 0%, $color2 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="$color1",endColorstr="$color2",GradientType=1);
+}
+
+@mixin full-gradient ($deg, $color1, $init-color1, $color2, $init-color2) {	
+	background: $color1;
+	background: -moz-linear-gradient(#{$deg}deg, $color1 $init-color1, $color2 $init-color2);
+	background: -webkit-linear-gradient(#{$deg}deg, $color1 $init-color1, $color2 $init-color2);
+	background: linear-gradient(#{$deg}deg, $color1 $init-color1, $color2 $init-color2);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="$color1",endColorstr="$color2",GradientType=1);
+}
+
+
+.blue-gradient{	@extend %gradient-blue; }
+.heat-gradient{	@extend %heat-gradient; }
+.blue-heat{	@extend %blue-heat; }
+.blue-gradient-deg, %blue-gradient-deg{ @include simple-gradient(119, $light-blue, $blue); }

@@ -1,0 +1,76 @@
+﻿using System;
+using System.Collections.Generic;
+
+
+namespace webMetrics.Models.DTO
+{
+    public class Insigth
+    {
+        public List<Datum> data { get; set; }
+    }
+
+    public class InsigthStory
+    {
+        public List<DatumStories> data { get; set; }
+    }
+
+    public class InsigthDTO
+    {
+        public List<DatumDTO> data { get; set; }
+    }
+
+    public class ValueName
+    {
+        public string name { get; set; }
+        public string valor { get; set; }
+    }
+
+    public class ValueDTO
+    {
+        public List<ValueName> value { get; set; }
+        public string end_time { get; set; }
+    }
+
+    public class DatumDTO
+    {
+        public string name { get; set; }
+        public string period { get; set; }
+        public List<ValueDTO> values { get; set; }
+        public string title { get; set; }
+        public string description { get; set; }
+        public string id { get; set; }
+    }
+
+    public class Value
+    {
+        public Dictionary<string,int> value { get; set; }
+        public string end_time { get; set; }
+    }
+
+    public class ValueStory
+    {
+        public int value { get; set; }
+    }
+
+    public class Datum
+    {
+        public string name { get; set; }
+        public string period { get; set; }
+        //public Dictionary<string, int> values { get; set; }
+        public List<Value> values { get; set; }
+        public string title { get; set; }
+        public string description { get; set; }
+        public string id { get; set; }
+    }
+
+    public class DatumStories
+    {
+        public string name { get; set; }
+        public string period { get; set; }
+        public List<ValueStory> values { get; set; }
+        public string title { get; set; }
+        public string description { get; set; }
+        public string id { get; set; }
+    }
+
+}

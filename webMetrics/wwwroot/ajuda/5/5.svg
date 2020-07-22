@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg viewBox="0 0 909 1286" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+<clipPath id="c0_5"><path d="M0,1286.2V0H909.5V1286.2Z" /></clipPath>
+<style type="text/css"><![CDATA[
+.g0_5{
+fill: #FFFFFF;
+}
+.g1_5{
+fill: none;
+stroke: #BFBFBF;
+stroke-width: 0.38194445;
+stroke-linecap: butt;
+stroke-linejoin: miter;
+stroke-miterlimit: 4;
+}
+.g2_5{
+fill: none;
+stroke: #DEE2E6;
+stroke-width: 1.5277778;
+stroke-linecap: butt;
+stroke-linejoin: miter;
+stroke-miterlimit: 4;
+}
+.g3_5{
+fill: none;
+stroke: #DEE2E6;
+stroke-width: 3.0555556;
+stroke-linecap: butt;
+stroke-linejoin: miter;
+stroke-miterlimit: 4;
+}
+.g4_5{
+fill: #00A2FF;
+}
+]]></style>
+</defs>
+<g clip-path="url(#c0_5)">
+<path d="M0,-.8H910.6V1287.1H0Z" class="g0_5" />
+</g>
+<path d="M206.5,198.1v43.1M350.2,198.1v43.1m82.5,-43.1v43.1m147,-43.1v43.1m80,-43.1v43.1M86.8,198.1v43.1m736,-43.1v43.1" class="g1_5" />
+<path d="M86,198.9H823.6" class="g2_5" />
+<path d="M86,239.7H823.6" class="g3_5" />
+<path d="M147.8,815.7v43.1m65.3,-43.1v43.1M345.3,815.7v43.1m86.6,-43.1v43.1M541.7,815.7v43.1M687.5,815.7v43.1M86.8,815.7v43.1m736,-43.1v43.1" class="g1_5" />
+<path d="M86,816.4H823.6" class="g2_5" />
+<path d="M86,857.2H823.6" class="g3_5" />
+<path d="M75.3,747.9c-6.2,0,-11.3,5,-11.3,11.3c0,6.2,5.1,11.3,11.3,11.3c6.3,0,11.3,-5.1,11.3,-11.3c0,-6.3,-5,-11.3,-11.3,-11.3Zm0,1.3c5.5,0,10,4.5,10,10c0,5.5,-4.5,10,-10,10c-5.5,0,-10,-4.5,-10,-10c0,-5.5,4.5,-10,10,-10Zm0,.3c-5.4,0,-9.7,4.3,-9.7,9.7c0,5.3,4.3,9.7,9.7,9.7c5.4,0,9.7,-4.4,9.7,-9.7c0,-5.4,-4.3,-9.7,-9.7,-9.7Zm0,1.3c4.6,0,8.4,3.8,8.4,8.4c0,4.6,-3.8,8.3,-8.4,8.3c-4.6,0,-8.4,-3.7,-8.4,-8.3c0,-4.6,3.8,-8.4,8.4,-8.4Zm0,2.2c-3.4,0,-6.2,2.7,-6.2,6.2c0,3.4,2.8,6.2,6.2,6.2c3.4,0,6.2,-2.8,6.2,-6.2c0,-3.5,-2.8,-6.2,-6.2,-6.2Zm0,1.8c2.4,0,4.3,2,4.3,4.4c0,2.4,-1.9,4.3,-4.3,4.3c-2.4,0,-4.3,-1.9,-4.3,-4.3c0,-2.4,1.9,-4.4,4.3,-4.4Zm0,2.2c-.5,0,-1.1,.2,-1.5,.7c-.8,.8,-.8,2.2,0,3c.8,.8,2.2,.8,3,0c.9,-.8,.9,-2.2,0,-3c-.4,-.5,-.9,-.7,-1.5,-.7Z" class="g4_5" />
+</svg>

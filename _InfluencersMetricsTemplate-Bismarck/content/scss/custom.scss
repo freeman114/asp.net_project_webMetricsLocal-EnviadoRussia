@@ -1,0 +1,62 @@
+//// imports
+
+/// variaveis globais
+$max-width: 1640px;
+$max-width-strict: 1366px;
+
+$init-space: /*144px*/ 72px;
+$size-contFlag: 48px;
+$size-flag: /*54px*/ 32px;
+$h-width-btns: 100%;
+$h-space-btns: 8px;
+
+/// dash vars
+$side-bar-width: 280px;
+$sidebar-padding: 10px;
+$avatar-sidesize: 48px;
+
+
+/// pastas
+$default-root: '../img/backgrounds/';
+ $social-root: '../img/social/';
+   $flag-root: '../img/flags/';
+
+
+/// Google Font
+@import url('https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,700');
+
+/// Settings
+@import 'settings/mixin';
+@import 'settings/placeholders';
+
+
+/// project parts
+@import 'settings/cores';
+@import 'settings/imagesBG';
+@import 'settings/fonts';
+@import 'settings/forms';
+@import 'settings/tables';
+@import 'settings/tabs';
+@import 'settings/progressbars';
+@import 'settings/microcard';
+
+
+/*** plugins ***/
+////@import 'settings/offsetrightgrid';
+@import 'settings/sliderlogos';
+@import 'settings/customrange';
+@import 'settings/gallery';
+@import 'settings/clockchart';
+@import 'settings/echarts';
+@import 'settings/mapa';
+
+
+/**** ajustes do layout *****/
+@import "layout";
+
+
+/*** make mediaquerie placeholders **/
+@import 'settings/makePlaceholders';
+@import "media-querie";
+
+

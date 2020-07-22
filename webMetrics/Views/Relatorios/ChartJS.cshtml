@@ -1,0 +1,143 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width" />
+		<title>ChartJS</title>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.bundle.min.js">
+		</script>
+		<style>
+		canvas {
+			-moz-user-select: none;
+			-webkit-user-select: none;
+			-ms-user-select: none;
+		}
+		</style>
+	</head>
+	<body>
+		<div class="col-md-6 col-12">
+			<div class="pt-3 pl-2 pr-2 pb-2">
+				<canvas id="barcanvas" width="250" height="150"></canvas>
+			</div>
+		</div>
+	
+		<script src="~/node_modules/jquery/dist/jquery.min.js"></script>
+		<script src="~/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script src="~/node_modules/chart.js/dist/Chart.min.js"></script>
+		<script src="~/node_modules/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.min.js"></script>
+	</body>
+</html>
+	<script>
+		var color = Chart.helpers.color;
+
+		var horizontalBarChartData = {
+			labels: ['13-17', '18-24', '25-34', '35-44', '45-54', '55-64', '65+'],
+			datasets: [{
+				label: 'Mulher',
+				backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+				'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 99, 132, 0.2)'
+				],
+				borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(255,99,132,1)',
+                'rgba(255,99,132,1)',
+                'rgba(255,99,132,1)',
+                'rgba(255,99,132,1)',
+				'rgba(255,99,132,1)',
+                'rgba(255,99,132,1)'
+				],
+				borderWidth: 1,
+				data: [
+					30,
+					15,
+					25,
+					10,
+					20,
+					05,
+					15
+				]
+			}, {
+				label: 'Homem',
+				backgroundColor: [
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+				'rgba(54, 162, 235, 0.2)',
+				'rgba(54, 162, 235, 0.2)',
+                'rgba(54, 162, 235, 0.2)'
+				],
+				borderColor: [
+                'rgba(54, 162, 235, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(54, 162, 235, 1)',
+				'rgba(54, 162, 235, 1)',
+				'rgba(54, 162, 235, 1)',
+                'rgba(54, 162, 235, 1)'
+				],
+				data: [
+					-30,
+					-15,
+					-25,
+					-10,
+					-20,
+					-05,
+					-15
+				]
+			}]
+
+		};
+
+		window.onload = function() {
+			var ctx = document.getElementById('barcanvas').getContext('2d');
+			window.myHorizontalBar = new Chart(ctx, {
+				type: 'horizontalBar',
+				data: horizontalBarChartData,
+				options: {
+					// Elements options apply to all of the options unless overridden in a dataset
+					// In this case, we are setting the border of each horizontal bar to be 2px wide
+					elements: {
+						rectangle: {
+							borderWidth: 2,
+						}
+					},
+					responsive: true,
+					legend: {
+						position: 'right',
+					},
+					title: {
+						display: true,
+						text: 'Chart.js Horizontal Bar Chart'
+					}
+				}
+			});
+
+		};
+	</script>
+
+		<!--Start of Tawk.to Script-->
+	<script type="text/javascript">
+		var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+		(function(){
+			var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+			s1.async=true;
+			s1.src='https://embed.tawk.to/5ca9005553f1e453fb8c767a/default';
+			s1.charset='UTF-8';
+			s1.setAttribute('crossorigin','*');
+			s0.parentNode.insertBefore(s1,s0);
+		})();
+	</script>
+	<!--End of Tawk.to Script-->

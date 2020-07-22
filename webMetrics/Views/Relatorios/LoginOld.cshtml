@@ -1,0 +1,359 @@
+﻿@model webMetrics.Models.Usuario
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Influencers Inc</title>
+
+    <link rel="stylesheet" href="~/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/node_modules/@@fortawesome/fontawesome-free/css/all.css">
+    <link rel="stylesheet" href="~/resources/assets/styles/fonts.css">
+    <link rel="stylesheet" href="~/resources/assets/styles/global.css">
+    <link rel="stylesheet" href="~/resources/assets/styles/mobile.css">
+
+</head>
+<body>
+    <div id="fb-root"></div>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LdciZ8UAAAAAH31RkgmdBMHdtMYII1p_ER21V1"></script>
+
+    <script>
+        if (location.protocol != 'https:') {
+            location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+        }
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '220440968764019',
+                cookie: true,
+                xfbml: true,
+                version: 'v3.1'
+            });
+            FB.AppEvents.logPageView();
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) { return; }
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        grecaptcha.ready(function () {
+            grecaptcha.execute('6LdciZ8UAAAAAH31RkgmdBMHdtMYII1p_ER21V1-', { action: 'homepage' }).then(function (token) {
+
+            });
+        });
+    </script>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-white card-resume shadow-sm py-0 pr-md-0 px-2 pl-md-3">
+        <a class="navbar-brand" href="/">
+            <img width="100%" src="~/resources/assets/images/logo3.png" alt="logo">
+        </a>
+
+        <button class="navbar-toggler px-1 py-0 border-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse py-2 py-md-0" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto justify-content-between align-items-center">
+                <li class="nav-item font-weight-semi-bold"><a class="nav-link px-4" href="~/entenda_a_importancia.pdf" >ENTENDA A IMPORTÂNCIA</a></li>
+                <li class="nav-item font-weight-semi-bold"><a href="~/relatorios/login" class="nav-link px-5 mr-4">LOGIN</a></li>
+                <li class="nav-item font-weight-semi-bold">
+                    <a href="~/relatorios/comeceaqui" class="nav-link btn btn-blue text-white rounded-0">COMECE AQUI</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="row row-banner-login py-5 py-md-0">
+        <div class="col-2 mx-auto my-auto box-login">
+            <form asp-action="Login">
+                <div class="row mb-5">
+                    <div class="col-12">
+                        <div class="fb-login-button btn btn-block btn-purple btn-fb rounded text-left" width="100%"
+                             data-max-rows="1" data-size="large"
+                             data-button-type="continue_with"
+                             data-scope="email,instagram_basic,instagram_manage_insights,read_insights,manage_pages,instagram_manage_comments"
+                             data-show-faces="false" data-auto-logout-link="false"
+                             data-use-continue-as="true" onlogin="checkLoginState();"></div>
+                    </div>
+                </div>
+
+                <div class="row m-0 mt-4 mb-3 py-2">
+                    <div class="col-12 border border-bottom-0 border-left-0 border-right-0 border-grey"></div>
+                    <span class="bg-secondary rounded-circle text-white font-weight-bold py-2 px-2 mx-auto btn-or" style="z-index: 2;">OU</span>
+                </div>
+
+                <input asp-for="TokenFacebook" class="form-control" style="display:none;" />
+                <input asp-for="UserId" class="form-control" style="display:none;" />
+
+                <div class="form-group">
+                    <input type="email" class="form-control" asp-for="Email" placeholder="Endereço de email" value="@ViewBag.Email" />
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" asp-for="Senha" placeholder="Senha" />
+                </div>
+
+                <input type="submit" id="btnForm" value="Acessar"
+                       class="btn btn-blue btn-block py-3 font-weight-semi-bold mb-2 rounded-0 btn-login" />
+
+
+                <div class="text-center text-white font-weight-semi-bold mt-3 btns-lost-password">
+                    <a href="javascript:;" data-toggle="modal" data-target="#resetPasswordModal" class="text-white text-center"><span class="text-warning">Esqueceu</span> sua senha</a> ou <a class="text-blue" href="comeceaqui">cadastre-se</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="border border-bottom-0 border-left-0 border-right-0 border-1 mt-5">
+        <div class="container-fluid text-center text-md-left">
+            <div class="row m-0">
+                <div class="col-11 mx-auto">
+                    <div class="row py-5">
+                        <div class="col-lg-3 col-12 mb-3">
+                            <div class="row">
+                                <div class="col-lg-10 pl-0">
+                                    <h6 class="text-dark font-weight-semi-bold">INFLUENCERS INC</h6>
+                                    <nav class="nav flex-column">
+                                        <a class="nav-link text-muted px-0" href="~/home/sobrenos">SOBRE NÓS</a>
+                                        <a class="nav-link px-4" href="~/entenda_a_importancia.pdf" target="_blank">ENTENDA A IMPORTÂNCIA</a>
+                                        <a class="nav-link text-muted px-0" href="javascript:alert('Em breve');">IMPRENSA</a>
+                                        <a class="nav-link text-muted px-0" href="javascript:alert('Em breve');">TEAM</a>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg col-12 mb-3">
+                            <h6 class="text-dark font-weight-semi-bold">DESCUBRA</h6>
+                            <nav class="nav flex-column">
+                                <a class="nav-link text-muted px-0" href="~/home/descubra#micro">MICRO INFLUENCERS</a>
+                                <a class="nav-link text-muted px-0" href="~/home/descubra#colaborador">COLABORADORES</a>
+                                <a class="nav-link text-muted px-0" href="~/home/descubra#marcas">MARCAS</a>
+                            </nav>
+                        </div>
+                        <div class="col-lg-4 col-12 mb-3">
+                            <h6 class="text-dark font-weight-semi-bold">SEJA UM MICROINFLUENCER</h6>
+                            <nav class="nav flex-column">
+                                <a class="nav-link text-muted px-0" href="~/home/passoapasso">PASSO A PASSO</a>
+                                <a class="nav-link text-muted px-0" href="~/home/influencersguide">INFLUENCERS GUIDE</a>
+                                <a class="nav-link text-muted px-0" href="~/home/workshop">WORKSHOP</a>
+                            </nav>
+                        </div>
+                        <div class="col-lg col-12 mb-3 pr-0">
+                            <h6 class="text-dark font-weight-semi-bold">INTELLIGENCE & METRICS</h6>
+                            <nav class="nav flex-column">
+                                <a class="nav-link text-muted px-0" href="~/home/ConsulteEngajamento">CONSULTE ENGAJAMENTO</a>
+                                <a class="nav-link text-muted px-0" href="~/Home/EntendaaImportancia">ENTENDA A IMPORTÂNCIA</a>
+                            </nav>
+                        </div>
+                    </div>
+                    <div class="row d-flex align-items-center py-4 border border-left-0 border-right-0 border-1 border-bottom-0 border-black" id="sub-footer">
+                        <div class="col-lg-2 col-6 mx-auto ml-md-0 pl-0 mb-3 mb-md-0">
+                            <img src="~/resources/assets/images/logo2.png" style="width: 80%">
+                        </div>
+                        <div class="col-lg-8 col-12 text-center text-muted">
+                            <div class="row">
+                                <div class="ml-auto col-lg-6 col-12 mb-3 mb-md-0">
+                                    ALL RIGHTS RESERVED INFLUENCERS INC. © 2019.
+                                </div>
+                                <div class="col-lg-4 col-12 mb-3 mb-md-0">
+                                    <a class="text-muted" href="javascript:;" data-toggle="modal" data-target="#modalTermosECondicoes">TERMOS E CONDIÇÕES</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-12 p-0 text-center">
+                            <nav class="nav justify-content-md-end justify-content-center">
+                                <a class="nav-link text-dark p-0" href="http://www.instagram.com/influencersinc"><i class="fab fa-lg fa-instagram"></i></a>
+                                <a class="nav-link text-dark p-0 pl-2" href="http://www.facebook.com/influencersinc"><i class="fab fa-lg fa-facebook"></i></a><a class="nav-link text-dark p-0 pl-2" href="https://www.youtube.com/channel/UCoYfvO-p8lWpj0Yw-O--25A"><i class="fab fa-lg fa-youtube"></i></a>
+
+
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal fade" id="senhainvalida" tabindex="-1" role="dialog" aria-labelledby="senhainvalidaModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title" id="resetPasswordModalLabel">MENSAGEM - LOGIN</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body pt-0">
+                    <div class="form-group mb-0">
+                        <span id='lblMensagemLogin'></span>
+                    </div>
+                </div>
+                <div class="modal-footer pt-0 border-0">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="resetPasswordModal" tabindex="-1" role="dialog" aria-labelledby="resetPasswordModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title" id="resetPasswordModalLabel">RESETAR A SENHA</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form asp-action="ResetSenha">
+                    <div class="modal-body pt-0">
+                        <div class="form-group mb-0">
+                            <label asp-for="Email">Digite seu e-mail cadastrado</label>
+                            <input asp-for="Email" type="email" class="form-control">
+                        </div>
+
+                    </div>
+                    <div class="modal-footer pt-0 border-0">
+                        <button type="button" class="btn btn-grey px-4" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-blue px-4">Resetar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="como-funciona-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content modal-content-center rounded-3 border-0">
+                <div class="modal-header pb-0 border-0 text-center position-absolute w-100 z-index-top">
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <i class="fa fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body p-0 text-center">
+                    <img class="img-fluid" src="~/resources/assets/images/como-funciona-1.jpg" alt="como funciona">
+
+                    <img width="80%" class="img-fluid mt-5" src="~/resources/assets/images/como-funciona-2.png" alt="como funciona">
+
+                    <div class="row m-0 py-5"><div class="col-11 mx-auto border border-top-0 border-left-0 border-right-0 border-1"></div></div>
+                    <img width="80%" class="img-fluid" src="~/resources/assets/images/como-funciona-3.png" alt="como funciona">
+                    <div class="row m-0 py-5"><div class="col-11 mx-auto border border-top-0 border-left-0 border-right-0 border-1"></div></div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-10 col-10 px-0 py-2 mx-auto border border-black text-center">
+                            <div class="text-dark font-weight-semi-bold" style="font-size:1rem;">
+                                ENSINAMOS INFLUENCIADORES E MARCAS, ESTRATÉGIAS DE VERTICALIZAÇÃO DE MARKETING DE CONTEÚDO
+                                JÁ QUE ATRAVÉS DE TODOS OS DADOS, CONSEGUIMOS ENTENDER O QUE NÃO FOI FEITO,
+                                O QUE FOI FEITO ERRADO, O QUE FUNCIONA, E O QUE PODERÁ FUNCIONAR
+                            </div>
+                        </div>
+                    </div>
+
+                    <img width="80%" class="img-fluid" src="~/resources/assets/images/como-funciona-4.png" alt="como funciona">
+                    <div class="row m-0 py-5"><div class="col-11 mx-auto border border-top-0 border-left-0 border-right-0 border-1"></div></div>
+                    <div class="row pb-5">
+                        <div class="col-md-10 col-10 px-0 py-2 mx-auto text-center">
+                            <div class="text-dark font-weight-semi-bold" style="font-size:1rem;">
+                                MÉTRICAS DE PUBLICAÇÕES NO STORIES
+                            </div>
+                        </div>
+                    </div>
+                    <img width="80%" class="img-fluid" src="~/resources/assets/images/como-funciona-5.png" alt="como funciona">
+                    <div class="row m-0 py-5"><div class="col-11 mx-auto border border-top-0 border-left-0 border-right-0 border-1"></div></div>
+                    <div class="row pb-5">
+                        <div class="col-md-10 col-10 px-0 py-2 mx-auto text-center">
+                            <div class=" text-dark font-weight-semi-bold" style="font-size:1rem;">
+                                MÉTRICAS APROFUNDADAS DE LIKES POR BAIRRO EM CADA CIDADE E NÚMERO DE HABITANTES, PERFIL EMOCIONAL, ETC…
+                            </div>
+                        </div>
+                    </div>
+                    <img width="80%" class="img-fluid" src="~/resources/assets/images/como-funciona-6.png" alt="como funciona">
+                    <div class="row m-0 py-5"><div class="col-11 mx-auto border border-top-0 border-left-0 border-right-0 border-1"></div></div>
+                    <div class="row pb-5">
+                        <div class="col-md-10 col-10 px-0 py-2 mx-auto text-center">
+                            <div class=" text-dark font-weight-semi-bold" style="font-size:1rem;">
+                                ENTREGA DE RELATÓRIO DE ENGAJAMENTO INDIVIDUAL OU EM LOTE PARA SABER QUEM MELHOR CONTRATAR E COMO
+                            </div>
+                        </div>
+                    </div>
+                    <img width="80%" class="img-fluid mb-5" src="~/resources/assets/images/como-funciona-7.png" alt="como funciona">
+                    <img class="img-fluid" src="~/resources/assets/images/como-funciona-8.jpg" alt="como funciona">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="~/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="~/node_modules/popper.js/dist/umd/popper.min.js"></script>
+    <script src="~/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <script src="~/node_modules/chart.js/dist/Chart.min.js"></script>
+    <script src="~/node_modules/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.min.js"></script>
+
+</body>
+</html>
+
+<script>
+
+    var openFacebookLogin = function () {
+        console.log('aki');
+        $('.fb-login-button').trigger('click');
+    }
+
+</script>
+
+<script>
+    function checkLoginState() {
+        FB.getLoginStatus(function (response) {
+            statusChangeCallback(response);
+        });
+    }
+
+    function statusChangeCallback(response) {
+        if (response.status == "connected") {
+            document.getElementById('Email').value = "";
+            document.getElementById('Senha').value = "";
+            document.getElementById('TokenFacebook').value = response.authResponse.accessToken;
+            document.getElementById('UserId').value = response.authResponse.userID;
+            document.getElementById('btnForm').click();
+        }
+    }
+
+    function teste() {
+        document.getElementById('Email').value = "";
+        document.getElementById('Senha').value = "";
+        document.getElementById('TokenFacebook').value = 'EAADIfWmjGnMBADoOtnriZBSISkKokZBY1gxnyyb3iDobkCKOuho80hRRUJHTrvB3T6Nwfe63DIwZA33cTVz9lWqbNyGocd6bHNdxT4HOcRoUkWfRFA6dMdMM6Ta9mqx0yHbEpnW4Ll8Uy4ZCt20MbU2ZAGCopeoAEqfEBno4m4112aFMeATZB8jDmiFAJssOwFOszsfD30CQZDZD';
+        document.getElementById('UserId').value = '952357081614016';
+        document.getElementById('btnForm').click();
+    }
+
+	function abrirModal(name, msg)
+	{
+		document.getElementById('lblMensagemLogin').innerHTML  = msg;
+		$(name).modal('show');
+	}
+
+	@Html.Raw(@ViewBag.ExecutarJS);
+</script>
+
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+    (function () {
+        var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+        s1.async = true;
+        s1.src = 'https://embed.tawk.to/5ca9005553f1e453fb8c767a/default';
+        s1.charset = 'UTF-8';
+        s1.setAttribute('crossorigin', '*');
+        s0.parentNode.insertBefore(s1, s0);
+    })();
+</script>
+<!--End of Tawk.to Script-->

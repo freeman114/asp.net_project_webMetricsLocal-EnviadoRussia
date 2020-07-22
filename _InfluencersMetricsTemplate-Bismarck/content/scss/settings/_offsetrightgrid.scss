@@ -1,0 +1,41 @@
+/* Scss Document */
+
+$index: 100%;
+$grid-columns: 12;
+
+$screen-sm-min: 576px;
+$screen-md-min: 768px;
+$screen-lg-min: 992px;
+$screen-xl-min: 1200px;
+
+@mixin make-grid-offset-right($class) {
+    @for $index from 0 through $grid-columns {
+        .offset-right-#{$class}-#{$index} {
+            margin-right: percentage(($index / $grid-columns));
+        }
+    }
+}
+
+///@include make-grid-offset-right(xs);
+////@include make-grid-offset-right();
+
+@for $index from 0 through $grid-columns {
+	.offset-right-#{$index} {
+		margin-right: percentage(($index / $grid-columns));
+	}
+}
+
+@media all and (min-width: $screen-sm-min) {
+  @include make-grid-offset-right(sm);
+}
+
+@media all and (min-width: $screen-md-min) {
+  @include make-grid-offset-right(md);
+}
+
+@media all and (min-width: $screen-lg-min) {
+  @include make-grid-offset-right(lg);
+}
+@media all and (min-width: $screen-xl-min) {
+  @include make-grid-offset-right(xl);
+}

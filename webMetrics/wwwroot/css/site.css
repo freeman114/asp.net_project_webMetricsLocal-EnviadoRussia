@@ -1,0 +1,290 @@
+/* Always set the map height explicitly to define the size of the div
+* element that contains the map. */
+
+#map {
+    height: 100%;
+}
+
+.table td, .table th {
+max-width:300px;
+}
+
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+body {
+    line-height: 1;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+    blockquote:before, blockquote:after,
+    q:before, q:after {
+        content: '';
+        content: none;
+    }
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+body {
+    overflow-x: hidden;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.main-wrapper {
+    overflow-x: hidden;
+}
+
+.full-banner {
+    padding: 40px 0;
+}
+
+    .full-banner .box {
+        text-align: center;
+        margin-top: 100px;
+    }
+
+    .full-banner .cta-banner {
+        text-align: center;
+        margin-top: 110px;
+    }
+
+.generic-text {
+    text-align: center;
+    padding: 40px 15px;
+    vertical-align: middle;
+}
+
+    .generic-text > div p {
+        font-size: small;
+        vertical-align: middle;
+    }
+
+.first-section {
+    overflow: hidden;
+    display: flex;
+    margin: 50px 0;
+}
+
+    .first-section > div > img {
+        width: 90%;
+        height: auto;
+        display: block;
+    }
+
+    .first-section > div:first-of-type > img {
+        float: right;
+    }
+
+    .first-section > div:last-of-type {
+        flex: 1;
+        align-self: flex-end;
+    }
+
+        .first-section > div:last-of-type > img {
+            float: left;
+        }
+
+.second-section > div {
+    text-align: center;
+    padding: 30px;
+    vertical-align: middle;
+    margin-top: 25px;
+}
+
+    .second-section > div img {
+        width: 40%;
+        margin: 0 auto;
+    }
+
+.third-section > div {
+    text-align: center;
+    padding: 30px;
+    vertical-align: middle;
+    margin-top: 25px;
+}
+
+    .third-section > div p {
+        font-size: small;
+        vertical-align: middle
+    }
+
+.fourth-section > div {
+    text-align: center;
+    padding: 40px;
+    vertical-align: middle;
+    margin-top: 25px;
+}
+
+    .fourth-section > div img {
+        display: block;
+        margin: 0 auto;
+        width: 40%;
+        max-width: 1200px;
+    }
+
+.footer {
+    max-width: 1140px;
+    margin: 0 auto;
+}
+
+    .footer div.col-md-12 div.footer-wrapper > div > div {
+        text-align: left;
+        font-size: small;
+        line-height: 20px;
+    }
+
+        .footer div.col-md-12 div.footer-wrapper > div > div strong {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+            font-size: 16px;
+        }
+
+@media only screen and ( max-width: 768px ) {
+    .full-banner .box {
+        margin-top: 30px;
+    }
+
+    .full-banner .cta-banner {
+        margin-top: 30px;
+    }
+
+    .generic-text {
+        padding: 30px 15px;
+    }
+
+        .generic-text > div p {
+            font-size: 12px;
+            line-height: 20px;
+        }
+
+    .first-section {
+        display: block;
+    }
+
+        .first-section > div:first-of-type > img,
+        .first-section > div:last-of-type > img {
+            float: none;
+            margin: 20px auto;
+        }
+
+    .third-section > div p {
+        line-height: 20px;
+    }
+
+    .footer div.col-md-12 div.footer-wrapper {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+        .footer div.col-md-12 div.footer-wrapper > div {
+            flex: 1 0 50%;
+        }
+
+            .footer div.col-md-12 div.footer-wrapper > div > div {
+                text-align: center;
+            }
+
+    .footer-copy > div > div {
+        text-align: center !important;
+    }
+}
+
+@media only screen and ( max-width: 480px ) {
+    .full-banner .box div > span {
+        line-height: 20px;
+    }
+
+    .first-section {
+        margin: 20px auto;
+    }
+
+    .second-section > div {
+        padding: 0;
+    }
+
+        .second-section > div img {
+            width: 90%;
+        }
+
+    .fourth-section > div {
+        padding: 20px;
+        margin-top: 0;
+    }
+
+        .fourth-section > div img {
+            width: 90%;
+        }
+
+    .footer div.col-md-12 div.footer-wrapper {
+        align-items: flex-start;
+    }
+
+        .footer div.col-md-12 div.footer-wrapper > div > div strong {
+            font-size: 14px;
+        }
+
+    .footer-copy h6 {
+        font-size: 12px;
+    }
+}
+
+@media only screen and ( max-width: 320px ) {
+    .generic-text > div p,
+    .third-section > div p {
+        font-size: 11px;
+    }
+
+    .footer div.col-md-12 div.footer-wrapper > div > div strong {
+        font-size: 12px;
+    }
+
+    .footer div.col-md-12 div.footer-wrapper > div > div {
+        font-size: 11px;
+        line-height: 16px;
+    }
+
+    .footer-copy h6 {
+        font-size: 10px;
+    }
+}

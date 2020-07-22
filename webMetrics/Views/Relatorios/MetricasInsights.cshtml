@@ -1,0 +1,132 @@
+﻿@{
+    ViewData["Title"] = "Solicitacao Metricas";
+    ViewData["Page"] = "SolicitacaoMetricas";
+    Layout = "_LayoutM2";
+}
+
+<!--- dash content--->
+<div class="page-content content-full">
+    <section class="container-fluid limit-1366 py-2">
+        <h1 class="font-black my-5  text-center">Solicitação de métrica</h1>
+
+        <div class="row justify-content-center" align="center">
+            <div class="col-sm-8 col-md-6 col-lg-4 col-xl-4">
+                <div class="fb-login-button btn btn-block rounded text-left" width="100%"
+                     data-max-rows="1" data-size="large"
+                     data-button-type="continue_with" id='btnFacebook'
+                     data-scope="email,instagram_basic,instagram_manage_insights,read_insights,manage_pages,instagram_manage_comments"
+                     data-show-faces="false" data-auto-logout-link="false"
+                     data-use-continue-as="true" onlogin="checkLoginState();">
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center" id='boxVincularPage' align="center" style="display:none;">
+            <p class="mt-2 mb-2 col-12 text-uppercase  text-center">Qual página que você vinculou com a sua conta Instagram?</p>
+            <div class="row col-12 justify-content-center">
+                <div class="col-lg-5 col-md-8 col-sm-10">
+                    <select name="ddlPage" id='ddlPage' onchange='selectPage()' class="form-control form-control-lg select-white">
+                        <option disabled="disabled" selected="selected">Escolha a página</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row col-12 justify-content-center">
+                <a id='btnPermitir' href="javascript:setToken();" title="" role="button" class="btn btn-big btn-gradient-blue"> Permitir geração de análise </a>
+                <img src='~/images/loading2.gif' id='loading' style='display:none' />
+            </div>
+            <div class="row col-12">
+                <div class="col-12" style="color:black;">
+                    Informações do Usuário...
+                </div>
+                <div class="col-12" style="color:black;">
+                    <span id='okUsuario' class="btn-success"
+                          style="display:none;font-size:8pt;height:15px;width:26px;text-align:center;color:black;">
+                        <i class="glyphicon glyphicon-ok"></i>
+                        OK
+                    </span>
+                </div>
+            </div>
+            <div class="col-12" style="color:black;">
+                Informações de Mídia...
+            </div>
+            <div class="col-12">
+                <span id='okMedia' class="btn-success"
+                      style="display:none;font-size:8pt;height:15px;width:26px;text-align:center;color:black;">
+                    <i class="glyphicon glyphicon-ok"></i>
+                    OK
+                </span>
+            </div>
+            <div class="col-12" style="color:black;">
+                Informações de Tags...
+            </div>
+            <div class="col-12" style="color:black;">
+                <span id='oktags' class="btn-success" style="display:none;font-size:8pt;height:15px;width:26px;text-align:center;">
+                    <i class="glyphicon glyphicon-ok"></i>
+                    OK
+                </span>
+            </div>
+            <div class="col-12" style="color:black;">
+                Insigths - Gênero e Idade...
+            </div>
+            <div class="col-2" style="color:black;">
+                <span id='okInsightsGenderAge' class="btn-success"
+                      style="display:none;font-size:8pt;height:15px;width:26px;text-align:center;color:black;">
+                    <i class="glyphicon glyphicon-ok"></i>OK
+                </span>
+            </div>
+            <div class="col-12" style="color:black;">
+                Insigths - Engajamento por Cidades...
+            </div>
+            <div class="col-12" style="color:black;">
+                <span id='okInsightsCity' class="btn-success"
+                      style="display:none;font-size:8pt;height:15px;width:26px;text-align:center;color:black;">
+                    <i class="glyphicon glyphicon-ok"></i>OK
+                </span>
+            </div>
+            <div class="col-12" style="color:black;">
+                Informações de engajamento...
+            </div>
+            <div class="col-12" style="color:black;">
+                <span id='okUserInsights' class="btn-success" style="display:none;font-size:8pt;height:15px;width:26px;text-align:center;">
+                    <i class="glyphicon glyphicon-ok"></i>
+                    OK
+                </span>
+            </div>
+            <div class="col-12" style="color:black;">
+                Informações de Stories...
+            </div>
+            <div class="col-12" style="color:black;">
+                <span id='okStories' class="btn-success" style="display:none;font-size:8pt;height:15px;width:26px;text-align:center;">
+                    <i class="glyphicon glyphicon-ok"></i>OK
+                </span>
+            </div>
+        </div>
+
+
+        <div class="container-1366 my-3">
+            <p>Somente usúario com uma função na Página do Facebook vinculada à conta do Instagram para Empresas podem conceder ao seu aplicativo permissões para usar o Metrics.</p>
+            <p>A INFLUENCERS INC. METRICS, preza por distinto profissionalismo, integridade e ética, que são os valores centrais de nossa empresa. Com experiência de mais de 12 anos no segmento de tecnologia publicidade, criamos a plataforma para solucionar resultados e trazer as marcas, a realidade da influência digital. Não nos comprometemos em fazer a gestão de influenciadores, e sim, o que fazemos, e simplesmente o relatório de métricas de forma completa para INFLUENCIADORES, MARACAS e AGÊNCIAS no Brasil e de todo o mundo.</p>
+            <p>A INFLUENCERS INC. considera a autenticidade dos influenciadores e das agências cadastradas e pesquisadas, a questão de maior importância. Porque a segurança e os melhores interesses do mercado é o que levamos a sério, nós solicitamos estar atento e ser cautelosos caso impostores encaminhem mensagens ou utilizem por apropriação indevida do nome da INFLUENCERS METRICS , conhecida como INFLUENCERS INC. Qualquer informações de pesquisas e dados jamais aparecerão de forma pública, ou seja, estará completamente segura e protegida por nossos termos de privacidade. O contato direto com influenciadores consultados através da Influencers Inc.ou Influencers Metrics, será realizado apenas através de agências, agentes ou marcas cadastradas e conveniadas a INFLUENCERS INC.</p>
+            <p>Seja bem vindo.</p>
+        </div>
+    </section>
+</div>
+@section plugins{
+    <script>
+        if (location.protocol != 'https:') {
+            location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+        }
+
+        function verifyFacebookToken() {
+            $('#facebookPagesModal').modal('show');
+        }
+    </script>
+}
+
+@section scripts{
+    <script src="~/node_modules/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
+    <script src="~/js/MetricasInsights.js"></script>
+    <script>
+	    @Html.Raw(@ViewBag.ExecuteGetToken);
+    </script>
+}

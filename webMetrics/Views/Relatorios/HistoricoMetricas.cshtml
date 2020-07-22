@@ -1,0 +1,686 @@
+﻿@model webMetrics.Models.DTO.AutorizarMetricaPage
+@{
+    ViewData["Title"] = "Histórico de métricas";
+    ViewData["Page"] = "MetricsHistory";
+    Layout = "_LayoutManagement";
+}
+@section Style{
+    <link rel="stylesheet" href="~/node_modules/formstone/dist/css/upload.css">
+    <script>
+        var _userId = @Html.Raw("'" + Model.autorizacaoMetrica.UsuarioId + "'");
+        var _apiSobreposicao = '/facedata/getsobreposicao';
+        var _apiSobreposicaoDetail = '/facedata/getsobreposicaoDetail';
+
+        if (location.protocol != 'https:') {
+            location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+        }
+
+        function verifyFacebookToken() {
+            $('#facebookPagesModal').modal('show');
+        }
+
+        var idUserClick = '';
+        function setDebito() {
+            $.ajax({
+                url: "/relatorios/desbloquearRelatorio",
+                type: 'post',
+                data: {
+                    id: idUserClick
+                }
+            })
+                .done(function (msg) {
+                    if (msg.indexOf("Error#") > -1) {
+                        alert('Algum problema ocorreu: ' + msg.replace('Error#', ''));
+                    } else {
+                        window.location = 'Metricas/' + msg;
+                    }
+                })
+                .fail(function (jqXHR, textStatus, msg) {
+                    alert("Fail: " + msg);
+                });
+        }
+
+        function setId(idUser) {
+            idUserClick = idUser;
+            $('#CreditosModal').appendTo("body").modal('show');
+        }
+    </script>
+}
+
+<section class="container-fluid limit-1366 fixed-left text-center">
+
+    <h1 class="font-black my-5  text-center">Histórico de métricas</h1>
+    <form>
+        <div class="row justify-content-center mb-4">
+
+            <div class="col-lg-5">
+                @*<p class="mt-2 mb-2 text-uppercase container-1200  text-center px-lg-5">*@
+                Caso tenha salvo perfis ou indicado o nome da campanha ou quem solicitou selecione aqui o cliente@*</p>*@
+                <br />
+                <select onchange="window.location='historicometricas?client=' + event.target.value;" class="form-control form-control-lg select-white">
+                    <option value="" selected="selected">Nenhum cliente selecionado</option>
+                    @{
+                        @foreach (var cliente in Model.Clientes)
+                        {
+                            if (ViewBag.ClienteSeletcted == cliente)
+                            {
+                                @Html.Raw("<option selected value='" + cliente + "'>" + cliente + "</option>")
+                            }
+                            else
+                            {
+                                @Html.Raw("<option value='" + cliente + "'>" + cliente + "</option>")
+                            }
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-lg-5">
+                Analisar Sobreposição<br />
+                <a class="btn btn-circle btn-border-none btn-red-outline" href="javascript:sobreposicao();">
+                    <i class="fas fa-address-book"></i>
+                </a>
+            </div>
+        </div>
+    </form>
+</section>
+
+<section class="fixed-left">
+    @{
+        var monthName = 0;
+        var sobe = 0M;
+        var desce = 0M;
+    }
+    @foreach (var headItem in Model.Months)
+    {
+        {
+            monthName += 1;
+        }
+        <!-- !!!! IMPORTANT o valor do [href] do link tem que ser o mesmo [id] do bloco q vai abrir -->
+        <div class="header-accordion bg-gray">
+            <a class="btn-clear limit-1366 fixed-left text-center font-white" data-toggle="collapse" href="#mes@(monthName)" aria-expanded="true">
+                MÊS: @Html.Raw(headItem.DataCriacao.ToString("MMMM", webMetrics.Helper.culturePtBr)) <i class="fas fa-sort-down"></i>
+            </a>
+        </div>
+        <div class="collapse show" id="mes@(monthName++)">
+            <div class="type-table line-row hist-metrics">
+                <div class="table-header">
+                    <div class="row limit-1366 fixed-left">
+                        <div class="col">
+                            Perfil analisado
+                        </div>
+                        <div class="col">
+                            Data da solicitação
+                        </div>
+                        <div class="col">
+                            Redes sociais autorizadas
+                        </div>
+                        <div class="col">
+                            Metrics
+                        </div>
+                        <div class="col">
+                            Engajamento Autêntico
+                        </div>
+                        <div class="col">
+
+                        </div>
+                    </div>
+                </div>
+
+                @foreach (var item in Model.autorizacaoMetricas.Where(w => w.DataCriacao.Month == headItem.DataCriacao.Month).OrderByDescending(o => o.DataCriacao))
+                {
+                    var nameDiv = "divRow" + item._id;
+                    desce = item.Seguidores;
+                    <div id="@nameDiv">
+                        <div class="row limit-1366 fixed-left">
+                            <div class="col">
+                                <div class="avatar-container color-gray">
+
+                                    <img class="avatar" alt="" src="@item.ProfilePictureUrl" onerror="this.src='../content/img/noimg.jpg'" />
+                                    <span class="etc profile">@("@" + @item.UsuarioInstagram)</span>
+
+                                    <input type="checkbox" alt="Selecionar" id="sel_@item._id" onclick="selectInfluencer('@item._id')" value="@item._id" />
+                                    <i> selecionar</i>
+
+                                    <span class="etc follows" data-sufix="seguidores">
+                                        @item.Seguidores.ToString("N0", webMetrics.Helper.culturePtBr)
+                                        @if (sobe <= desce)
+                                        {
+                                        <i class="fa fa-arrow-up text-danger"></i>
+                                        }
+                                        else
+                                        {
+                                            if (sobe != 0)
+                                            {
+                                        <i class="fa fa-arrow-up text-success"></i>
+                                            }
+                                        }
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <span class="date">@item.TimeSpan.ToString("dd/MM/yyyy", webMetrics.Helper.culturePtBr)</span>
+                                <span class="time">@item.TimeSpan.ToString("HH:mm:ss", webMetrics.Helper.culturePtBr)</span>
+                            </div>
+                            <div class="col">
+                                <div class="media-box">
+                                    <span class="social-instagram"></span>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <span class="range" data-sufix="alcance">@item.Alcance</span>
+                                <span class="engagement" data-sufix="engajamento">@item.Engajamento</span>
+                            </div>
+                            <div class="col">
+                                <div class="tools">
+                                    @if (item.Status == "Disponivel")
+                                    {
+                                        <a href="/relatorios/ViewBasica?id=@item._id" class="btn btn-light-blue">Análise básica</a>
+                                        @if (item.Reprocessar)
+                                        {
+                                            <a class="btn btn-circle btn-border-none btn-black-outline" href="/facedata/novaconsulta?id=@item._id&origem=b">
+                                                <i class="fas fa-sync-alt"></i>
+                                            </a>
+                                        }
+                                        <a class="btn btn-circle btn-border-none btn-red-outline" href="javascript:loadExcluir('@item._id','b');">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        @if (item.LiberadoCredito)
+                                        {
+                                            <a href="/relatorios/Metricas?id=@item._id" class="btn btn-light-blue">Análise completa</a>
+                                        }
+                                        else
+                                        {
+                                            <a href="javascript:setId('@Html.Raw(item.UsuarioId)')" class="btn btn-light-blue">Análise completa</a>
+                                        }
+                                        //<br />
+                                        //<a href="javascript:setId('@Html.Raw(item.UsuarioId)')" class="btn btn-light-blue">Teste</a>
+                                        @if (item.Reprocessar && (!item.ProblemasToken))
+                                        {
+                                            <a class="btn btn-circle btn-border-none btn-black-outline" href="/facedata/novaconsulta?id=@item._id&origem=c">
+                                                <i class="fas fa-sync-alt"></i>
+                                            </a>
+                                        }
+                                        <a class="btn btn-circle btn-border-none btn-red-outline" href="javascript:loadExcluir('@item._id','c');">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        @if (item.ProblemasToken)
+                        {
+                            <div class="row limit-1366 fixed-left" style="color:red;">
+                                *Este influenciador trocou a sua senha, revogou o token para o aplicativo ou estamos com problemas para ler os dados atualmennte.
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</section>
+
+<!-- Modal -->
+<div class="modal fade" id="imagemModal" tabindex="-1" role="dialog" aria-labelledby="imagemModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <h5 class="modal-title" id="imagemModalLabel">SELECIONE UMA FOTO</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body pt-0">
+                <form asp-controller="Relatorios" asp-action="UploadFile" method="post" enctype="multipart/form-data">
+                    <input type="file" name="file" />
+                    <input type="hidden" name="_view" value="historicometricas" />
+                    <button type="submit">Upload File</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="ExcluirModal" tabindex="-1" role="dialog" aria-labelledby="ExcluirModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <h5 class="modal-title" id="ExcluirModalLabel">CONFIRMA A EXCLUSÃO?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body pt-0">
+                <input type="hidden" id="excluir" name="excluir" value="" />
+                <input type="hidden" id="origem" name="origem" value="b" />
+                <a href="javascript:excluir()" class="btn btn-blue btn-sm">Sim, excluir</a>
+                <button type="button" data-dismiss="modal" aria-label="Close">Não, desistir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="como-funciona-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content modal-content-center rounded-3 border-0">
+            <div class="modal-header pb-0 border-0 text-center position-absolute w-100 z-index-top">
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body p-0 text-center">
+                <img class="img-fluid" src="~/resources/assets/images/como-funciona-1.jpg" alt="como funciona">
+
+                <img width="80%" class="img-fluid mt-5" src="~/resources/assets/images/como-funciona-2.png" alt="como funciona">
+
+                <div class="row m-0 py-5"><div class="col-11 mx-auto border border-top-0 border-left-0 border-right-0 border-1"></div></div>
+                <img width="80%" class="img-fluid" src="~/resources/assets/images/como-funciona-3.png" alt="como funciona">
+                <div class="row m-0 py-5"><div class="col-11 mx-auto border border-top-0 border-left-0 border-right-0 border-1"></div></div>
+
+                <div class="row mb-4">
+                    <div class="col-lg-10 col-10 px-0 py-2 mx-auto border border-black text-center">
+                        <div class="text-dark font-weight-semi-bold" style="font-size:1rem;">
+                            ENSINAMOS INFLUENCIADORES E MARCAS, ESTRATÉGIAS DE VERTICALIZAÇÃO DE MARKETING DE CONTEÚDO
+                            JÁ QUE ATRAVÉS DE TODOS OS DADOS, CONSEGUIMOS ENTENDER O QUE NÃO FOI FEITO,
+                            O QUE FOI FEITO ERRADO, O QUE FUNCIONA, E O QUE PODERÁ FUNCIONAR
+                        </div>
+                    </div>
+                </div>
+
+                <img width="80%" class="img-fluid" src="~/resources/assets/images/como-funciona-4.png" alt="como funciona">
+                <div class="row m-0 py-5"><div class="col-11 mx-auto border border-top-0 border-left-0 border-right-0 border-1"></div></div>
+                <div class="row pb-5">
+                    <div class="col-lg-10 col-10 px-0 py-2 mx-auto text-center">
+                        <div class="text-dark font-weight-semi-bold" style="font-size:1rem;">
+                            MÉTRICAS DE PUBLICAÇÕES NO STORIES
+                        </div>
+                    </div>
+                </div>
+                <img width="80%" class="img-fluid" src="~/resources/assets/images/como-funciona-5.png" alt="como funciona">
+                <div class="row m-0 py-5"><div class="col-11 mx-auto border border-top-0 border-left-0 border-right-0 border-1"></div></div>
+                <div class="row pb-5">
+                    <div class="col-lg-10 col-10 px-0 py-2 mx-auto text-center">
+                        <div class=" text-dark font-weight-semi-bold" style="font-size:1rem;">
+                            MÉTRICAS APROFUNDADAS DE LIKES POR BAIRRO EM CADA CIDADE E NÚMERO DE HABITANTES, PERFIL EMOCIONAL, ETC…
+                        </div>
+                    </div>
+                </div>
+                <img width="80%" class="img-fluid" src="~/resources/assets/images/como-funciona-6.png" alt="como funciona">
+                <div class="row m-0 py-5"><div class="col-11 mx-auto border border-top-0 border-left-0 border-right-0 border-1"></div></div>
+                <div class="row pb-5">
+                    <div class="col-lg-10 col-10 px-0 py-2 mx-auto text-center">
+                        <div class=" text-dark font-weight-semi-bold" style="font-size:1rem;">
+                            ENTREGA DE RELATÓRIO DE ENGAJAMENTO INDIVIDUAL OU EM LOTE PARA SABER QUEM MELHOR CONTRATAR E COMO
+                        </div>
+                    </div>
+                </div>
+                <img width="80%" class="img-fluid mb-5" src="~/resources/assets/images/como-funciona-7.png" alt="como funciona">
+                <img class="img-fluid" src="~/resources/assets/images/como-funciona-8.jpg" alt="como funciona">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="senhainvalida" tabindex="-1" role="dialog" aria-labelledby="senhainvalidaModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <h5 class="modal-title" id="resetPasswordModalLabel">MENSAGEM - HISTÓRICO</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body pt-0">
+                <div class="form-group mb-0">
+                    <span id='lblMensagemLogin'></span>
+                </div>
+            </div>
+            <div class="modal-footer pt-0 border-0">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal - Facebook Pages -->
+<div class="modal fade" id="facebookPagesModal" tabindex="-1" role="dialog" aria-labelledby="facebookPagesModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <h5 class="modal-title" id="imagemModalLabel">SELECIONE UMA PAGINA</h5>
+            </div>
+            <div class="modal-body pt-10">
+                <div class="row">
+                    <div class="col-sm-2">
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="row">
+                            <div class="fb-login-button btn btn-block btn-purple btn-fb rounded text-left" width="100%"
+                                 data-max-rows="1" data-size="large"
+                                 data-button-type="continue_with" id='btnFacebook'
+                                 data-scope="email,instagram_basic,instagram_manage_insights,read_insights,manage_pages,instagram_manage_comments"
+                                 data-show-faces="false" data-auto-logout-link="false"
+                                 data-use-continue-as="true" onlogin="checkLoginState();"></div>
+                        </div>
+                        <div class="row">
+                            Você precisa vincular uma conta instagram em uma página facebook para consultar métricas.<p>
+                        </div>
+                        <div class="row">
+                            <span name="cbxPaginas" class="form-control" id="cbxPaginas" />
+                        </div>
+                        <div class="row">
+                            <hr />
+                        </div>
+                        <div class="row" style='align:center'>
+                            <a id='btnPermitir' class='btn btn-success btn-sm px-3' href='javascript:setToken();'>Permitir métricas</a>
+                            <img src='~/images/loading.gif' id='loading' style='display:none' />
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal - Creditos -->
+<div class="modal fade" id="CreditosModal" tabindex="-1" role="dialog" aria-labelledby="CreditosModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <h5 class="modal-title" id="imagemModalLabel">Créditos - Uso</h5>
+            </div>
+            <div class="modal-body pt-10">
+                <div class="row">
+                    <div class="col-sm-2">
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="row">
+                            Seu saldo: @ViewBag.CreditoMetricas
+                        </div>
+                        <div class="row">
+                            Você precisa autorizar o débito de um crédito para visualizar dados desse influencer.<p>
+                        </div>
+                        <div class="row">
+                            <hr />
+                        </div>
+                        <div class="row" style='align:center'>
+                            <a id='btnDebito' class='btn btn-success btn-sm px-3' href='javascript:setDebito();'>Permitir</a>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Sobreposição-->
+<div class="modal fade" id="SobreposicaoModal" tabindex="-1" role="dialog" aria-labelledby="SobreposicaoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <h5 class="modal-title" id="ExcluirModalLabel">ANÁLISE DE SOBREPOSIÇÃO</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body pt-0">
+                <div>
+                    <img src='~/images/loading.gif' id='loadingSobreposicao' style='display:none' />
+                </div>
+                <div style="overflow:scroll;display: flex;overflow-x: hidden;height: 350px;">
+                    <span id="spListSobreposicao"></span>
+                </div>
+                <p></p>
+                <button type="button" data-dismiss="modal" aria-label="Close">Pronto</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/node_modules/formstone/dist/js/core.js"></script>
+    <script src="~/node_modules/formstone/dist/js/upload.js"></script>
+    <script src="~/resources/assets/javascripts/upload.js"></script>
+
+    <script>
+
+		@Html.Raw(@ViewBag.ExecuteGetToken);
+		function logout()
+		{
+			location.href = 'login';
+		}
+
+		function abrirModal(name, msg)
+		{
+            document.getElementById('lblMensagemLogin').innerHTML = msg;
+            $(name).appendTo('body').modal('show');
+		}
+		@Html.Raw(@ViewBag.ExecutarJS);
+    </script>
+    <script>
+        var _url = 'https://www.influencersmetrics.com';
+        //var _url = 'https://localhost:44318';
+        //var _url = '/';
+
+        var _apiSetToken = '/facedata/setToken';
+        var _apiSaveData = "/facedata/setJsonData";
+        var _apiRemoverConsulta = "/relatorios/removerconsulta";
+        var _key = "tipo-01";
+        //var _userId = "";
+
+        function checkLoginState() {
+            FB.getLoginStatus(function (response) {
+                statusChangeCallback(response);
+            });
+        }
+
+        function statusChangeCallback(response) {
+            if (response.status == "connected") {
+                document.getElementById('btnFacebook').style.display = 'none';
+
+                //Carregar paginas
+                listPages();
+            }
+            else {
+                document.getElementById('btnFacebook').style.display = 'block';
+            }
+        }
+
+        function listPages() {
+            FB.api('/me/accounts?fields=instagram_business_account,name,access_token', function (dataface) {
+                var tokens = $.grep(dataface.data, function (p) { return p.category != ''; });
+
+                var tokensName = tokens.map(function (p) {
+                    return { 'instagram_business_account': p.instagram_business_account, 'name': p.name, 'access_token': p.access_token }
+                });
+
+                var str = "<select style='form-control' id='ddlPage' onchange='selectPage()'>";
+                str += "<option value=''>Escolha a sua página</option>";
+                $(tokensName).each(function () {
+                    if (this.instagram_business_account != "" && this.instagram_business_account != null) {
+                        str += '<option value=' + this.instagram_business_account.id + ';' + this.access_token + '>' + this.name + '</option>';
+                    }
+                });
+                str += "</select>";
+
+                $('#cbxPaginas').html(str);
+                str = "";
+            });
+        }
+
+        instagram_business_account = "";
+        access_token = "";
+        nomePage = "";
+        function selectPage() {
+            var e = document.getElementById("ddlPage");
+            var idPage = e.options[e.selectedIndex].value;
+            instagram_business_account = idPage.split(';')[0];
+            access_token = idPage.split(';')[1];
+            nomePage = e.options[e.selectedIndex].text;
+        }
+
+        function setToken() {
+            if (instagram_business_account == "" || access_token == "" || nomePage == "") {
+                alert('Antes de prosseguir, precisa selecionar uma página vinculada a sua conta instagram!');
+                return;
+            }
+            $("#btnPermitir").hide();
+            saveToken(instagram_business_account, access_token, nomePage);
+        }
+
+        function saveToken(instagram_business_account, access_token, nomePage) {
+            $.ajax({
+                url: _url + _apiSetToken,
+                type: 'post',
+                data: {
+                    instagram_business_account: instagram_business_account,
+                    access_token: access_token,
+                    nomePage: nomePage//,
+                    //userId: _userId
+                },
+                beforeSend: function () {
+                    $("#resultado").html("ENVIANDO...");
+                }
+            })
+                .done(function (msg) {
+                    if (msg.indexOf("Error#") == -1) {
+                        msg = setInterval(function () {
+                            alert('Pronto, você pode consultar os influenciadores.');
+                            $('#facebookPagesModal').modal('hide');
+                            clearInterval(msg);
+                            window.location = 'HistoricoMetricas';
+                        }, 1000);
+                    } else {
+                        $("#btnPermitir").show();
+                        alert('Algum problema ocorreu: ' + msg.replace('Error#', ''));
+                    }
+                })
+                .fail(function (jqXHR, textStatus, msg) {
+                    $("#btnPermitir").show();
+                    alert("Fail: " + msg);
+                });
+        }
+
+        function loadExcluir(id, origem) {
+            $("#excluir").val(id);
+            $("#origem").val(origem);
+            $('#ExcluirModal').appendTo('body').modal('show');
+        }
+
+        function excluir(id, origem) {
+            $.ajax({
+                url: _url + _apiRemoverConsulta,
+                type: 'post',
+                data: {
+                    excluir: $("#excluir").val(),
+                    origem: $("#origem").val()
+                }
+            })
+                .done(function (msg) {
+                    if (msg.indexOf("Error#") == -1) {
+                        msg = setInterval(function () {
+                            $('#divRow' + $("#excluir").val()).css("display", "none");
+                            $('#divRow' + $("#excluir").val()).removeClass("d-flex");
+                            $('#ExcluirModal').modal('hide');
+                            clearInterval(msg);
+                        }, 1000);
+                    } else {
+                        alert('Algum problema ocorreu: ' + msg.replace('Error#', ''));
+                    }
+                })
+                .fail(function (jqXHR, textStatus, msg) {
+                    alert("Fail: " + msg);
+                });
+        }
+
+        var selects = '';
+        function selectInfluencer(id) {
+            if (document.getElementById('sel_' + id).checked) {
+                selects = selects + ',' + document.getElementById('sel_' + id).value;
+            } else {
+                selects = selects.replace(',' + document.getElementById('sel_' + id).value, '');
+            }
+            //alert(selects);
+        }
+
+        function sobreposicao() {
+            if (selects === '') {
+                alert('Nenhum influencer selecionado.');
+                return;
+            }
+            if (selects.length < 22) {
+                alert('Selecionar outro influencer para analisar sobreposição.')
+                return;
+            }
+
+            $('#SobreposicaoModal').appendTo('body').modal('show');
+            $('#loadingSobreposicao').show();
+            $("#spListSobreposicao").empty();
+            $.ajax({
+                url: _url + _apiSobreposicao + '?userid=' + _userId + '&listUsers=' + selects,
+                type: 'post',
+                data: {
+                    userid: _userId,
+                    listUsers: selects
+                }
+            })
+                .done(function (msg) {
+                    if (msg.indexOf("Error#") == -1) {
+
+                        $.ajax({
+                            url: _url + _apiSobreposicaoDetail + '?userid=' + _userId + '&id=' + msg,
+                            type: 'post',
+                            data: {
+                                userid: _userId,
+                                listUsers: selects
+                            }
+                        })
+                            .done(function (msg) {
+                                if (msg === undefined) {
+                                    $('#loadingSobreposicao').hide();
+                                    alert('Algum problema ocorreu: ' + msg.replace('Error#', ''));
+                                } else {
+                                    $('#loadingSobreposicao').hide();
+                                    var row1 = "";
+                                    $.each(msg, function (index, value) {
+                                        row1 = row1 + MakeRowSobreposicao(msg[index].profile, msg[index].username, msg[index].after, msg[index].before)
+                                    });
+                                    $("#spListSobreposicao").append(row1);
+                                }
+                            })
+                            .fail(function (jqXHR, textStatus, msg) {
+                                $('#SobreposicaoModal').modal('hide');
+                                alert("Fail: " + msg);
+                            });
+                    } else {
+                        alert('Algum problema ocorreu: ' + msg.replace('Error#', ''));
+                    }
+                })
+                .fail(function (jqXHR, textStatus, msg) {
+                    $('#SobreposicaoModal').modal('hide');
+                    alert("Fail: " + msg);
+                });
+        }
+
+        function MakeRowSobreposicao(profile, nome, after, before) {
+            var row = "  <div class='row'>" +
+                "    <div class='avatar-container color-gray'> " +
+                "        <img class='avatar' alt='' src='" + profile + "'/>" +
+                "        <span class='etc profile'> @@" + nome + " </span>" +
+                "        <br /><span class='etc'><b>Sobreposição de "+ parseFloat((100 - ((after / before) * 100)).toFixed(2)) +"% do total de seguidores </b></span>" +
+                "    </div>" +
+                "</div>";
+            return row;
+        }
+
+    </script>
+}

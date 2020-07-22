@@ -1,0 +1,619 @@
+﻿@model webMetrics.Models.DTO.AutorizarMetricaPage
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Influencers Inc</title>
+
+    <link rel="stylesheet" href="~/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/node_modules/@@fortawesome/fontawesome-free/css/all.css">
+    <link rel="stylesheet" href="~/node_modules/formstone/dist/css/upload.css">
+    <link rel="stylesheet" href="~/resources/assets/styles/fonts.css">
+    <link rel="stylesheet" href="~/resources/assets/styles/global.css">
+    <link rel="stylesheet" href="~/resources/assets/styles/mobile.css">
+    <script>
+        var _userId = "";
+        if (location.protocol != 'https:') {
+            location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+        }
+
+        function verifyFacebookToken() {
+            $('#facebookPagesModal').modal('show');
+        }
+    </script>
+</head>
+<body id="page-home">
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '220440968764019',
+                cookie: true,
+                xfbml: true,
+                status: true,
+                version: 'v3.1'
+            });
+            FB.AppEvents.logPageView();
+            FB.Event.subscribe('auth.authResponseChange', function (response) {
+                if (response.status === 'connected') {
+                    checkLoginState();
+                } else if (response.status === 'not_authorized') {
+                    FB.login();
+                } else {
+                    FB.login();
+                }
+            });
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) { return; }
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/pt_Br/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        /**/</script>
+    <div id="fb-root"></div>
+    <nav id="nav-top" class="navbar navbar-expand-lg navbar-light bg-white card-resume py-0 pr-md-0 px-2 pl-md-3">
+        <a class="navbar-brand" href="/">
+            <img width="100%" src="~/resources/assets/images/logo3.png" alt="logo">
+        </a>
+        <button class="navbar-toggler px-1 py-0 border-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse py-2 py-md-0" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto justify-content-between align-items-center">
+                <li class="nav-item font-weight-semi-bold"><a class="nav-link px-4" href="~/entenda_a_importancia.pdf" target="_blank">ENTENDA A IMPORTÂNCIA</a></li>
+                <li class="nav-item font-weight-semi-bold dropdown bg-grey text-dark btn-menu position-relative">
+                    <a class="nav-link font-weight-bold text-uppercase align-items-center d-flex justify-content-center" href="javascript:;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div style="width:61px;height:60px;" class="mr-3">
+                            <img id="menu-profile-image" width="100%" height="100%" class="object-fit_cover rounded-circle"
+                                 src="@ViewBag.ProfileFotoURI" alt="icone de perfil">
+                        </div>
+                        @ViewBag.NameUser
+                    </a>
+                    <div style="z-index:9999;" class="dropdown-menu dropdown-menu-right p-0 m-0 bg-grey border-0" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" href="perfil">
+                            <img width="14" class="mr-1" src="~/resources/assets/images/ico-editar.png" alt="icon"> Editar Perfil
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item btn-chat show" href="minhasanalises">
+                            <img width="16" class="mr-1" src="~/resources/assets/images/ico-analises.png" alt="icon"> Minhas Análises
+                        </a>
+                        <a class="dropdown-item" href="javascript:alert('Em construção!');">
+                            <img width="14" class="mr-1" src="~/resources/assets/images/ico-visitantes.png" alt="icon"> Quem me Visitou
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="javascript:;" onclick="logout();">
+                            <img width="14" class="mr-1" src="~/resources/assets/images/ico-sair.png" alt="icon"> Sair
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main role="main" id="main-index" class="border border-grey border-right-0 border-left-0 border-bottom-0" style="min-height:500px;">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-2 p-0">
+                    <div class="border border-grey p-0 pb-3 mb-4">
+                        <div class="bg-grey py-2 pl-2 mb-3"><h6 class="m-0 p-0 font-weight-bold text-dark">MENU</h6></div>
+                        <div class="border border-grey text-secondary py-1 pl-2 mx-3 font-weight-semi-bold" style="font-size:1rem;">Informações</div>
+                        <nav class="nav nav-pills flex-column px-3 py-2" id="sidebar">
+                            <a class="flex-sm-fill text-sm-center nav-link" href="perfil">
+                                Perfil
+                            </a>
+                            <a class="flex-sm-fill text-sm-center nav-link active" href="MinhasAnalises">
+                                Minhas análises
+                            </a>
+                            <a class="flex-sm-fill text-sm-center nav-link" href="javascript:alert('Em construção!');">
+                                Quem me visitou
+                            </a>
+                            @*<a class="flex-sm-fill text-sm-center nav-link " href="~/relatorios/planos">
+                                    Meu plano
+                                </a>*@
+                            <div class="border border-grey text-secondary py-1 pl-2 mx-3 font-weight-semi-bold" style="font-size:1rem;">Configurações</div>
+                            <nav class="nav nav-pills flex-column px-3 py-2" id="sidebar">
+                                <a class="flex-sm-fill text-sm-center nav-link" href="~/relatorios/configuracoes">
+                                    Segurança & Conta
+                                </a>
+                                <a class="flex-sm-fill text-sm-center nav-link" href="javascript:alert('Em construção!');">
+                                    Assinatura & Pagamento
+                                </a>
+                            </nav>
+                            <div class="dropdown-divider border-grey mx-3"></div>
+                            <div class="row m-0 py-2 d-flex align-items-center">
+                                <div class="col-3 pr-0 text-center">
+                                    <div id="sidebar-profile-image" class="bg-img-responsive rounded-circle"
+                                         style="padding-bottom:100%;background-image:url(@ViewBag.ProfileFotoURI)"></div>
+                                </div>
+                                <div class="col-9">
+                                    <div class="row mt-4">
+                                        <div class="col-12">
+                                            <span class="font-15x font-weight-bold text-uppercase d-flex align-items-center">
+                                                @ViewBag.NameUser
+                                            </span>
+                                            <!--<a href="javascript:;" class="small" data-target="#imagemModal" data-toggle="modal"><u>Alterar imagem</u></a>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row m-0 mt-4">
+                                <div class="col-md-12 p-0">
+                                    <nav class="nav flex-column">
+                                    </nav>
+                                </div>
+                            </div>
+                            <div class="row m-0 mt-2">
+                                <div class="col-md-12 p-0">
+                                    <nav class="nav flex-column">
+                                        <a class="nav-link py-1 text-muted" href="javascript:;" onclick="window.logout();"><i class="fas fa-sign-out-alt mr-2 text-danger"></i> Sair</a>
+                                    </nav>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+                <div class="col-md-10 col-12 p-md-5">
+                    <div class="row align-items-center d-flex">
+                        <div class="col-12 col-md-6 mb-3">
+                            <h3>MINHAS ANÁLISES</h3>
+                            <span class="text-muted">CONSULTE OS SEUS HISTÓRICOS DE ANÁLISES</span>
+                        </div>
+                        <div class="col-md-4 ml-auto text-right">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Pesquisar por data...">
+                                <div class="input-group-append">
+                                    <span class="input-group-text bg-white"><i class="fa fa-search"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @{
+                        var sobe = 0M;
+                        var desce = 0M;
+                    }
+                    <div class="row">
+                        <div class="col">
+                            <div class="table-responsive">
+                                <div class="accordion" id="accordionExample">
+                                    @foreach (var headItem in Model.Months)
+                                    {
+
+                                        <div class="card border-0 mt-2">
+                                            <div class="card-header border-0 p-0" id="headingOne">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link text-dark w-100 font-weight-semi-bold" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                        <div class="float-left">MÊS: @Html.Raw(headItem.DataCriacao.Month)</div> <i class="fa fa-caret-down float-right"></i>
+                                                    </button>
+                                                </h5>
+                                            </div>
+
+                                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                                <div class="card-body text-dark px-0 pt-2 pb-0">
+                                                    <div class="row m-0 py-2 bg-light text-center font-weight-semi-bold">
+                                                        <div class="col">
+                                                            DATA
+                                                        </div>
+                                                        <div class="col">
+                                                            SEGUIDORES
+                                                        </div>
+                                                        <div class="col">
+                                                            POWERFUL
+                                                        </div>
+                                                        <div class="col d-none d-md-flex"></div>
+                                                    </div>
+                                                    @foreach (var item in Model.autorizacaoMetricas.Where(w => w.DataCriacao.Month == headItem.DataCriacao.Month).OrderByDescending(o => o.DataCriacao))
+                                                    {
+                                                        {
+                                                            desce = item.Seguidores;
+                                                        }
+
+                                                        <div class="row m-0 mt-2 py-2 text-center d-flex align-items-center">
+                                                            <div class="col">
+                                                                @Html.DisplayFor(modelItem => item.TimeSpan)
+                                                            </div>
+                                                            <div class="col">
+                                                                @Html.DisplayFor(modelItem => item.Seguidores)
+
+                                                                @if (sobe <= desce)
+                                                                {
+                                                                    <i class="fa fa-arrow-up text-danger"></i>
+                                                                }
+                                                                else
+                                                                {
+                                                                    if (sobe != 0)
+                                                                    {
+                                                                        <i class="fa fa-arrow-up text-success"></i>
+                                                                    }
+                                                                }
+
+                                                            </div>
+                                                            <div class="col">
+                                                                @if (item.Aprovado == 2)
+                                                                {
+                                                                    <span class="badge badge-success d-block"><h5 class="mb-0 p-0 title-percentage">@Html.DisplayFor(modelItem => item.PowerFull)%</h5></span>
+                                                                }
+                                                                else if (item.Aprovado == 1)
+                                                                {
+                                                                    <span class="badge badge-warning d-block"><h5 class="mb-0 p-0 title-percentage">@Html.DisplayFor(modelItem => item.PowerFull)%</h5></span>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <span class="badge badge-danger d-block"><h5 class="mb-0 p-0 title-percentage">@Html.DisplayFor(modelItem => item.PowerFull)%</h5></span>
+                                                                }
+                                                            </div>
+                                                            @if (ViewBag.CreditoMetricas > 0)
+                                                            {
+                                                                <div class="col my-3 my-md-0">
+                                                                    @Html.ActionLink("ANÁLISE COMPLETA", "Metricas", "relatorios", new { id = item._id },
+                                                                            new { @class = "btn btn-blue btn-sm" })
+                                                                </div>
+                                                                <div class="col">
+                                                                    @if (item.Reprocessar)
+                                                                    {
+                                                                        <a class="navbar-brand" href="/facedata/novaconsulta?id=@item._id&origem=c">
+                                                                            <img src="~/images/novaconsulta.png" style="height:30px" alt="voltar">
+                                                                        </a>
+                                                                    }
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                <div class="col my-3 my-md-0" data-toggle="modal" data-target="#planosModal">
+                                                                    <span class="btn btn-blue btn-sm">ANÁLISE COMPLETA</span>
+                                                                </div>
+                                                                <div class="col">
+                                                                    @if (item.Reprocessar)
+                                                                    {
+                                                                        <a class="navbar-brand" href="/facedata/novaconsulta?id=@item._id&origem=c">
+                                                                            <img src="~/images/novaconsulta.png" style="height:30px" alt="voltar">
+                                                                        </a>
+                                                                    }
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                        {
+                                                            sobe = item.Seguidores;
+                                                        }
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="border border-bottom-0 border-left-0 border-right-0 border-1 mt-5">
+        <div class="container-fluid text-center text-md-left">
+            <div class="row m-0">
+                <div class="col-11 mx-auto">
+                    <div class="row py-5">
+                        <div class="col-lg-3 col-12 mb-3">
+                            <div class="row">
+                                <div class="col-lg-10 pl-0">
+                                    <h6 class="text-dark font-weight-semi-bold">INFLUENCERS INC</h6>
+                                    <nav class="nav flex-column">
+                                        <a class="nav-link text-muted px-0" href="~/home/sobrenos">SOBRE NÓS</a>
+                                        <a class="nav-link px-4" href="~/entenda_a_importancia.pdf" target="_blank">ENTENDA A IMPORTÂNCIA</a>
+                                        <a class="nav-link text-muted px-0" href="javascript:alert('Em breve');">IMPRENSA</a>
+                                        <a class="nav-link text-muted px-0" href="javascript:alert('Em breve');">TEAM</a>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg col-12 mb-3">
+                            <h6 class="text-dark font-weight-semi-bold">DESCUBRA</h6>
+                            <nav class="nav flex-column">
+                                <a class="nav-link text-muted px-0" href="~/home/descubra#micro">MICRO INFLUENCERS</a>
+                                <a class="nav-link text-muted px-0" href="~/home/descubra#colaborador">COLABORADORES</a>
+                                <a class="nav-link text-muted px-0" href="~/home/descubra#marcas">MARCAS</a>
+                            </nav>
+                        </div>
+                        <div class="col-lg-4 col-12 mb-3">
+                            <h6 class="text-dark font-weight-semi-bold">SEJA UM MICROINFLUENCER</h6>
+                            <nav class="nav flex-column">
+                                <a class="nav-link text-muted px-0" href="~/home/passoapasso">PASSO A PASSO</a>
+                                <a class="nav-link text-muted px-0" href="~/home/influencersguide">INFLUENCERS GUIDE</a>
+                                <a class="nav-link text-muted px-0" href="~/home/workshop">WORKSHOP</a>
+                            </nav>
+                        </div>
+                        <div class="col-lg col-12 mb-3 pr-0">
+                            <h6 class="text-dark font-weight-semi-bold">INTELLIGENCE & METRICS</h6>
+                            <nav class="nav flex-column">
+                                <a class="nav-link text-muted px-0" href="~/home/ConsulteEngajamento">CONSULTE ENGAJAMENTO</a>
+                                <a class="nav-link text-muted px-0" href="~/Home/EntendaaImportancia">ENTENDA A IMPORTÂNCIA</a>
+                            </nav>
+                        </div>
+                    </div>
+                    <div class="row d-flex align-items-center py-4 border border-left-0 border-right-0 border-1 border-bottom-0 border-black" id="sub-footer">
+                        <div class="col-lg-2 col-6 mx-auto ml-md-0 pl-0 mb-3 mb-md-0">
+                            <img src="~/resources/assets/images/logo2.png" style="width: 80%">
+                        </div>
+                        <div class="col-lg-8 col-12 text-center text-muted">
+                            <div class="row">
+                                <div class="ml-auto col-lg-6 col-12 mb-3 mb-md-0">
+                                    ALL RIGHTS RESERVED INFLUENCERS INC. © 2019.
+                                </div>
+                                <div class="col-lg-4 col-12 mb-3 mb-md-0">
+                                    <a class="text-muted" href="javascript:;" data-toggle="modal" data-target="#modalTermosECondicoes">TERMOS E CONDIÇÕES</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-12 p-0 text-center">
+                            <nav class="nav justify-content-md-end justify-content-center">
+                                <a class="nav-link text-dark p-0" href="http://www.instagram.com/influencersinc"><i class="fab fa-lg fa-instagram"></i></a>
+                                <a class="nav-link text-dark p-0 pl-2" href="http://www.facebook.com/influencersinc"><i class="fab fa-lg fa-facebook"></i></a><a class="nav-link text-dark p-0 pl-2" href="https://www.youtube.com/channel/UCoYfvO-p8lWpj0Yw-O--25A"><i class="fab fa-lg fa-youtube"></i></a>
+
+
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal - Facebook Pages -->
+    <div class="modal fade" id="facebookPagesModal" tabindex="-1" role="dialog" aria-labelledby="facebookPagesModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title" id="imagemModalLabel">SELECIONE UMA PAGINA</h5>
+                </div>
+                <div class="modal-body pt-10">
+                    <div class="row">
+                        <div class="col-sm-2">
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="row">
+                                <div class="fb-login-button btn btn-block btn-purple btn-fb rounded text-left" width="100%"
+                                     data-max-rows="1" data-size="large"
+                                     data-button-type="continue_with" id='btnFacebook'
+                                     data-scope="email,instagram_basic,instagram_manage_insights,read_insights,manage_pages,instagram_manage_comments"
+                                     data-show-faces="false" data-auto-logout-link="false"
+                                     data-use-continue-as="true" onlogin="checkLoginState();"></div>
+                            </div>
+                            <div class="row">
+                                Qual página que você vinculou a sua conta Instagram?<p>
+                            </div>
+                            <div class="row">
+                                <span name="cbxPaginas" class="form-control" id="cbxPaginas" />
+                            </div>
+                            <div class="row">
+                                <hr />
+                            </div>
+                            <div class="row" style='align:center'>
+                                <a id='btnPermitir' class='btn btn-success btn-sm px-3' href='javascript:setToken();'>Permitir geração de métricas</a>
+                                <img src='~/images/loading.gif' height="50px" id='loading' style='display:none' />
+                            </div>
+                            <!--<div class="row" style='align:center'>
+                                <div class="col-10">
+                                    Informações do Usuário...
+                                </div>
+                                <div class="col-2">
+                                    <span id='okUsuario' class="btn-success" style="display:none;font-size:8pt;height:15px;width:26px;text-align:center;">
+                                        <i class="glyphicon glyphicon-ok"></i>
+                                        OK
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row" style='align:center'>
+                                <div class="col-10">
+                                    Informações de Mídia...
+                                </div>
+                                <div class="col-2">
+                                    <span id='okMedia' class="btn-success" style="display:none;font-size:8pt;height:15px;width:26px;text-align:center;">
+                                        <i class="glyphicon glyphicon-ok"></i>
+                                        OK
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row" style='align:center'>
+                                <div class="col-10">
+                                    Informações de Tags...
+                                </div>
+                                <div class="col-2">
+                                    <span id='oktags' class="btn-success" style="display:none;font-size:8pt;height:15px;width:26px;text-align:center;">
+                                        <i class="glyphicon glyphicon-ok"></i>
+                                        OK
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row" style='align:center'>
+                                <div class="col-10">
+                                    Insigths - Gênero e Idade...
+                                </div>
+                                <div class="col-2">
+                                    <span id='okInsightsGenderAge' class="btn-success" style="display:none;font-size:8pt;height:15px;width:26px;text-align:center;">
+                                        <i class="glyphicon glyphicon-ok"></i>OK
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row" style='align:center'>
+                                <div class="col-10">
+                                    Insigths - Engajamento por Cidades...
+                                </div>
+                                <div class="col-2">
+                                    <span id='okInsightsCity' class="btn-success" style="display:none;font-size:8pt;height:15px;width:26px;text-align:center;">
+                                        <i class="glyphicon glyphicon-ok"></i>OK
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row" style='align:center'>
+                                <div class="col-10">
+                                    Informações de Stories...
+                                </div>
+                                <div class="col-2">
+                                    <span id='okStories' class="btn-success" style="display:none;font-size:8pt;height:15px;width:26px;text-align:center;">
+                                        <i class="glyphicon glyphicon-ok"></i>
+                                        OK
+                                    </span>
+                                </div>
+                            </div>-->
+                        </div>
+                        <div class="col-sm-2">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="imagemModal" tabindex="-1" role="dialog" aria-labelledby="imagemModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title" id="imagemModalLabel">SELECIONE UMA FOTO</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body pt-0">
+                    <form action="javascript:;" method="GET" class="form demo_form">
+                        <div class="upload py-4 text-center">
+                        </div>
+                        <div class="filelists mb-0 pb-0" style="display:none;">
+                            <h5>FOTOS CARREGADA</h5>
+                            <ol class="filelist queue mb-0 pb-0"></ol>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="planosModal" tabindex="-1" role="dialog" aria-labelledby="planosModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title" id="imagemModalLabel">Você ainda não tem o crédito para visualizar a consulta</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body pt-0">
+                    <div class="py-4 text-center">
+                        <h5>Veja os planos disponíveis</h5>
+                        <p>
+                            <a href="~/relatorios/planos" class="btn btn-blue btn-sm">Clique aqui</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="como-funciona-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content modal-content-center rounded-3 border-0">
+                <div class="modal-header pb-0 border-0 text-center position-absolute w-100 z-index-top">
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <i class="fa fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body p-0 text-center">
+                    <img class="img-fluid" src="~/resources/assets/images/como-funciona-1.jpg" alt="como funciona">
+                    <img width="80%" class="img-fluid mt-5" src="~/resources/assets/images/como-funciona-2.png" alt="como funciona">
+                    <div class="row m-0 py-5"><div class="col-11 mx-auto border border-top-0 border-left-0 border-right-0 border-1"></div></div>
+                    <img width="80%" class="img-fluid" src="~/resources/assets/images/como-funciona-3.png" alt="como funciona">
+                    <div class="row m-0 py-5"><div class="col-11 mx-auto border border-top-0 border-left-0 border-right-0 border-1"></div></div>
+                    <div class="row mb-4">
+                        <div class="col-lg-10 col-10 px-0 py-2 mx-auto border border-black text-center">
+                            <div class="text-dark font-weight-semi-bold" style="font-size:1rem;">
+                                ENSINAMOS INFLUENCIADORES E MARCAS, ESTRATÉGIAS DE VERTICALIZAÇÃO DE MARKETING DE CONTEÚDO
+                                JÁ QUE ATRAVÉS DE TODOS OS DADOS, CONSEGUIMOS ENTENDER O QUE NÃO FOI FEITO,
+                                O QUE FOI FEITO ERRADO, O QUE FUNCIONA, E O QUE PODERÁ FUNCIONAR
+                            </div>
+                        </div>
+                    </div>
+                    <img width="80%" class="img-fluid" src="~/resources/assets/images/como-funciona-4.png" alt="como funciona">
+                    <div class="row m-0 py-5"><div class="col-11 mx-auto border border-top-0 border-left-0 border-right-0 border-1"></div></div>
+                    <div class="row pb-5">
+                        <div class="col-lg-10 col-10 px-0 py-2 mx-auto text-center">
+                            <div class="text-dark font-weight-semi-bold" style="font-size:1rem;">
+                                MÉTRICAS DE PUBLICAÇÕES NO STORIES
+                            </div>
+                        </div>
+                    </div>
+                    <img width="80%" class="img-fluid" src="~/resources/assets/images/como-funciona-5.png" alt="como funciona">
+                    <div class="row m-0 py-5"><div class="col-11 mx-auto border border-top-0 border-left-0 border-right-0 border-1"></div></div>
+                    <div class="row pb-5">
+                        <div class="col-lg-10 col-10 px-0 py-2 mx-auto text-center">
+                            <div class=" text-dark font-weight-semi-bold" style="font-size:1rem;">
+                                MÉTRICAS APROFUNDADAS DE LIKES POR BAIRRO EM CADA CIDADE E NÚMERO DE HABITANTES, PERFIL EMOCIONAL, ETC…
+                            </div>
+                        </div>
+                    </div>
+                    <img width="80%" class="img-fluid" src="~/resources/assets/images/como-funciona-6.png" alt="como funciona">
+                    <div class="row m-0 py-5"><div class="col-11 mx-auto border border-top-0 border-left-0 border-right-0 border-1"></div></div>
+                    <div class="row pb-5">
+                        <div class="col-lg-10 col-10 px-0 py-2 mx-auto text-center">
+                            <div class=" text-dark font-weight-semi-bold" style="font-size:1rem;">
+                                ENTREGA DE RELATÓRIO DE ENGAJAMENTO INDIVIDUAL OU EM LOTE PARA SABER QUEM MELHOR CONTRATAR E COMO
+                            </div>
+                        </div>
+                    </div>
+                    <img width="80%" class="img-fluid mb-5" src="~/resources/assets/images/como-funciona-7.png" alt="como funciona">
+                    <img class="img-fluid" src="~/resources/assets/images/como-funciona-8.jpg" alt="como funciona">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="loading-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    </div>
+
+    <script src="~/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="~/node_modules/popper.js/dist/umd/popper.min.js"></script>
+    <script src="~/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/node_modules/chart.js/dist/Chart.min.js"></script>
+    <script src="~/node_modules/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.min.js"></script>
+    <script src="~/node_modules/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
+    <script src="~/node_modules/formstone/dist/js/core.js"></script>
+    <script src="~/node_modules/formstone/dist/js/upload.js"></script>
+    <script src="~/resources/assets/javascripts/upload.js"></script>
+</body>
+</html>
+
+<script src="~/js/MinhasAnalises.js"></script>
+<script>
+  @Html.Raw(@ViewBag.ExecuteGetToken);
+  function logout()
+  {
+	location.href = 'login';
+    }
+    @Html.Raw(@ViewBag.ExecutarJavascript)
+</script>
+
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+    (function () {
+        var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+        s1.async = true;
+        s1.src = 'https://embed.tawk.to/5ca9005553f1e453fb8c767a/default';
+        s1.charset = 'UTF-8';
+        s1.setAttribute('crossorigin', '*');
+        s0.parentNode.insertBefore(s1, s0);
+    })();
+</script>
+<!--End of Tawk.to Script-->

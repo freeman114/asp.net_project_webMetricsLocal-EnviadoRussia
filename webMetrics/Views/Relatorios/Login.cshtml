@@ -1,0 +1,279 @@
+﻿@model webMetrics.Models.Usuario
+@{
+    ViewData["Title"] = "Login";
+    ViewData["Page"] = "Login";
+    Layout = "_LayoutM2";
+}
+<div id="fb-root"></div>
+@*<script src="https://www.google.com/recaptcha/api.js?render=6LdciZ8UAAAAAH31RkgmdBMHdtMYII1p_ER21V1"></script>*@
+@*<script>
+    if (location.protocol != 'https:') {
+        location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+    }
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: '220440968764019',
+            cookie: true,
+            xfbml: true,
+            status: true,
+            version: 'v3.1'
+        });
+        FB.AppEvents.logPageView();
+    };
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) { return; }
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>*@
+<section class="fullscreen section-alone container-fluid banner-login">
+    <div class="card slim-card vertical-center">
+        <div class="card-body">
+
+            <header class="card-title">
+                <h3 class="text-center font-black">
+                    Login
+                </h3>
+            </header>
+
+            @*<a class="btn btn-facebook btn-round-square btn-text-big" href="">
+            <i class="fab fa-facebook-square"></i> Continue com o facebook
+        </a>*@
+
+            <div class="fb-login-button backcolor btn btn-text-big btn-block btn-purple btn-fb rounded text-left" width="100%"
+                 data-max-rows="1" data-size="large"
+                 data-button-type="continue_with"
+                 data-scope="email,instagram_basic,instagram_manage_insights,read_insights,manage_pages,instagram_manage_comments"
+                 data-show-faces="false" data-auto-logout-link="false"
+                 data-use-continue-as="true" onlogin="checkLoginState();"></div>
+
+            <p class="divider-or">
+                ou
+            </p>
+
+
+            <form asp-action="Login">
+                <div class="row">
+                    <div class="col-12">
+                        <!--
+                    para utilizar mensagens de erro, informações ou sucesso....
+                    basta colocar os textos dentre do [data-] correspondente e acrescentar as classes:
+
+                    form-info    - > informações
+                    form-success - > validado
+                    form-error   - > informações
+                    para funcionar precisa primeiro ter a classe [info-text]
+                -->
+                        <input asp-for="TokenFacebook" class="form-control" style="display:none;" />
+                        <input asp-for="UserId" class="form-control" style="display:none;" />
+
+                        <div class="group material-form  info-text" data-info="Informações de preenchimento" data-success="Validado" data-error="Campo inválido">
+                            <input type="email" class="" asp-for="Email" value="@ViewBag.Email" /> <!-- enquanto for do tipo e-mail, vai ter problemas do label sobrepor o input -->
+                            <span class="bar"></span>
+                            <label>Usuário</label>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="group material-form  info-text" data-info="Informações de preenchimento" data-success="Validado" data-error="Campo inválido">
+                            <input type="password" class="" asp-for="Senha" />
+                            <span class="bar"></span>
+                            <label>Senha</label>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" id="btnForm" class="btn btn-light-blue btn-text-big limit-w" href="">
+                    continuar
+                </button>
+            </form>
+
+            <div class="small-itens">
+                <a class="link" title="Veja os Termos e Condições" href="javascript:;" data-toggle="modal" data-target="#resetPasswordModal">Esqueci minha senha</a>
+
+                <p>Ainda não tem Cadastro?</p>
+                <a class="link" title="Veja os Termos e Condições" href="@Url.Action("ComeceAqui", "Relatorios")">Cadastre-se</a>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+<div class="modal fade" id="senhainvalida" tabindex="-1" role="dialog" aria-labelledby="senhainvalidaModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <h5 class="modal-title" id="resetPasswordModalLabel">MENSAGEM - LOGIN</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body pt-0">
+                <div class="form-group mb-0">
+                    <span id='lblMensagemLogin'></span>
+                </div>
+            </div>
+            <div class="modal-footer pt-0 border-0">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="resetPasswordModal" tabindex="-1" role="dialog" aria-labelledby="resetPasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <h5 class="modal-title" id="resetPasswordModalLabel">RESETAR A SENHA</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form asp-action="ResetSenha">
+                <div class="modal-body pt-0">
+                    <div class="form-group mb-0">
+                        <label asp-for="Email">Digite seu e-mail cadastrado</label>
+                        <input asp-for="Email" type="email" class="form-control">
+                    </div>
+
+                </div>
+                <div class="modal-footer pt-0 border-0">
+                    <button style="color: black;" type="button" class="btn btn-grey px-4" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-blue px-4">Resetar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="como-funciona-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content modal-content-center rounded-3 border-0">
+            <div class="modal-header pb-0 border-0 text-center position-absolute w-100 z-index-top">
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body p-0 text-center">
+                <img class="img-fluid" src="~/resources/assets/images/como-funciona-1.jpg" alt="como funciona">
+
+                <img width="80%" class="img-fluid mt-5" src="~/resources/assets/images/como-funciona-2.png" alt="como funciona">
+
+                <div class="row m-0 py-5"><div class="col-11 mx-auto border border-top-0 border-left-0 border-right-0 border-1"></div></div>
+                <img width="80%" class="img-fluid" src="~/resources/assets/images/como-funciona-3.png" alt="como funciona">
+                <div class="row m-0 py-5"><div class="col-11 mx-auto border border-top-0 border-left-0 border-right-0 border-1"></div></div>
+
+                <div class="row mb-4">
+                    <div class="col-md-10 col-10 px-0 py-2 mx-auto border border-black text-center">
+                        <div class="text-dark font-weight-semi-bold" style="font-size:1rem;">
+                            ENSINAMOS INFLUENCIADORES E MARCAS, ESTRATÉGIAS DE VERTICALIZAÇÃO DE MARKETING DE CONTEÚDO
+                            JÁ QUE ATRAVÉS DE TODOS OS DADOS, CONSEGUIMOS ENTENDER O QUE NÃO FOI FEITO,
+                            O QUE FOI FEITO ERRADO, O QUE FUNCIONA, E O QUE PODERÁ FUNCIONAR
+                        </div>
+                    </div>
+                </div>
+
+                <img width="80%" class="img-fluid" src="~/resources/assets/images/como-funciona-4.png" alt="como funciona">
+                <div class="row m-0 py-5"><div class="col-11 mx-auto border border-top-0 border-left-0 border-right-0 border-1"></div></div>
+                <div class="row pb-5">
+                    <div class="col-md-10 col-10 px-0 py-2 mx-auto text-center">
+                        <div class="text-dark font-weight-semi-bold" style="font-size:1rem;">
+                            MÉTRICAS DE PUBLICAÇÕES NO STORIES
+                        </div>
+                    </div>
+                </div>
+                <img width="80%" class="img-fluid" src="~/resources/assets/images/como-funciona-5.png" alt="como funciona">
+                <div class="row m-0 py-5"><div class="col-11 mx-auto border border-top-0 border-left-0 border-right-0 border-1"></div></div>
+                <div class="row pb-5">
+                    <div class="col-md-10 col-10 px-0 py-2 mx-auto text-center">
+                        <div class=" text-dark font-weight-semi-bold" style="font-size:1rem;">
+                            MÉTRICAS APROFUNDADAS DE LIKES POR BAIRRO EM CADA CIDADE E NÚMERO DE HABITANTES, PERFIL EMOCIONAL, ETC…
+                        </div>
+                    </div>
+                </div>
+                <img width="80%" class="img-fluid" src="~/resources/assets/images/como-funciona-6.png" alt="como funciona">
+                <div class="row m-0 py-5"><div class="col-11 mx-auto border border-top-0 border-left-0 border-right-0 border-1"></div></div>
+                <div class="row pb-5">
+                    <div class="col-md-10 col-10 px-0 py-2 mx-auto text-center">
+                        <div class=" text-dark font-weight-semi-bold" style="font-size:1rem;">
+                            ENTREGA DE RELATÓRIO DE ENGAJAMENTO INDIVIDUAL OU EM LOTE PARA SABER QUEM MELHOR CONTRATAR E COMO
+                        </div>
+                    </div>
+                </div>
+                <img width="80%" class="img-fluid mb-5" src="~/resources/assets/images/como-funciona-7.png" alt="como funciona">
+                <img class="img-fluid" src="~/resources/assets/images/como-funciona-8.jpg" alt="como funciona">
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Style{
+    <link href="~/content/plugins/scrollbars/jquery.mCustomScrollbar.css" rel="stylesheet" />
+    <link href="~/content/css/custom.css" rel="stylesheet" />
+}
+@section Plugins{
+    <link href="~/content/css/custom-adjusts.css" rel="stylesheet" />
+}
+@section EspecificBodyScripts{
+}
+@section Scripts{
+    <script src="~/content/plugins/scrollbars/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+
+    <script>
+        var openFacebookLogin = function () {
+            console.log('aki');
+            $('.fb-login-button').trigger('click');
+        }
+    </script>
+
+    <script>
+    function checkLoginState() {
+        FB.getLoginStatus(function (response) {
+            statusChangeCallback(response);
+        });
+    }
+
+    function statusChangeCallback(response) {
+        if (response.status == "connected") {
+            document.getElementById('Email').value = "";
+            document.getElementById('Senha').value = "";
+            document.getElementById('TokenFacebook').value = response.authResponse.accessToken;
+            document.getElementById('UserId').value = response.authResponse.userID;
+            document.getElementById('btnForm').click();
+        }
+    }
+
+    function teste() {
+        document.getElementById('Email').value = "";
+        document.getElementById('Senha').value = "";
+        document.getElementById('TokenFacebook').value = 'EAADIfWmjGnMBADoOtnriZBSISkKokZBY1gxnyyb3iDobkCKOuho80hRRUJHTrvB3T6Nwfe63DIwZA33cTVz9lWqbNyGocd6bHNdxT4HOcRoUkWfRFA6dMdMM6Ta9mqx0yHbEpnW4Ll8Uy4ZCt20MbU2ZAGCopeoAEqfEBno4m4112aFMeATZB8jDmiFAJssOwFOszsfD30CQZDZD';
+        document.getElementById('UserId').value = '952357081614016';
+        document.getElementById('btnForm').click();
+    }
+
+	function abrirModal(name, msg)
+	{
+		document.getElementById('lblMensagemLogin').innerHTML  = msg;
+		$(name).modal('show');
+	}
+
+	@Html.Raw(@ViewBag.ExecutarJS);
+    </script>
+
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        (function () {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/5ca9005553f1e453fb8c767a/default';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+    </script>
+
+}

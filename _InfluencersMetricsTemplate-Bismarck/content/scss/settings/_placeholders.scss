@@ -1,0 +1,249 @@
+/*placeholders &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&*/
+
+%w-auto{ width: auto; }
+%h-auto{ height: auto; }
+
+%w-100{ width: 100%; }
+%h-100{ height: 100%; }
+
+%max-w-100{ max-width: 100%; }
+%max-h-100{ max-height: 100%; }
+%min-w-100{ min-width: 100%; }
+%min-h-100{ min-height: 100%; }
+
+%max-content{ max-width: -webkit-max-content; max-width: max-content; }
+
+/* animations */
+
+//// normal
+$basic-animation-params: all .55s cubic-bezier(.19,1,.22,1) 10ms;
+$basic-animation-quick-params: all .35s cubic-bezier(.19,1,.22,1) 0ms;
+$basic-animation-slow-params: all .65s cubic-bezier(.19,1,.22,1) 50ms;
+
+%basic-animation{ @include transition($basic-animation-params); }
+%basic-animation-quick{ @include transition($basic-animation-quick-params); }
+%basic-animation-slow{ @include transition($basic-animation-slow-params); }
+
+//// bounce
+$bounce-animation-params: all 0.35s cubic-bezier(0.13, 1.21, 0.35, 1.35) 10ms !important;
+$bounce-animation-slow: all 0.35s cubic-bezier(0.13, 1.21, 0.35, 1.35) 50ms !important;
+$bounce-animation-menu-in: all 0.65s cubic-bezier(0.09, 1.15, 0.85, 0.94) 0ms !important;
+$bounce-animation-menu: all 0.35s cubic-bezier(0.93, 0.74, 0.77, 0.99) 10ms !important;
+$bounce-animation-menu-link: all 0.35s cubic-bezier(0.5, 1.04, 0.57, 1.16) 10ms !important;
+
+%bounce-animation{ @include transition($bounce-animation-params); }
+%bounce-animation-slow{ @include transition($bounce-animation-slow); }
+%bounce-animation-menu{	@include transition($bounce-animation-menu); }
+%bounce-animation-menu-in{ @include transition($bounce-animation-menu-in); }
+%bounce-animation-menu-link{ @include transition($bounce-animation-menu-link); }
+
+/// remove timing
+$no-timing: none !important;
+$no-duration: 0s !important;
+%no-transition{
+	    	transition-timing-function: $no-timing ;
+    	-ms-transition-timing-function: $no-timing ;
+       -moz-transition-timing-function: $no-timing ;
+    -webkit-transition-timing-function: $no-timing ;
+    	 -o-transition-timing-function: $no-timing ;
+    			   transition-duration: $no-duration ;
+    		   -ms-transition-duration: $no-duration ;
+    		  -moz-transition-duration: $no-duration ;
+    	   -webkit-transition-duration: $no-duration ;
+    			-o-transition-duration: $no-duration ;
+}
+
+
+
+%img-restrict{
+	@extend %max-w-100;
+	@extend %min-h-100;
+	
+	object-fit: cover;
+	///display: block;
+	///max-width: 100%;
+	height: auto;
+	///min-height: 100%;
+	text-align: center;
+	vertical-align: middle;
+	///@extend %display-flex;
+}
+
+	%bg-center{ background-position: center; }
+ %bg-no-repeat{ background-repeat: no-repeat; }
+	 %bg-cover{ background-size: cover; }
+   %bg-contain{ background-size: contain; }
+
+
+%font-Montserrat{ font-family: 'Montserrat', sans-serif; }
+///%font-awesome{ font-family: 'FontAwesome'; font-style: normal; text-rendering: auto; -webkit-font-smoothing: antialiased; }
+%font-awesome, %font-awesome-5, %font-awesome5{ font-family: 'Font Awesome 5 Free'; font-style: normal; text-rendering: auto; -webkit-font-smoothing: antialiased; }
+
+/* texts */
+.text-initial, %text-initial{ text-transform: inherit !important; }
+%text-uppercase{ text-transform: uppercase; }
+%text-decoration{ text-decoration: underline; }
+%text-decoration-none{ text-decoration: none; }
+%list-none{ list-style: none; }
+%no-wrap{ white-space: nowrap; }
+%etc{ text-overflow: ellipsis; white-space: nowrap; overflow: hidden; }
+
+
+%text-decoration-IMP{ text-decoration: underline !important; }
+%text-decoration-none-IMP{ text-decoration: none !important; }
+%text-uppercase-IMP{ text-transform: uppercase !important; }
+%list-none-IMP{ list-style: none !important; }
+
+/* overflow - display*/
+%overflow-inicial, %overflow-initial{ overflow: initial !important; }
+%overflow-hidden{ overflow: hidden; }
+%overflow-y{ overflow: hidden; /*overflow-x: hidden;*/ overflow-y: auto !important;}
+%overflow-x{ overflow: hidden; /*overflow-y: hidden;*/ overflow-x: auto !important;}
+
+%display-flex{ display: -webkit-box; display: -webkit-flex; display: -ms-flexbox; display:flexbox; display: flex; }
+%display-flex-center{ @extend %display-flex; @include flexType( align-items, center); }
+%display-inline-flex{ display: -webkit-inline-flex; display: inline-flex; }
+%display-block{ display: block; }
+%display-block-IMP{ display: block !important; }
+%display-inline-block{ display: inline-block; }
+%display-inline-block-IMP{ display: inline-block !important; }
+%display-none{ display: none; }
+%display-none-IMP{ display: none !important; }
+%content{ content: ''; }
+%outline{ outline:none !important; }
+%bloquear{ pointer-events: none; @extend %outline; /*outline:none;*/ }
+%desbloquear{ pointer-events: all; @extend %outline; /*outline:none;*/ }
+
+/* position */
+%p-sticky{ position: -webkit-sticky; position: sticky; }
+%p-initial{ position: inherit !important; }
+%p-relative{ position: relative; }
+%p-absolute{ position: absolute; }
+%p-fixed{ position: fixed; }
+%position-relative{ position: relative !important; }
+%position-absolute{ position: absolute !important; }
+%position-fixed{ position: fixed !important; }
+%absolute-center{ @extend %p-absolute; @extend %text-center; /*position: absolute;*/ right: 0; left: 0; margin-left: auto; margin-right: auto; /*text-align: center;*/ }
+%absolute-center-IMP{ @extend %position-absolute; @extend %text-center-IMP; right: 0; left: 0; margin-left: auto !important; margin-right: auto !important; }
+%vertical-center{ @extend %p-absolute; top: 50%; -webkit-transform: translateY(-50%); -moz-transform: translateY(-50%); transform: translateY(-50%); }
+
+%clear-left{ clear: left; }
+%clear-right{ clear: right; }
+%clear-both{ clear: both; }
+
+%no-border, %border-none{ border: none; }
+%no-border-IMP, %border-none-IMP{ border: none !important; }
+
+
+
+%border-radius-0, %no-border-radius{ @include border-radius(0px); }
+%border-radius-4, %border-r-4{ @include border-radius(4px); }
+.border-10, %border-radius-10, %border-r-10{ @include border-radius(10px); }
+.border-20, %border-radius-20, %border-r-20{ @include border-radius(20px); }
+%border-radius-30, %border-r-30{ @include border-radius(30px); }
+%border-radius-50, %border-r-50{ @include border-radius(50%); }
+.border-200, %border-radius-200{ @include border-radius(200px);}
+%border-radius-0-IMP, %no-border-radius-IMP{ @include border-radius(0px !important); }
+%border-radius-4-IMP, %border-r-4-IMP{ @include border-radius(4px !important); }
+%border-radius-10-IMP, %border-r-10-IMP{ @include border-radius(10px !important); }
+%border-radius-20-IMP, %border-r-20-IMP{ @include border-radius(20px !important); }
+%border-radius-30-IMP, %border-r-30-IMP{ @include border-radius(30px !important); }
+%border-radius-50-IMP, %border-r-50-IMP{ @include border-radius(50% !important); }
+%border-radius-200-IMP{ @include border-radius(200px !important);}
+
+
+%no-box-shadow, %box-shadow-none{ @include box-shadow(none); }
+%box-shadow{ @include box-shadow(0 4px 8px 0 rgba(0,0,0,.125)); }
+%no-box-shadow-IMP, %box-shadow-none-IMP{ @include box-shadow(none !important); }
+%box-shadow-IMP{ @include box-shadow(0 4px 8px 0 rgba(0,0,0,.125) !important); }
+
+
+%opacity-0{ @include opacity(0); }
+%opacity-05{ @include opacity(0.5); }
+%opacity-1{ @include opacity(1); }
+
+
+/* paddings */
+%padding-top-0{ padding-top: 0; }
+%padding-bottom-0{ padding-bottom: 0; }
+%padding-left-0{ padding-left: 0; }
+%padding-right-0{ padding-right: 0; }
+/*%padding-lr-0, %padding-rl-0{ @extend %padding-l-0; @extend %padding-r-0;}
+%padding-tb-0, %padding-bt-0{ @extend %padding-t-0; @extend %padding-b-0;}
+%padding-all-0, %padding-0{ @extend %padding-lr-0; @extend %padding-tb-0; }*/
+
+%padding-t-0{ padding-top: 0 !important; }
+%padding-b-0{ padding-bottom: 0 !important; }
+%padding-l-0{ padding-left: 0 !important; }
+%padding-r-0{ padding-right: 0 !important; }
+%padding-lr-0, %padding-rl-0{ @extend %padding-l-0; @extend %padding-r-0;}
+%padding-tb-0, %padding-bt-0{ @extend %padding-t-0; @extend %padding-b-0;}
+%padding-all-0, %padding-0{ @extend %padding-lr-0; @extend %padding-tb-0; }
+
+%padding-l-15{ padding-left: 15px !important; }
+%padding-r-15{ padding-right: 15px !important; }
+
+%padding-l-25{ padding-left: 25px !important; }
+%padding-r-25{ padding-right: 25px !important; }
+%padding-t-25{ padding-top: 25px !important; }
+%padding-b-25{ padding-bottom: 25px !important; }
+%padding-lr-25, %padding-rl-25{ @extend %padding-l-25; @extend %padding-r-25; }
+%padding-tb-25, %padding-bt-25{ @extend %padding-t-25; @extend %padding-b-25; }
+%padding-all-25{ @extend %padding-lr-25; @extend %padding-tb-25; }
+
+/* margins */
+%margin-top-0{ margin-top: 0; }
+%margin-bottom-0{ margin-bottom: 0; }
+%margin-left-0{ margin-left: 0; }
+%margin-right-0{ margin-right: 0; }
+%margin-all-0{ @extend %margin-top-0; @extend %margin-bottom-0; @extend %margin-left-0; @extend %margin-right-0; }
+
+%margin-t-0{ margin-top: 0 !important; }
+%margin-b-0{ margin-bottom: 0 !important; }
+%margin-l-0{ margin-left: 0 !important; }
+%margin-r-0{ margin-right: 0 !important; }
+/*%margin-all-0, */
+%margin-0{ @extend %margin-t-0; @extend %margin-b-0; @extend %margin-l-0; @extend %margin-r-0; }
+
+%margin-tb-0, %margin-bt-0{ @extend %margin-t-0; @extend %margin-b-0; }
+%margin-lr-0, %margin-rl-0{ @extend %margin-l-0; @extend %margin-r-0; }
+
+/* floats */
+%float-right, %f-right{ float: right; }
+%float-left, %f-left{ float: left; }
+%float-right-IMP{ float: right !important; }
+%float-left-IMP{ float: left !important; }
+%float-none{ float: none; }
+%float-none-IMP{ float: none !important; }
+
+%top-bottom-0{ top: 0; bottom: 0; }
+%left-right-0{ left: 0; right: 0; }
+%margin-0-auto{ margin: 0 auto; }
+%margin-LR-auto{ margin-left: auto; margin-right: auto; }
+%margin-LR-auto-IMP{ margin-left: auto !important; margin-right: auto !important; }
+
+////.mobile-show{ @extend %display-none; }
+
+
+/// flex options
+%flex-00auto, %flex-0-0-auto{ @include flexType(flex, 0 0 auto); }
+%flex-00100, %flex-0-0-100{ @include flexType(flex, 0 0 100%); }
+
+%flex-row{ @include flexType(flex-direction, row); }
+%flex-column{ @include flexType(flex-direction, column); }
+
+%align-items-end{ @include flexType(align-items, flex-end); }
+%align-items-start{ @include flexType(align-items, flex-start); }
+%align-items-center{ @include flexType(align-items, center); }
+
+%justify-content-end{ @include flexType(justify-content, flex-end); }
+%justify-content-start{ @include flexType(justify-content, flex-start); }
+%justify-content-center{ @include flexType(justify-content, center); }
+
+
+
+/*------------------------------------------------------------------------------------------------------------------------*/
+
+
+
+

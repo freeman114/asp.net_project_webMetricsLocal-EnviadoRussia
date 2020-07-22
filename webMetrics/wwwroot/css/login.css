@@ -1,0 +1,66 @@
+.header_login{
+	padding: 7px;
+    font-family: "avenirnext";
+    font-size: 15px;
+    text-transform: uppercase;
+    border: 1px solid #000;
+    margin: 20px 0 30px 0;
+    text-align: center;
+}
+.bx_login{
+	height:max-content;
+	border:2px solid #000;
+	padding:20px;
+}
+.bx_login h1{
+	font-family:"avenirnext";
+	font-size:20px;
+	text-align:center;
+	margin-bottom:50px;
+	font-weight:bold;
+}
+.text_login{
+	text-align:center;
+	font-family:"avenirnext";
+	font-size:14px;
+	margin:0;
+}
+.text_login + .text_login{
+	margin-bottom:50px;
+}
+.bx_login_facebook{
+	text-align: center;
+	margin-bottom:40px;
+}
+.bx_login_facebook button{
+	background:#3b52c9;
+	font-size:17px;
+	color:#fff;
+	border:0;
+	font-size:'poppinsBold';
+}
+.text_login_email{
+	text-align:center;
+	margin-bottom:40px;
+}
+.text_login_email a{
+	color:#3b52c9;
+	font-family:"avenirnext";
+	font-weight: bold;
+}
+.btn_login_newUser{
+	text-align:center;
+	margin-top:20px;
+}
+.btn_login_newUser button{
+    padding: 10px;
+    margin: 0;
+    font-family: "avenirnext";
+    background: none;
+    border: 1px solid #000;
+    font-size: 12px;
+    font-weight:bold;
+}
+.logo_login_footerInfluencer{
+	margin-top:20px;
+}

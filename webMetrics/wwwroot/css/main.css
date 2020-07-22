@@ -1,0 +1,173 @@
+/*LOGIN INFLUENCERS.INC*/
+body{
+	background:#fbfbfb;
+	padding-top:151px;
+    font-size:10pt;
+}
+
+/*GERAL*/
+.dn{
+	display:none;
+}
+.padding-left-0{
+	padding-left:0!important;
+}
+
+/*HEADER INTERNA*/
+.header_interna{
+	border-top: 3px solid #000;
+    padding-top: 10px;
+    height: 128px;
+    position:fixed;
+    top:0;
+    background:#fff;
+    z-index:9998;
+}
+.circle {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%; /* the magic */
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  overflow:hidden;
+}
+.circle img{
+	width:100%;
+}
+.bx_user_interna{
+	background:#ffcc00;
+	width:100%;
+}
+.bx_user_interna h1{
+	float:left;
+	margin: 0;
+	font-family:poppinsBold;
+}
+.bx_user_interna .bx_icons_header{
+	list-style-type: none;
+	float:left;
+	margin: 0 0 0 15px;
+	padding: 0;
+}
+.bx_user_interna .bx_icons_header li{
+	background:#f4f4f4;
+	padding:10px;
+	float:left;
+	margin-right:4px;
+}
+.bx_user_interna .bx_icons_header li a{
+	color:#000;
+}
+.bx-circle{
+	width:10%;
+	float:left;
+	padding-right:10px;
+}
+.bx_circle_user{
+	float:left;
+}
+.bx_text_user{
+	float:left;
+	width:85%;
+}
+.user_twitter_interna{
+	width:100%;
+	float:left;
+	padding: 0;
+	margin: 0 0 5px 0;
+	font-family:poppinsRegular;
+}
+.user_text_interna{
+	width:100%;
+	float:left;
+	padding: 0;
+	margin: 0;
+	font-family:poppinsRegular;
+}
+.bx_numbers_user{
+	float:left;
+	width:30%;
+	display:none;
+}
+.bx_numbers_user ul{
+	float:right;
+	margin:0;
+	padding:0;
+}
+.bx_numbers_user ul li{
+	float:left;
+	list-style-type: none;
+}
+.bx_numbers_user ul li:nth-child(1){
+	border-right:1px solid #ddd;
+	padding:0 10px 0 0;
+	margin-right: 10px;
+}
+.bx_numbers_user ul li:nth-child(2){
+	margin-right: 20px;
+}
+.bx_numbers_user ul li p{
+	margin:0;
+	padding:0;
+	color:#a8a8a8;
+	text-align:right;
+	font-size:12px;
+}
+.bx_numbers_user ul li p:last-child{
+	margin:0;
+	padding:0;
+	color:#727272;
+	font-size:23px;
+}
+.bx_numbers_user ul li:last-child button{
+	background:#d84a7a;
+	color:#fff;
+	border:0;
+	margin-top:8px;
+}
+
+
+/*CAIXAS COM CONTEÚDO*/
+.bx-itens{
+	border:1px solid #ddd;
+	background:#fff;
+	margin-bottom:50px;
+    margin-right:350px;
+}
+
+@media all and (max-width: 1190px) and (min-width: 992px){
+	.user_text_interna{
+	 	font-size:12px;	
+	}
+	.bx_text_user{
+		width:79%;
+	}
+	.bx-circle{
+		width:21%;
+	}
+	.bx_cinza_navDireita ul li{
+		font-size:13px;
+	}
+}
+
+@media all and (max-width: 991px) and (min-width: 768px){
+	.bx_cinza_navDireita{
+	 	display:none;
+	}
+}
+
+
+
+
+
+
+
+
+
+.tit_interna{
+	margin: 0 0 20px 0;
+    padding: 0;
+    font-size: 25px;
+    font-family: avenirnext;
+    letter-spacing: 8px;
+}

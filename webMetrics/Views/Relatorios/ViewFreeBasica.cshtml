@@ -1,0 +1,1119 @@
+﻿@model webMetrics.Models.DTO.InfluencersResumoFree
+
+@{
+    Layout = null;
+    ViewBag.Title = "Influencers Inc."; 
+
+    var faixa1 = 100000; //Até
+    var faixa2 = 500000;
+
+    var valor1 = 15.5;
+    var valor2 = 13.5;
+    var valor0 = 12.5;
+
+    var picture = Microsoft.AspNetCore.Http.SessionExtensions.GetString(Context.Session, "ProfilePicture");
+    var name = Microsoft.AspNetCore.Http.SessionExtensions.GetString(Context.Session, "userNameTitle");
+    var route = Context.Request.Path.Value;
+} 
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Influencers Inc</title>
+
+    <link rel="stylesheet" href="~/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/node_modules/@@fortawesome/fontawesome-free/css/all.css">
+    <link rel="stylesheet" href="~/resources/assets/styles/fonts.css">
+    <link rel="stylesheet" href="~/resources/assets/styles/global.css">
+    <link rel="stylesheet" href="~/resources/assets/styles/mobile.css">
+	<link rel="stylesheet" href="~/css/consulta.css">
+
+	<script src="~/js/maps.js"></script>
+
+	<script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.bundle.min.js"></script>
+	<script>
+		if (location.protocol != 'https:')
+		{
+			location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+		}
+	</script>
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white card-resume shadow-sm py-0 py-md-2 px-md-3 px-2">
+        <a class="navbar-brand" href="#">
+            <img src="~/resources/assets/images/logo.png" alt="logo">
+        </a>
+		<i></i>
+        <button class="navbar-toggler px-1 py-0" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" 
+				aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+		
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+			<ul class="navbar-nav flex-row ml-auto justify-content-between align-items-center">
+                <li class="nav-item">
+					<a class="navbar-brand" href="/relatorios/historicometricas">
+						<img src="~/images/voltar.png" style="height:30px" alt="voltar">
+					</a>
+                    <a href="javascript:;" class="nav-link btn btn-sm btn-success text-white py-0 px-2" onclick="window.print();">
+						IMPRIMIR
+					</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" 
+						aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="javascript:window.close()">Sair</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <nav class="nav bg-white card-resume fixed sidebar-mobile w-100 justify-content-between d-md-none" id="sidebar">
+        <a class="nav-link active" href="#"><i class="far fa-user"></i></a>
+        <a class="nav-link" href="javascript:;" data-link="#hashtags"><i class="fa fa-hashtag"></i></a>
+        <a class="nav-link" href="javascript:;" data-link="#mentions"><i class="fa fa-at"></i></a>
+        <a class="nav-link" href="javascript:;" data-link="#mentioned"><i class="fa fa-comments"></i></a>
+        <a class="nav-link" href="javascript:;" data-link="#places"><i class="fa fa-map-marker-alt"></i></a>
+        <a class="nav-link" href="javascript:;" data-link="#maps-places"><i class="fa fa-map-marked-alt"></i></a>
+        <a class="nav-link" href="javascript:;" data-link="#photo"><i class="fa fa-tags"></i></a>
+        <a class="nav-link" href="javascript:;" data-link="#recent"><i class="far fa-images"></i></a>
+        <a class="nav-link" href="javascript:;" data-link="#emotional"><i class="far fa-images"></i></a>
+    </nav>
+
+    <div class="row bg-white card-resume fixed w-100 m-0 p-0 shadow-sm" id="row-fixed" style="display:none;">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row d-flex align-items-center py-2" id="row-info">
+                        <div class="col-md-1 col-2 pr-1 pr-md-3 order-1">
+                            @if (Model != null)
+                            {
+                                var imgProfile = Model.ProfilePicture;
+                                <img width="90%" src="@imgProfile" alt="logo">
+                            }
+                        </div>
+                        <div class="col-md-3 col-7 pr-0 pr-md-3 order-2 d-none d-md-block">
+                            @*<h5 class="mb-0" style="font-weight:600">@Model.NomeCompleto</h5>*@
+                            <h5 class="mb-0" style="font-weight:600">@name</h5>
+                            <span>@@@Model.UserName</span><br>							
+                        </div>
+
+                        <div class="col-md-2 col-3 ml-auto text-right order-md-3 order-4 pr-0 pr-md-3">
+                            <small>Seguidores</small><br>
+                            <h5 class="mb-0">@Model.Seguidores.ToString("N0")</h5>
+                        </div>
+
+                        <div class="col-md-4 col-5 text-left order-md-4 order-5">
+                            <small>Média de alcance 7 últimos dias</small><br>
+                            <h5 class="mb-0">@Model.avgPostReach.ToString("N0")</h5>
+                        </div>
+
+                        <div class="col-md-1 col-2 order-md-5 pl-0 order-6">
+                            <small>Powerful <span class='Powerfull' style='color:red;'>?<span class="tooltipPowerfull" style="color:white;">*A soma de likes e comentários dos 7 últimos dias, divididos pelo número de seguidores</span></span></small><br>
+                            @if (Model.Aprovado == 2)
+                            {
+                                <span class="badge badge-success d-block">
+								<h5 class="mb-0 p-0 title-percentage">@Model.percentAvg %</h5></span>
+                            }
+                            else if (Model.Aprovado == 1)
+                            {
+                                <span class="badge badge-warning d-block">
+								<h5 class="mb-0 p-0 title-percentage">@Model.percentAvg %</h5></span>
+                            }
+                            else
+                            {
+                                <span class="badge badge-danger d-block">
+								<h5 class="mb-0 p-0 title-percentage">@Model.percentAvg %</h5></span>
+                            }							
+                        </div>                    
+					</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-5 mt-md-3 mb-5" id="profile">
+        <div class="row">
+            <div class="col-md-9 pr-md-0 pr-3 col-12 order-2 order-md-1" id="printdivs">
+
+                <div class="row d-flex align-items-center" id="row-info">
+                    <div class="col-md-2 col-3 ml-auto order-1">
+                        @if (Model != null)
+                        {
+                            var imgProfile = Model.ProfilePicture;
+                            <img width="100%" src="@imgProfile" alt="logo">
+                        }
+                    </div>
+					<!--<div class="col-md-3 col-5 order-2 pl-0 pl-md-3 pr-0 pr-md-3">-->
+                    <div class="col-md-10 col-20 order-2 pl-0 pl-md-3 pr-0 pr-md-3">
+                        @*<h5 class="mb-0" style="font-weight:600">@Model.NomeCompleto</h5>*@
+                        <h5 class="mb-0" style="font-weight:600">@name</h5>
+                        <span>@@@Model.UserName</span><br>
+						<span>@Model.Biography</span>
+                        <span>@Model.SocialContext</span>
+                    </div>
+				</div>
+
+				<div class="row d-flex align-items-center py-2" id="row-info">
+                    <div class="col-md-2 col-3 ml-auto text-right order-md-3 order-4 pr-0 pr-md-3">
+                        <small>Seguidores</small><br>
+                        <h5>@Model.Seguidores.ToString("n0")</h5>
+                    </div>
+
+                    <div class="col-md-4 col-3 ml-auto text-right order-md-3 order-4 pr-0 pr-md-3">
+                        <small>Média de alcance 7 últimos dias</small><br>
+                        <h5>@Model.avgPostReach.ToString("n0")</h5>
+                    </div>
+                </div>
+				
+				<div class="row mt-md-5 mt-3">
+                    <div class="col">
+					<div class="row">
+						<div class="col" style="align:left">
+							<h3 class="">SUMÁRIO</h3>
+						</div>
+						<div class="col" style="text-align:right">
+							<div class="ml-auto text-left order-md-3 order-4 pr-0 pr-md-3" style="width:190px">
+								<small><b>Powerful</b> <span class='Powerfull' style='color:red;'>?<span class="tooltipPowerfull" style="color:white;">*A soma de likes e comentários dos 7 últimos dias, divididos pelo número de seguidores</span></span></small><br>
+								@{
+									var comentarioscurtidas = Model.MediaCurtidas+Model.MediaComentarios;
+								}
+								@if (Model.Aprovado == 2)
+								{
+									<span onclick="inverter(this);" style='height:25px' class="badge badge-success d-block">
+									<h5 class="mb-0 p-0">@comentarioscurtidas.ToString("N0")</h5></span>
+								}
+								else if (Model.Aprovado == 1)
+								{
+									<span onclick="inverter(this);" style='height:25px' class="badge badge-warning d-block">
+									<h5 class="mb-0 p-0">@comentarioscurtidas.ToString("N0")</h5></span>
+								}
+								else
+								{
+									<span onclick="inverter(this);" style='height:25px' class="badge badge-danger d-block">
+									<h5 class="mb-0 p-0">@comentarioscurtidas.ToString("N0")</h5></span>
+								}								
+							</div>
+						</div>
+					</div>
+                    </div>
+                </div>
+                <div class="row mb-md-2 mb-3">
+                    <div class="col-md col-6 pr-0 mb-3 mb-md-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative">
+                            <span class="text-muted small">Seguidores</span>
+                            <h5 class="mb-0">@Model.Seguidores.ToString("n0")</h5>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 mb-3 mb-md-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative">
+                            <span class="text-muted small">Seguindo</span>
+                            <h5 class="mb-0">@Model.Seguindo.ToString("n0")</h5>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 pr-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative">
+                            <span class="text-muted small">Seguindo / Seguidores</span>
+                            <h5 class="mb-0">@Math.Round(Model.SeguindoSeguidores, 4) %</h5>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 pr-md-3">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative">
+                            <span class="text-muted small">Unicos</span>
+                            <h5 class="mb-0">@Model.SeguidoresUnicos.ToString("n0")</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-md-2 mb-3">
+                    <div class="col-md col-6 pr-0 mb-3 mb-md-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative">
+                            <span class="text-success float-left small text-number"></span>
+                            <span class="text-muted small">Posts</span>
+                            <h5 class="mb-0">@Model.Posts</h5>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 mb-3 mb-md-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative">
+                            <span class="text-muted small">Avg. posts diário</span>
+                            <h5 class="mb-0">@string.Format("{0:N}", (Model.Posts / 30.25))</h5>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 pr-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative">
+                            <span class="text-muted small">Avg. posts semanal</span>
+                            <h5 class="mb-0">@string.Format("{0:N}", (Model.Posts / 4.25))</h5>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 pr-md-3">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative">
+                            <span class="text-muted small">Avg. posts mensal</span>
+                            <h5 class="mb-0">@Model.Posts.ToString("n0")</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-md-2 mb-3">
+                    <div class="col-md col-6 pr-0 mb-3 mb-md-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative">
+                            <span class="text-danger float-left small text-number"></span>
+                            <span class="text-muted small">Likes</span>
+                            <h5 class="mb-0">@Model.Curtidas.ToString("n0")</h5>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 mb-3 mb-md-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative">
+                            <span class="text-muted small">Avg. Likes</span>
+                            <h5 class="mb-0">@Model.MediaCurtidas.ToString("n0")</h5>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 pr-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative">
+                            <span class="text-muted small">Comentários</span>
+                            <h5 class="mb-0">@Model.Comentarios.ToString("n0")</h5>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 pr-md-3">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative">
+                            <span class="text-muted small">Avg. Comentários</span>
+                            <h5 class="mb-0">@Math.Round(Model.MediaComentarios, 4)</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-md-2 mb-3">
+                    <div class="col-md col-6 pr-0 mb-3 mb-md-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative">
+                            <span class="text-muted small">Comentários / Seguidores 
+							<span class="ComentariosSeguidores" style='color:red;'> ?<span class="tooltipComentariosSeguidores" style="color:white;">*Cada seguidor esta comentando X% dos seus posts</span></span>
+							</span>
+                            <h5 class="mb-0">@Math.Round(Model.ComentariosSeguidores, 4) %</h5>							
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 mb-3 mb-md-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative">
+                            <span class="text-muted small">Range de engajamento 
+							<span class="RangeEngajamento" style='color:red;'> ?<span class="tooltipRangeEngamento" style="color:white;">*É o post que mais obteve engajamento e o pior de engajamento</span></span>
+							</span>
+                            <h5 class="mb-0">
+                                @Math.Round(Model.LstInstaMidias.Max(m => m.Engagemer), 2) % -
+                                @Math.Round(Model.LstInstaMidias.Min(i => i.Engagemer), 2) %
+                            </h5>							
+                        </div>
+                    </div>
+
+                    <div class="col-md col-6 pl-md-2 pr-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative">
+                            <span class="text-muted small">Engajamento</span>
+							@{
+								comentarioscurtidas = Model.MediaCurtidas+Model.MediaComentarios;
+							}
+							@if (Model.Aprovado == 2)
+                            {								
+                                <span class="badge badge-success d-block">
+									<h5 class="mb-0">@comentarioscurtidas.ToString("N0")</h5>
+								</span>
+                            }
+                            else if (Model.Aprovado == 1)
+                            {
+								<span class="badge badge-warnig d-block">
+									<h5 class="mb-0">@comentarioscurtidas.ToString("N0")</h5>
+								</span>                                
+                            }
+                            else
+                            {
+								<span class="badge badge-danger d-block">
+									<h5 class="mb-0">@comentarioscurtidas.ToString("N0")</h5>
+								</span>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 pr-md-3">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative">
+                            <span class="text-danger float-left small text-number"></span>
+                            <span class="text-muted small">Avg. alcance post</span>
+                            <h5 class="mb-0">@Math.Round(Model.MediaAlcancePost, 4)</h5>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="row mb-2">
+            <div class="col-md col-6 pr-0 mb-3 mb-md-0">
+                <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative">
+                    <span class="text-success float-left small text-number">+ 0.2%</span>
+                    <span class="text-muted small">Mencionado por</span>
+                    <h5 class="mb-0"></h5>
+                </div>
+            </div>
+            <div class="col-md col-6 pl-md-2 mb-3 mb-md-0">
+                <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative">
+                    <span class="text-success float-left small text-number">+ 451.1%</span>
+                    <span class="text-muted small">Posts amplificados</span>
+                    <h5 class="mb-0"></h5>
+                </div>
+            </div>
+            <div class="col-md col-6 pl-md-2 pr-0">
+                <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative">
+                    <span class="text-success float-left small text-number">+ 247.3%</span>
+                    <span class="text-muted small">Alcance amplificado</span>
+                    <h5 class="mb-0"></h5>
+                </div>
+            </div>
+            <div class="col-md col-6 pl-md-2 pr-md-3">
+                <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative">
+                    <span class="text-success float-left small text-number">+ 29.2%</span>
+                    <span class="text-muted float-right small mb-1">Avg. alcance do post amplificado</span>
+                    <h5 class="mb-0 mt-3"></h5>
+                </div>
+            </div>
+        </div>*@
+
+                <div class="row mt-5" id="TopBotton">
+                    <div class="col">
+                        <h3 class="">TOP POST AND WORST POST</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card border-0">
+                            <div class="table-responsive">
+                                @if (Model != null)
+                                {
+                                    if (Model.LstTopAndBotton != null)
+                                    {
+                                        <table class="table-sm table table-hover text-center mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>Post</th>
+                                                    <th>Alcance</th>
+                                                    <th>Engajamento %</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.LstTopAndBotton)
+                                                {
+                                                    <tr>
+                                                        <td class="align-middle">
+                                                            @if (item.Imagens != null)
+                                                            {
+                                                                foreach (var itImagens in item.Imagens)
+                                                                {
+																	<a class="nav-link text-muted px-0" 
+																			href="javascript:getImage('@Html.DisplayFor(modelItem => itImagens)');" >
+                                                                    <img src="@Html.DisplayFor(modelItem => itImagens)"
+																			width="48" />
+																			</a>
+                                                                }
+                                                            }
+                                                        </td>
+                                                        <td class="align-middle">@Html.DisplayFor(modelItem => item.UserName)</td>
+                                                        <td class="align-middle">@item.Reach.ToString("n0")</td>
+                                                        <td class="align-middle">
+                                                            @{
+                                                                var engaj =
+                                                                    Math.Round((
+                                                                    Convert.ToDouble(item.Reach) /
+                                                                    Convert.ToDouble(Model.Seguidores)
+                                                                    ) * 100, 4);
+                                                            }
+                                                            @if (Convert.ToDouble(engaj) <
+                                               (Model.Seguidores < faixa1 ? valor1 : (Model.Seguidores < faixa2 ? valor2 : valor0))
+                                                )
+                                                            {
+																<span class="badge badge-danger d-block">
+																	<h5 class="mb-0 p-0">
+																		@Html.Raw(engaj) %
+																	</h5>
+																</span>
+                                                            }
+                                                            else
+                                                            {
+																<span class="badge badge-success d-block">
+																	<h5 class="mb-0 p-0">
+																		+ @Html.Raw(engaj) %
+																	</h5>
+																</span>
+                                                            }
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+				@if (Model != null)
+                {
+                    if (Model.LstInstaTags != null)
+                    {                                
+						<!-- Tags -->
+						<div class="row mt-5" id="tagsenionedBy">
+							<div class="col">
+								<h3 class="">TAGS - MENTIONED BY</h3>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<div class="card border-0">
+									<div class="table-responsive">
+										<table class="table-sm table table-hover text-center mb-0">
+											<thead>
+												<tr>
+													<th></th>
+													<th>Mencionado por</th>
+													<th>Engajamento do post</th>
+													<th>Engajamento %</th>
+												</tr>
+											</thead>
+											<tbody>
+												@foreach (var item in Model.LstInstaTags)
+												{
+													<tr>
+														<td class="align-middle">
+															@if (item.Imagens != null)
+															{
+																foreach (var itImagens in item.Imagens)
+																{
+																	<a class="nav-link text-muted px-0" 
+																			href="javascript:getImage('@Html.DisplayFor(modelItem => itImagens)');" >                                                                    
+																		<img src="@Html.DisplayFor(modelItem => itImagens)"
+																			width="48" />
+																	</a>
+																}
+															}
+														</td>
+														<td class="align-middle">@@@Html.DisplayFor(modelItem => item.UserName)</td>
+														<td class="align-middle">@item.Reach.ToString("n0")</td>
+														<td class="align-middle">
+															@{
+																var engaj =
+																	Math.Round((
+																	Convert.ToDouble(item.Reach) /
+																	Convert.ToDouble(Model.Seguidores)
+																	) * 100, 4);
+															}
+															@if (Convert.ToDouble(engaj) <
+												(Model.Seguidores < faixa1 ? valor1 : (Model.Seguidores < faixa2 ? valor2 : valor0))
+												)
+															{
+																<span class="badge badge-danger d-block">
+																	<h5 class="mb-0 p-0">
+																		@Html.Raw(engaj) %
+																	</h5>
+																</span>
+															}
+															else
+															{
+																<span class="badge badge-success d-block">
+																	<h5 class="mb-0 p-0">
+																		+ @Html.Raw(engaj) %
+																	</h5>
+																</span>
+															}
+														</td>
+													</tr>
+												}
+											</tbody>
+										</table>
+											
+									</div>
+								</div>
+							</div>
+						</div>
+					}
+				}
+
+				@if (Model != null)
+                {
+                    if (Model.LstInstaEmotionalResume != null)
+                    {                                
+						<!-- Tags -->
+						<div class="row mt-5" id="emotionalResume">
+							<div class="col">
+								<h3 class="">EMOTIONAL - RESUME</h3>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<div class="card border-0">
+									<div class="table-responsive">
+										<table class="table-sm table table-hover text-center mb-0">
+											<thead>
+												<tr>
+													<th></th>
+													<th>Aferição</th>					
+													<th>Emoção</th>								
+												</tr>
+											</thead>
+											<tbody>
+												@foreach (var item in Model.LstInstaEmotionalResume)
+												{
+													<tr>
+														<td class="align-middle">-</td>
+														<td class="align-middle">@item.Reach.ToString("n0")</td>
+														<td class="align-middle"> POSTS DE @Html.DisplayFor(modelItem => item.UserName)</td>
+													</tr>
+												}
+											</tbody>
+										</table>
+											
+									</div>
+								</div>
+							</div>
+						</div>
+					}
+				}
+
+				<!-- Emotion profile analysis-->
+                <div class="row mt-5" id="emotional">
+                    <div class="col">
+                        <h3 class="">EMOTIONAL PROFILE ANALYSIS</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card border-0">
+                            <div class="row">
+                                <div class="col-md-6 col-12">
+                                    @if (Model != null)
+                                    {
+                                        if (Model.LstFaceDetection != null)
+                                        {
+                                            <div class="table-responsive">
+                                                <table class="table-sm table table-hover text-center mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>Alegria</th>
+                                                            <th>Surpresa</th>
+                                                            <th>Raiva</th>
+                                                            <th>Tristeza</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var item in Model.LstFaceDetection)
+                                                        {
+                                                            <tr>
+                                                                <td class="align-middle">
+                                                                    @if (item.UrlImagem != null)
+                                                                    {
+																		<a class="nav-link text-muted px-0" 
+																				href="javascript:getImage('@item.UrlImagem');" >                                                                    
+																			<img src="@item.UrlImagem" width="48" />
+																		</a>
+                                                                    }
+                                                                </td>
+                                                                <td class="align-middle">
+                                                                    @Html.DisplayFor(modelItem => item.Joy)
+                                                                </td>
+                                                                <td class="align-middle">
+                                                                    @Html.DisplayFor(modelItem => item.Sorrow)
+                                                                </td>
+                                                                <td class="align-middle">
+                                                                    @Html.DisplayFor(modelItem => item.Anger)
+                                                                </td>
+                                                                <td class="align-middle">
+                                                                    @Html.DisplayFor(modelItem => item.Surprise)
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="pt-3 pl-2 pr-2 pb-2">
+                                        <canvas id="barcanvas" width="100%" height="250"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+				<!-- Hastags -->
+				<div class="row mt-5" id="hashtags">
+                    <div class="col">
+                        <h3 class="">HASHTAGS</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card border-0">
+                            <div class="table-responsive">
+                                @if (Model != null)
+                                {
+                                    if (Model.LstInstaHashs != null)
+                                    {
+                                        <table class="table-sm table table-hover text-center mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>Hashtag</th>
+                                                    <th>Likes e Comentários</th>                                                    
+													<th>Engajamento %</th>				
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.LstInstaHashs)
+                                                {
+                                                    <tr>
+                                                        <td class="align-middle">
+                                                            @if (item.Imagens != null)
+                                                            {
+                                                                foreach (var itImagens in item.Imagens)
+                                                                {
+																	<a 
+																			href="javascript:getImage('@Html.DisplayFor(modelItem => itImagens)');" >                                                                    
+																		<img src="@Html.DisplayFor(modelItem => itImagens)"
+                                                                         width="48" />
+																	</a>
+                                                                }
+                                                            }
+                                                        </td>
+                                                        <td class="align-middle">#@Html.DisplayFor(modelItem => item.UserName)</td>
+                                                        <td class="align-middle">@Html.DisplayFor(modelItem => item.Reach)</td>
+                                                        <td class="align-middle">
+                                                            @{
+                                                                var engaj =
+                                                                    Math.Round((
+                                                                    Convert.ToDouble(item.Reach) /
+                                                                    Convert.ToDouble(Model.Seguidores)
+                                                                    ) * 100, 4);
+                                                            }
+                                                            @if (Convert.ToDouble(engaj) <
+																   (Model.Seguidores < faixa1 ? valor1 : (Model.Seguidores < faixa2 ? valor2 : valor0))
+																	)
+                                                            {
+																<span class="badge badge-danger d-block">
+																	<h5 class="mb-0 p-0">
+																		@Html.Raw(engaj) %
+																	</h5>
+																</span>
+                                                            }
+                                                            else
+                                                            {
+																<span class="badge badge-success d-block">
+																	<h5 class="mb-0 p-0">
+																		+ @Html.Raw(engaj) %
+																	</h5>
+																</span>
+                                                            }
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+				
+				<!-- Stories -->
+				@if (Model != null)
+                {
+                    if (Model.LstInstaStories != null)
+                    {
+
+						<div class="row mt-5" id="hashtags">
+							<div class="col">
+								<h3 class="">STORIES</h3>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<div class="card border-0">
+									<div class="table-responsive">
+										<table class="table-sm table table-hover text-center mb-0">
+											<thead>
+												<tr>
+													<th></th>
+													<th>Insight</th>
+													<th>Reach</th>     
+													<th>Engajamento</th>     
+												</tr>
+											</thead>
+											<tbody>
+												@foreach (var item in Model.LstInstaStories)
+												{
+													<tr>
+														<td class="align-middle">
+															@if (item.Imagens != null)
+															{
+																foreach (var itImagens in item.Imagens)
+																{
+																	<a class="nav-link text-muted px-0" href="javascript:getImage('@Html.DisplayFor(modelItem => itImagens)');" >
+																		<img src="@Html.DisplayFor(modelItem => itImagens)" width="48" />
+																	</a>
+																}
+															}
+														</td>
+														<td class="align-middle">@Html.DisplayFor(modelItem => item.UserName)</td>
+														<td class="align-middle">@item.Reach.ToString("n0")</td>
+														<td class="align-middle">
+															@{
+																var engaj =
+																	Math.Round((
+																	Convert.ToDouble(item.Reach) /
+																	Convert.ToDouble(Model.Seguidores)
+																	) * 100, 4);
+															}
+															@if (Convert.ToDouble(engaj) <
+												(Model.Seguidores < faixa1 ? valor1 : (Model.Seguidores < faixa2 ? valor2 : valor0))
+												)
+															{
+																<span class="badge badge-danger d-block">
+																	<h5 class="mb-0 p-0">
+																		@Html.Raw(engaj) %
+																	</h5>
+																</span>
+															}
+															else
+															{
+																<span class="badge badge-success d-block">
+																	<h5 class="mb-0 p-0">
+																		+ @Html.Raw(engaj) %
+																	</h5>
+																</span>
+															}
+														</td>
+													</tr>
+												}
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+						}
+					}
+
+                <!-- Recent media-->
+                <div class="row mt-5" id="recent">
+                    <div class="col">
+                        <h3 class="">RECENT MEDIA</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card border-0">
+                            @if (Model != null)
+                            {
+                                if (Model.LstInstaMidias != null)
+                                {
+                                    <div class="table-responsive">
+                                        <table class="table-sm table table-hover text-center mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>Descrição</th>
+                                                    <!--<th>Engajamento do post</th>-->
+                                                    <th>Alcance / Post</th>
+                                                    
+													<th>Impressions</th>
+													<th>Reach</th>
+													<th>Engagement</th>
+													<th>Saved</th>
+													<th>Engajamento %</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.LstInstaMidias)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            @if (item.Imagens != null)
+                                                            {
+                                                                foreach (var itImagens in item.Imagens)
+                                                                {
+																	<a class="nav-link text-muted px-0" 
+																			href="javascript:getImage('@Html.DisplayFor(modelItem => itImagens)');" >
+		                                                                <img src="@Html.DisplayFor(modelItem => itImagens)"
+			                                                                 width="48"/>
+																	</a>
+                                                                }
+                                                            }
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.UserName)
+                                                        </td>
+                                                        <!--<td>
+                                                            @item.Reach.ToString("n0")
+                                                        </td>-->
+                                                        <td>
+                                                            @{
+                                                                var reachPost = Math.Round(Convert.ToDecimal(item.Reach) / Convert.ToDecimal(item.Used), 0).ToString("n0");
+                                                            }
+                                                            <span>@reachPost</span>
+                                                        </td>
+                                                        <td class="align-middle">@Html.DisplayFor(modelItem => item.Impressions)</td>
+														<td class="align-middle">@Html.DisplayFor(modelItem => item.Reachs)</td>
+														<td class="align-middle">@Html.DisplayFor(modelItem => item.Engagements)</td>
+														<td class="align-middle">@Html.DisplayFor(modelItem => item.Saveds)</td>
+														<td>
+														@{
+                                                                var engaj =
+                                                                    Math.Round((
+                                                                    Convert.ToDouble(item.Reach) /
+                                                                    Convert.ToDouble(Model.Seguidores)
+                                                                    ) * 100, 4);
+                                                            }
+                                                            @if (Convert.ToDouble(engaj) <
+															 (Model.Seguidores < faixa1 ? valor1 : (Model.Seguidores < faixa2 ? valor2 : valor0))
+															  )
+                                                            {
+																<span class="badge badge-danger d-block">
+																	<h5 class="mb-0 p-0">
+																		@Html.Raw(engaj) %
+																	</h5>
+																</span>
+                                                            }
+                                                            else
+                                                            {
+																<span class="badge badge-success d-block">
+																	<h5 class="mb-0 p-0">
+																		+ @Html.Raw(engaj) %
+																	</h5>
+																</span>
+                                                            }
+                                                        </td>														
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ages -->
+                @if (Model != null)
+                {
+                    if (Model.LstAge != null && (Model.LstAge.Count != 0))
+                    {
+                        <div class="row mt-5" id="age">
+                            <div class="col">
+                                <h3 class="">GENDER AND AGE</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card border-0">
+                                    <div class="table-responsive">
+                                        <table class="table-sm table table-hover text-center mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Gender and Age</th>
+                                                    <th>Reach</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.LstAge)
+                                                {
+                                                    <tr>                                                        
+                                                        <td class="align-middle">@Html.DisplayFor(modelItem => item.UserName)</td>
+                                                        <td class="align-middle">@Html.DisplayFor(modelItem => item.Reach)</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+						<div class="row mt-5" id="age">
+                            <div class="col">
+                                <h3 class="">GENDER AND AGE - CHART</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card border-0">
+									<div id="container" style="min-width: 810px; max-width: 850px; height: 400px; margin: 0 auto"></div>
+								</div>
+							</div>
+						</div>
+                    }
+                }
+
+			<!-- Cities --> 
+                @if (Model != null)
+                {
+                    if (Model.LstCities != null && (Model.LstCities.Count != 0))
+                    {
+                        <div class="row mt-5" id="age">
+                            <div class="col">
+                                <h3 class="">CITIES - RANKING</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card border-0">
+                                    <div class="table-responsive">
+                                        <table class="table-sm table table-hover text-center mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>City</th>
+                                                    <th>Reach</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.LstCities)
+                                                {
+                                                    <tr>                                                        
+                                                        <td class="align-middle">@Html.DisplayFor(modelItem => item.UserName)</td>
+                                                        <td class="align-middle">@Html.DisplayFor(modelItem => item.Reach)</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+						<div class="row mt-5" id="age">
+                            <div class="col">
+                                <h3 class="">CITIES - ENGAGEMENT</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card border-0">
+									<div id="chart_cities" style="width: 900px; height: 500px;"></div>
+								</div>
+							</div>
+						</div>
+                    }
+                }
+
+            <div class="col-md-3 col-12 position-relative order-1 order-md-2 p-0 sidebar-fixed d-none">
+                <nav class="ml-md-3 nav flex-md-column flex-row justify-content-between bg-white card-resume rounded fixed" id="sidebar">
+                    <a class="nav-link active" href="#"><i class="far fa-user mr-2"></i> <span class="d-none d-md-inline-block">PERFIL</span></a>
+                    <a class="nav-link" href="javascript:;" data-link="#hashtags"><i class="fa fa-hashtag mr-2"></i> <span class="d-none d-md-inline-block">HASTAGS</span></a>
+                    <a class="nav-link" href="javascript:;" data-link="#mentions"><i class="fa fa-at mr-2"></i> <span class="d-none d-md-inline-block">MENÇÕES</span></a>
+                    <a class="nav-link" href="javascript:;" data-link="#mentioned"><i class="fa fa-comments mr-2"></i> <span class="d-none d-md-inline-block">MENCIONADO POR</span></a>
+                    <a class="nav-link" href="javascript:;" data-link="#places"><i class="fa fa-map-marker-alt mr-2"></i> <span class="d-none d-md-inline-block">LUGARES</span></a>
+                    <a class="nav-link" href="javascript:;" data-link="#maps-places"><i class="fa fa-map-marked-alt mr-2"></i> <span class="d-none d-md-inline-block">MAPAS DE LUGARES</span></a>
+                    <a class="nav-link" href="javascript:;" data-link="#photo"><i class="fa fa-tags mr-2"></i> <span class="d-none d-md-inline-block">FOTO TAGS</span></a>
+                    <a class="nav-link" href="javascript:;" data-link="#recent"><i class="far fa-images mr-2"></i> <span class="d-none d-md-inline-block">MEDIA RECENTE</span></a>
+                    <a class="nav-link" href="javascript:;" data-link="#emotional"><i class="far fa-images mr-2"></i> <span class="d-none d-md-inline-block">ANALISE EMOCIONAL</span></a>
+                </nav>
+            </div>
+        </div>
+    </div>
+	
+	<div class="modal fade" id="story-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content modal-content-center rounded-3 border-0" style="background-color:#424242;">
+                <div class="modal-header pb-0 border-0 text-center position-absolute w-100 z-index-top">
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <i class="fa fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body p-0 text-center">
+                    <img id='imgStory' alt="" height="540px">
+				</div>
+			</div>
+		</div>
+	</div>
+	@{
+		var _comentarioscurtidas = Model.MediaCurtidas+Model.MediaComentarios;
+		var valorTexto = @comentarioscurtidas.ToString("N0");
+	}
+    <script type="text/javascript">
+                var markers = @Html.Raw(ViewBag.Markers);
+                InitMarkers(markers);
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDIDcw3VuLRqxv9TY9Xf0sLjHcf3fQSsW4&libraries=places&callback=getLocation"
+            async defer></script>
+
+    <script src="~/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="~/node_modules/popper.js/dist/umd/popper.min.js"></script>
+    <script src="~/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <script src="~/node_modules/chart.js/dist/Chart.min.js"></script>
+    <script src="~/node_modules/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.min.js"></script>
+
+<script>
+
+	function getImage(url)
+	{
+		$('#imgStory').attr("src",url);
+		$("#story-modal").modal()
+	}
+
+	$(window).scroll(function () {
+        if ($(window).width() > 992) {
+            if ($(window).scrollTop() > 100) {
+                $('#row-fixed').show();
+                $('#row-fixed').addClass('t-0');
+
+            }
+            else {
+                $('#row-fixed').hide();
+                $('#row-fixed').removeClass('t-0');
+            }
+        }
+        else {
+            if ($(window).scrollTop() > 15) {
+                $('#row-fixed').show();
+                $('#row-fixed').addClass('t-0');
+
+            }
+            else {
+                $('#row-fixed').hide();
+                $('#row-fixed').removeClass('t-0');
+            }
+        }
+    });
+
+    $('#sidebar a').click(function () {
+        $('html, body').animate({
+            scrollTop: $($.attr(this, 'data-link')).offset().top - 100
+        }, 500);
+        return false;
+    });
+
+	Percent='@Model.percentAvg %';
+	valor=@valorTexto;
+	lado=1;
+	function inverter(obj)
+	{
+		if (lado==1){
+			lado=0;
+			obj.innerHTML = '<h5 class="mb-0 p-0">' + Percent+ '</h5>';
+		}
+		else
+		{
+			lado=1;
+			obj.innerHTML = '<h5 class="mb-0 p-0">' + valor + '</h5>';
+		}
+	}
+
+</script>
+
+</body>
+</html>

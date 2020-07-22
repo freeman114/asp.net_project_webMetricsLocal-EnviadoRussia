@@ -1,0 +1,272 @@
+/* make placeholders */
+
+// make prefixes placeholders
+ $font-sizes: $sizes;
+	$dirFont: $align;
+$font-weight: $weight;
+
+$colorTheme: (
+ "transparent": transparent, 
+	   "black": $black,
+		"gray": $gray,
+  "light-gray": $light-gray,
+	   "white": $white,
+
+  "light-blue": $light-blue,
+		"blue": $blue,
+	  "yellow": $yellow,
+	   "green": $green,
+		 "red": $red
+);
+
+$positions: (
+ "absolute": absolute, 
+ "relative": relative,
+	"fixed": fixed,
+  "initial": initial,
+  "inherit": inherit
+);
+
+$displays: (
+ 		"block": block, 
+ "inline-block": inline-block,
+		 "none": none,
+  	  "initial": initial,
+  	  "inherit": inherit
+);
+
+$floats: (
+	 "left": left, 
+	"right": right,
+	 "none": none,
+  "initial": initial,
+  "inherit": inherit
+);
+
+@mixin mk-placeholders($sufix) {
+    //// font sizes
+	@each $varName, $varValue in $font-sizes {
+		%font-#{$varName}#{$sufix} { font-size: $varValue; }
+		%font-#{$varName}#{$sufix}-IMP,
+		%font-#{$varName}-IMP#{$sufix}{ font-size: $varValue !important; }
+	}
+
+	@each $varName, $varValue in $dirFont {
+		%text-#{$varName}#{$sufix} { text-align: $varValue; }
+		%text-#{$varName}#{$sufix}-IMP,
+		%text-#{$varName}-IMP#{$sufix}{ text-align: $varValue !important; }
+	}
+
+	@each $varName, $varValue in $font-weight {
+		%font-#{$varName}#{$sufix} { font-weight: $varValue; }
+		%font-#{$varName}#{$sufix}-IMP,
+		%font-#{$varName}-IMP#{$sufix}{ font-weight: $varValue !important; }
+	}
+	@each $varName, $varValue in $colorTheme {
+		%color-#{$varName}#{$sufix} { color: $varValue; }
+		%bg-#{$varName}#{$sufix} { background-color: $varValue; }
+		%border-#{$varName}#{$sufix} { border-color: $varValue; }
+
+		%color-#{$varName}#{$sufix}-IMP,
+		%color-#{$varName}-IMP#{$sufix}{ color: $varValue !important; }
+		%bg-#{$varName}#{$sufix}-IMP,
+		%bg-#{$varName}-IMP#{$sufix}{ background-color: $varValue !important; }
+		%border-#{$varName}#{$sufix}-IMP,
+		%border-#{$varName}-IMP#{$sufix}{ border-color: $varValue !important; }
+	}
+	
+	@each $varName, $varValue in $positions {
+		%p-#{$varName}#{$sufix} { position: $varValue; }
+		%p-#{$varName}#{$sufix}-IMP,
+		%p-#{$varName}-IMP#{$sufix}{ position: $varValue !important; }
+	}
+	@each $varName, $varValue in $displays {
+		%display-#{$varName}#{$sufix} { display: $varValue; }
+		%display-#{$varName}#{$sufix}-IMP,
+		%display-#{$varName}-IMP#{$sufix}{ display: $varValue !important; }
+	}
+	@each $varName, $varValue in $floats {
+		%float-#{$varName}#{$sufix},
+		%f-#{$varName}#{$sufix}{ float: $varValue; }
+		%f-#{$varName}#{$sufix}-IMP,
+		%f-#{$varName}-IMP#{$sufix},
+		%float-#{$varName}#{$sufix}-IMP,
+		%float-#{$varName}-IMP#{$sufix}{ float: $varValue !important; }
+	}
+
+
+
+%w-100#{$sufix}{ width: 100%; }
+%h-100#{$sufix}{ height: 100%; }
+
+%w-100#{$sufix}{ width: 100%; }
+%h-100#{$sufix}{ height: 100%; }
+
+%max-w-100#{$sufix}{ max-width: 100%; }
+%max-h-100#{$sufix}{ max-height: 100%; }
+%min-w-100#{$sufix}{ min-width: 100%; }
+%min-h-100#{$sufix}{ min-height: 100%; }
+
+%max-content#{$sufix}{ max-width: -webkit-max-content; max-width: max-content; }
+
+
+//// basic 
+%basic-animation#{$sufix}{ @include transition($basic-animation-params); }
+%basic-animation-quick#{$sufix}{ @include transition($basic-animation-quick-params); }
+%basic-animation-slow#{$sufix}{ @include transition($basic-animation-slow-params); }
+
+//// bounce
+%bounce-animation#{$sufix}{ @include transition($bounce-animation-params); }
+%bounce-animation-slow#{$sufix}{ @include transition($bounce-animation-slow); }
+%bounce-animation-menu#{$sufix}{	@include transition($bounce-animation-menu); }
+%bounce-animation-menu-in#{$sufix}{ @include transition($bounce-animation-menu-in); }
+%bounce-animation-menu-link#{$sufix}{ @include transition($bounce-animation-menu-link); }
+
+%no-transition#{$sufix}{
+	    	transition-timing-function: $no-timing ;
+    	-ms-transition-timing-function: $no-timing ;
+       -moz-transition-timing-function: $no-timing ;
+    -webkit-transition-timing-function: $no-timing ;
+    	 -o-transition-timing-function: $no-timing ;
+    			   transition-duration: $no-duration ;
+    		   -ms-transition-duration: $no-duration ;
+    		  -moz-transition-duration: $no-duration ;
+    	   -webkit-transition-duration: $no-duration ;
+    			-o-transition-duration: $no-duration ;
+}
+
+	/* texts */
+	%text-initial#{$sufix}{ text-transform: inherit !important; }
+	%text-uppercase#{$sufix}{ text-transform: uppercase; }
+	%text-decoration#{$sufix}{ text-decoration: underline; }
+	%text-decoration-none#{$sufix}{ text-decoration: none; }
+	%list-none#{$sufix}{ list-style: none; }
+	%no-wrap#{$sufix}{ white-space: nowrap; }
+	%etc#{$sufix}{ text-overflow: ellipsis; white-space: nowrap; overflow: hidden; }
+
+
+	%display-flex#{$sufix}{ display: -webkit-box; display: -webkit-flex; display: -ms-flexbox; display: flex; }
+	%display-flex-center#{$sufix}{ @extend %display-flex#{$sufix}; align-items: center; }
+	%display-inline-flex#{$sufix}{ display: -webkit-inline-flex; display: inline-flex; }
+
+
+	%overflow-inicial#{$sufix}, 
+	%overflow-initial#{$sufix}{ overflow: initial !important; }
+	%overflow-hidden#{$sufix}{ overflow: hidden; }
+	%overflow-y#{$sufix}{ overflow: hidden; /*overflow-x: hidden;*/ overflow-y: auto !important;}
+	%content#{$sufix}{ content: ''; }
+	%outline#{$sufix}{ outline:none !important; }
+	%bloquear#{$sufix}{ pointer-events: none; @extend %outline#{$sufix}; /*outline:none;*/ }
+	%desbloquear#{$sufix}{ pointer-events: all; @extend %outline#{$sufix}; /*outline:none;*/ }
+	
+	%clear-left#{$sufix}{ clear: left; }
+	%clear-right#{$sufix}{ clear: right; }
+	%clear-both#{$sufix}{ clear: both; }
+	%clear-none#{$sufix}{ clear: none; }
+
+	%no-border#{$sufix}, 
+	%border-none#{$sufix}{ border: none; }
+	%no-border-IMP#{$sufix}, 
+	%border-none-IMP#{$sufix}{ border: none !important; }
+
+
+
+	%border-radius-0#{$sufix}, 
+	%no-border-radius#{$sufix}{ @include border-radius(0px); }
+	%border-radius-4#{$sufix}, 
+	%border-r-4#{$sufix}{ @include border-radius(4px); }
+	%border-radius-10#{$sufix}, 
+	%border-r-10#{$sufix}{ @include border-radius(10px); }
+	%border-radius-30#{$sufix}, 
+	%border-r-30#{$sufix}{ @include border-radius(30px); }
+	%border-radius-50#{$sufix}, 
+	%border-r-50#{$sufix}{ @include border-radius(50%); }
+	%border-radius-200#{$sufix}{ @include border-radius(200px);}
+	
+	%border-radius-0-IMP#{$sufix}, 
+	%no-border-radius-IMP#{$sufix}{ @include border-radius(0px !important); }
+	%border-radius-4-IMP#{$sufix}, 
+	%border-r-4-IMP#{$sufix}{ @include border-radius(4px !important); }
+	%border-radius-10-IMP#{$sufix}, 
+	%border-r-10-IMP#{$sufix}{ @include border-radius(10px !important); }
+	%border-radius-20-IMP#{$sufix}, 
+	%border-r-20-IMP#{$sufix}{ @include border-radius(20px !important); }
+	%border-radius-30-IMP#{$sufix}, 
+	%border-r-30-IMP#{$sufix}{ @include border-radius(30px !important); }
+	%border-radius-50-IMP#{$sufix}, 
+	%border-r-50-IMP#{$sufix}{ @include border-radius(50% !important); }
+	%border-radius-200-IMP#{$sufix}{ @include border-radius(200px !important);}
+
+
+	%no-box-shadow#{$sufix}, 
+	%box-shadow-none#{$sufix}{ @include box-shadow(none); }
+	%box-shadow#{$sufix}{ @include box-shadow(0 4px 8px 0 rgba(0,0,0,.125)); }
+	%no-box-shadow-IMP#{$sufix}, 
+	%box-shadow-none-IMP#{$sufix}{ @include box-shadow(none !important); }
+	%box-shadow-IMP#{$sufix}{ @include box-shadow(0 4px 8px 0 rgba(0,0,0,.125) !important); }
+
+
+	%opacity-0#{$sufix}{ @include opacity(0); }
+	%opacity-05#{$sufix}{ @include opacity(0.5); }
+	%opacity-1#{$sufix}{ @include opacity(1); }
+
+
+/* position */
+%p-sticky#{$sufix}{ position: -webkit-sticky; position: sticky; }
+
+
+/* paddings */
+	%padding-top-0#{$sufix}{ padding-top: 0; }
+ %padding-bottom-0#{$sufix}{ padding-bottom: 0; }
+   %padding-left-0#{$sufix}{ padding-left: 0; }
+  %padding-right-0#{$sufix}{ padding-right: 0; }
+
+%padding-t-0#{$sufix}{ padding-top: 0 !important; }
+%padding-b-0#{$sufix}{ padding-bottom: 0 !important; }
+%padding-l-0#{$sufix}{ padding-left: 0 !important; }
+%padding-r-0#{$sufix}{ padding-right: 0 !important; }
+%padding-lr-0#{$sufix}, %padding-rl-0#{$sufix}{ @extend %padding-l-0#{$sufix}; @extend %padding-r-0#{$sufix};}
+%padding-tb-0#{$sufix}, %padding-bt-0#{$sufix}{ @extend %padding-t-0#{$sufix}; @extend %padding-b-0#{$sufix};}
+%padding-all-0#{$sufix}, %padding-0#{$sufix}{ @extend %padding-lr-0#{$sufix}; @extend %padding-tb-0#{$sufix}; }
+
+/* margins */
+	%margin-top-0#{$sufix}{ margin-top: 0; }
+ %margin-bottom-0#{$sufix}{ margin-bottom: 0; }
+   %margin-left-0#{$sufix}{ margin-left: 0; }
+  %margin-right-0#{$sufix}{ margin-right: 0; }
+	%margin-all-0#{$sufix}{ @extend %margin-top-0#{$sufix}; @extend %margin-bottom-0#{$sufix}; @extend %margin-left-0#{$sufix}; @extend %margin-right-0#{$sufix}; }
+
+	%margin-t-0#{$sufix}{ margin-top: 0 !important; }
+	%margin-b-0#{$sufix}{ margin-bottom: 0 !important; }
+	%margin-l-0#{$sufix}{ margin-left: 0 !important; }
+	%margin-r-0#{$sufix}{ margin-right: 0 !important; }
+/*%margin-all-0, */
+	%margin-0{ @extend %margin-t-0#{$sufix}; @extend %margin-b-0#{$sufix}; @extend %margin-l-0#{$sufix}; @extend %margin-r-0#{$sufix}; }
+
+	%margin-tb-0#{$sufix}, %margin-bt-0#{$sufix}{ @extend %margin-t-0#{$sufix}; @extend %margin-b-0#{$sufix}; }
+	%margin-lr-0#{$sufix}, %margin-rl-0#{$sufix}{ @extend %margin-l-0#{$sufix}; @extend %margin-r-0#{$sufix}; }
+
+
+	  %top-bottom-0#{$sufix}{ top: 0; bottom: 0; }
+	  %left-right-0#{$sufix}{ left: 0; right: 0; }
+	 %margin-0-auto#{$sufix}{ margin: 0 auto; }
+	%margin-LR-auto#{$sufix}{ margin-left: auto; margin-right: auto; }
+%margin-LR-auto-IMP#{$sufix}{ margin-left: auto !important; margin-right: auto !important; }
+
+/// flex options
+%flex-00auto#{$sufix}, %flex-0-0-auto#{$sufix}{ @include flexType(flex, 0 0 auto); }
+%flex-00100#{$sufix}, %flex-0-0-100#{$sufix}{ @include flexType(flex, 0 0 100%); }
+
+%flex-row#{$sufix}{ @include flexType(flex-direction, row); }
+%flex-column#{$sufix}{ @include flexType(flex-direction, column); }
+
+%align-items-end#{$sufix}{ @include flexType(align-items, flex-end); }
+%align-items-start#{$sufix}{ @include flexType(align-items, flex-start); }
+%align-items-center#{$sufix}{ @include flexType(align-items, center); }
+
+%justify-content-end#{$sufix}{ @include flexType(justify-content, flex-end); }
+%justify-content-start#{$sufix}{ @include flexType(justify-content, flex-start); }
+%justify-content-center#{$sufix}{ @include flexType(justify-content, center); }
+
+
+}

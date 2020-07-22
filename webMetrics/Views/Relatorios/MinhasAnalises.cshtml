@@ -1,0 +1,152 @@
+﻿@model webMetrics.Models.DTO.AutorizarMetricaPage
+@{
+    ViewData["Title"] = "Minhas Análises";
+    ViewData["Page"] = "MetricsHistory";
+    Layout = "_LayoutMinhasAnalises";
+}
+<div id="fb-root"></div>
+<section class="fixed-left">
+    @{
+        var monthName = 0;
+        var sobe = 0M;
+        var desce = 0M;
+    }
+    @foreach (var headItem in Model.Months)
+    {
+        {
+            monthName += 1;
+        }
+        <!-- !!!! IMPORTANT o valor do [href] do link tem que ser o mesmo [id] do bloco q vai abrir -->
+        <div class="header-accordion bg-gray">
+            <a class="btn-clear limit-1366 fixed-left text-center font-white" data-toggle="collapse" href="#mes@(monthName)" aria-expanded="true">
+                MÊS: @Html.Raw(headItem.DataCriacao.ToString("MMMM", webMetrics.Helper.culturePtBr)) <i class="fas fa-sort-down"></i>
+            </a>
+        </div>
+        <div class="collapse show" id="mes@(monthName++)">
+            <div class="type-table line-row hist-metrics">
+                <div class="table-header">
+                    <div class="row limit-1366 fixed-left">
+                        <div class="col">
+                            Perfil analisado
+                        </div>
+                        <div class="col">
+                            Data da solicitação
+                        </div>
+                        <div class="col">
+                            Redes sociais autorizadas
+                        </div>
+                        <div class="col">
+                            Metrics
+                        </div>
+                        <div class="col">
+                            Engajamento Autêntico
+                        </div>
+                        <div class="col">
+
+                        </div>
+                    </div>
+                </div>
+                @foreach (var item in Model.autorizacaoMetricas.Where(w => w.DataCriacao.Month == headItem.DataCriacao.Month).OrderByDescending(o => o.DataCriacao))
+                {
+                    desce = item.Seguidores;
+                    <div id="line-1">
+                        <div class="row limit-1366 fixed-left">
+                            <div class="col">
+                                <div class="avatar-container color-gray">
+                                    <img class="avatar" alt="" src="@ViewBag.ProfileFotoURI" />
+                                    <span class="etc profile">@("@" + @ViewBag.NameUser)</span>
+                                    <span class="etc follows" data-sufix="seguidores">
+                                        @item.Seguidores.ToString("N0", webMetrics.Helper.culturePtBr)
+                                        @if (sobe <= desce)
+                                        {
+                                            <i class="fa fa-arrow-up text-danger"></i>
+                                        }
+                                        else
+                                        {
+                                            if (sobe != 0)
+                                            {
+                                                <i class="fa fa-arrow-up text-success"></i>
+                                            }
+                                        }
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <span class="date">@item.TimeSpan.ToString("dd/MM/yyyy", webMetrics.Helper.culturePtBr)</span>
+                                <span class="time">@item.TimeSpan.ToString("HH:mm:ss", webMetrics.Helper.culturePtBr)</span>
+                            </div>
+                            <div class="col">
+                                <div class="media-box">
+                                    <span class="social-instagram"></span>
+                                    @*<span class="social-youtube"></span>
+                                    <span class="social-twitter"></span>
+                                    <span class="social-tiktok"></span>
+                                    <span class="social-linkedin"></span>
+                                    <span class="social-podcast"></span>*@
+                                </div>
+                            </div>
+                            <div class="col">
+                                <span class="range" data-sufix="alcance">-</span>
+                                <span class="engagement" data-sufix="engajamento">-</span>
+                            </div>
+                            <div class="col">
+                                @Html.DisplayFor(modelItem => item.PowerFull)%
+                            </div>
+                            <div class="col tools">
+                                @if (ViewBag.CreditoMetricas > 0)
+                                {
+                                <a href="/News/MidiaKit?key=@item._id" class="btn btn-light-yellow">Media Kit</a>
+                                    @if (item.Reprocessar)
+                                    {
+                                        <a class="btn btn-circle btn-border-none btn-black-outline" href="/facedata/novaconsulta?id=@item._id&origem=c">
+                                            <i class="fas fa-sync-alt"></i>
+                                        </a>
+                                    }
+                                    @*<a class="btn btn-circle btn-border-none btn-red-outline">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>*@
+                                }
+                                else
+                                {
+                                    <div class="col my-3 my-md-0" style="display: contents;">
+                                        <a id="btnNoCredit" style="width: 116px;" href="/News/MidiaKit?key=@item._id" class="btn btn-light-yellow">Media Kit</a>
+                                    </div>
+                                    @if (item.Reprocessar)
+                                    {
+                                        <a class="btn btn-circle btn-border-none btn-black-outline" href="/facedata/novaconsulta?id=@item._id&origem=c">
+                                            <i class="fas fa-sync-alt"></i>
+                                        </a>
+                                    }
+                                }
+                            </div>
+                            @{
+                                sobe = item.Seguidores;
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</section>
+@section Plugins{
+    <script src="~/js/MinhasAnalises.js"></script>
+    <script>
+        @Html.Raw(@ViewBag.ExecuteGetToken)
+        @Html.Raw(@ViewBag.ExecutarJavascript)
+
+    </script>
+}
+@section scripts{ 
+    <script>
+        function gotoURL(id) {
+            window.location = '~/News/MidiaKit?key=' + id;
+        }
+
+        //$('#btnNoCredit').on('click', function () {
+        //    window.location = '~/News/MidiaKit?key=' + 
+
+        //    $('#planosModal').appendTo('body').modal('show');
+        //});
+    </script>
+}

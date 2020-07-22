@@ -1,0 +1,10 @@
+#pills-checkout .nav-link.active {
+  background: #ccc!important;
+  color:#333;
+}
+
+#pills-checkout .nav-link {
+  background: #eee!important;
+  border-radius: 0;
+  color:#333;
+}

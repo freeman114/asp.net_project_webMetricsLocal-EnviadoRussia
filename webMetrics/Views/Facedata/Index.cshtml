@@ -1,0 +1,378 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Influencers Inc</title>
+    <link rel="stylesheet" href="~/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/node_modules/@@fortawesome/fontawesome-free/css/all.css">
+    <link rel="stylesheet" href="~/resources/assets/styles/fonts.css">
+    <link rel="stylesheet" href="~/resources/assets/styles/global.css">
+    <link rel="stylesheet" href="~/resources/assets/styles/mobile.css">
+	<script>
+		if (location.protocol != 'https:')
+		{
+			location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+		}
+        var _key = '@ViewBag.key';
+
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '220440968764019',
+                cookie: false,
+                xfbml: true,
+                version: 'v3.1'
+            });
+
+            FB.AppEvents.logPageView();
+        };
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) { return; }
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white card-resume shadow-sm py-0 py-md-2 px-md-3 px-2">
+        <a class="navbar-brand" href="#">
+            <img src="~/resources/assets/images/logo2.png" alt="logo">
+        </a>
+        <ul class="navbar-nav flex-row ml-auto justify-content-between align-items-center">
+            <li class="nav-item">
+                <a href="javascript:;" class="nav-link btn btn-blue text-white py-md-3 py-1 px-md-5 px-3 rounded-0 font-weight-semi-bold">COMECE AQUI</a>
+            </li>
+        </ul>
+    </nav>
+    <div class="row row-banner-login pb-5 pb-md-0">
+        <div class="col-12 my-ayto">
+            <div class="row mt-5">
+                <div class="col-2 mx-auto" style="max-width:320px !important;width:320px !important;flex:320px !important;">
+                    <form>
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <div class="fb-login-button" width="290px"
+                                     data-max-rows="1" data-size="large"
+                                     data-button-type="continue_with"
+                                     data-scope="instagram_basic,instagram_manage_insights,pages_show_list"
+                                     data-show-faces="false" data-auto-logout-link="false"
+                                     data-use-continue-as="true" onlogin="checkLoginState();"></div>
+                            </div>
+                        </div>
+                        <div class="row m-0 mt-4 mb-3 py-2" style="display:none" id="divPaginas">
+                            <div class="col-12 border border-bottom-0 border-left-0 border-right-0 border-grey"></div>
+                            <span id="cbxPaginas" class="bg-secondary rounded-circle text-white font-weight-bold py-2 px-2 mx-auto"
+                                  style="margin-top: -15px !important;z-index: 2;"></span>
+                        </div>
+                        <!--
+                        <div class="form-group">
+                          <input type="email" class="form-control form-control-sm" id="email" placeholder="Endereço de email">
+                        </div>
+                        <div class="form-group">
+                          <input type="password" class="form-control  form-control-sm" id="passwd" placeholder="Senha">
+                        </div>
+                        <button type="button" class="btn btn-blue btn-block py-3 font-weight-normal mb-2 rounded-0">ACESSAR</button>
+                        <a href="#" class="small text-white font-weight-bold text-center d-block" style="letter-spacing:0.5px;">Esqueceu a senha?</a><br>
+                        <div class="mt-1 text-center">
+                          <a href="/cadastrar" class="text-blue font-weight-bold">CADASTRE-SE</a>
+                        </div>-->
+                    </form>
+                </div>
+            </div>
+            <div></div>
+            <div class="row mt-4 mb-md-5 mb-3">
+                <div class="col-md-6 col-10 mx-auto text-white terms-login">
+                    <h3 class="text-center">SOLICITAÇÃO DE MÉTRICA</h3>
+
+                    <h4 class="mt-3">
+                        Somente usuários com uma função na Página do Facebook vinculada à conta do Instagram para Empresas podem conceder ao seu aplicativo permissões para usar o Metrics
+                    </h4>
+                    <p class="mt-3">
+                        Na <span class="font-weight-bold">INFLUENCERS INC.</span>, preza por distinto profissionalismo, integridade e ética, que são os
+                        valores centrais de nossa empresa. Com experiência de mais de 12 anos no segmento de
+                        tecnologia, criamos a plataforma para solucionar problemas e ajudar a transformar sonhos,
+                        vontades e desejos, em realidade.<br>
+                        Nao nos comprometemos em fazer a gestão de modelos, e sim, o que fazemos, e simplesmente
+                        a ponte de descoberta entre agencias do Brasil e do mundo e o modelo. <span class="font-weight-bold">INFLUENCERS INC.</span> considera a autenticidade dos modelos e das agencias, a questao de maior importância.
+                        Porque a segurança e melhores interesses dos modelos aspirantes são questões que levamos
+                        a sério, nós solicitamos que estar atento e cauteloso de aferição impostores apropriação
+                        indevida do nome da INFLUENCIADORES INCUBATOR, conhecida como <span class="font-weight-bold">INFLUENCERS INC.</span>. <br><br>
+
+                        O nome e o telefone dos nossos modelos não aparecem publicamente nos filtros de pesquisa.
+                        O contato direto com os modelos aprovados do Influencers Inc. será realizado ou através do
+                        <span class="font-weight-bold">INFLUENCERS INC.</span>, ou através das agências conveniadas a <span class="font-weight-bold">INFLUENCERS INC.</span>, para que
+                        possa ser realizado o contato direto
+                    </p>
+                </div>
+                @*<div class="row m-0 w-100">
+                        <div class="col-6 col-md-3 pl-0 pr-md-3 ml-auto">
+                            <a class="btn btn-white btn-sm btn-block py-3 enviarbranco rounded-0" data-dismiss="modal">NÃO CONCORDO</a>
+                        </div>
+                        <div class="col-6 col-md-3 pl-0 pl-md-3 mr-auto">
+                            <a href="/finalizar-cadastro" class="btn btn-blue btn-sm py-3 btn-block rounded-0 enviarpreto">CONCORDO</a>
+                        </div>
+                    </div>*@
+            </div>
+        </div>
+    </div>
+    <footer class="border border-bottom-0 border-left-0 border-right-0 border-1 mt-5">
+        <div class="container-fluid text-center text-md-left">
+            <div class="row m-0">
+                <div class="col-11 mx-auto">
+                    <div class="row py-5">
+                        <div class="col-md-3 col-12 mb-3">
+                            <div class="row">
+                                <div class="col-md-10 pl-0">
+                                    <h6 class="text-dark">INFLUENCERS INC</h6>
+                                    <nav class="nav flex-column">
+                                        <a class="nav-link text-muted small px-0" href="~/home/sobrenos">SOBRE NÓS</a>
+                                        <a class="nav-link px-4" href="~/entenda_a_importancia.pdf" >ENTENDA A IMPORTÂNCIA</a>                                        
+                                        <a class="nav-link text-muted small px-0" href="/">CASTING</a>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md col-12 mb-3">
+                            <h6 class="text-dark">DESCUBRA</h6>
+                            <nav class="nav flex-column">
+                                <a class="nav-link text-muted small px-0" href="#">MICRO INFLUENCERS</a>
+                                <a class="nav-link text-muted small px-0" href="#">COLABORADORES</a>
+                                <a class="nav-link text-muted small px-0" href="#">MARCAS</a>
+                            </nav>
+                        </div>
+                        <div class="col-md-4 col-12 mb-3">
+                            <h6 class="text-dark">SEJA UM MICROINFLUENCER</h6>
+                            <nav class="nav flex-column">
+                                <a class="nav-link text-muted small px-0" href="#">PASSO A PASSO</a>
+                                <a class="nav-link text-muted small px-0" href="#">INFLUENCERS GUIDE</a>
+                                <a class="nav-link text-muted small px-0" href="#">WORKSHOP</a>
+                            </nav>
+                        </div>
+                        <div class="col-md col-12 mb-3 pr-0">
+                            <h6 class="text-dark">INTELLIGENCE & METRICS</h6>
+                            <nav class="nav flex-column">
+                                <a class="nav-link text-muted small px-0" href="#">CONSULTE ENGAJAMENTO</a>
+                                <a class="nav-link text-muted small px-0" href="#">ENTENDA A IMPORTÂNCIA</a>
+                            </nav>
+                        </div>
+                    </div>
+
+                    <div class="row d-flex align-items-center py-4 border border-left-0 border-right-0 border-1 border-bottom-0 border-black" id="sub-footer">
+                        <div class="col-md-2 col-6 mx-auto ml-md-0 pl-0 mb-3 mb-md-0">
+                            <img src="~/resources/assets/images/logo2.png" style="width: 80%">
+                        </div>
+                        <div class="col-md-8 col-12 text-center text-muted small">
+                            <div class="row">
+                                <div class="ml-auto col-md-6 col-12 mb-3 mb-md-0">
+                                    ALL RIGHTS RESERVED INFLUENCERS INC. © 2019.
+                                </div>
+                                <div class="col-md-4 col-12 mb-3 mb-md-0">
+                                    <a class="text-muted" href="/termos-e-condicoes">TERMOS E CONDIÇÕES</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2 col-12 p-0 text-center">
+                            <nav class="nav justify-content-md-end justify-content-center">
+                                <a class="nav-link text-dark p-0" href="http://www.instagram.com/influencersinc"><i class="fab fa-lg fa-instagram"></i></a>
+                                <a class="nav-link text-dark p-0 pl-2" href="http://www.facebook.com/influencersinc"><i class="fab fa-lg fa-facebook"></i></a><a class="nav-link text-dark p-0 pl-2" href="https://www.youtube.com/channel/UCoYfvO-p8lWpj0Yw-O--25A"><i class="fab fa-lg fa-youtube"></i></a>
+                                
+                                
+                            </nav>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </footer>
+
+    <div class="modal fade" id="loading-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    </div>
+
+    <div class="modal fade" id="como-funciona-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content modal-content-center rounded-3 border-0">
+                <div class="modal-header pb-0 border-0 text-center position-absolute w-100 z-index-top" style="background-color:black;">
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close" onclick="javascript: window.location='https://www.influencersmetrics.com/'">
+                        <i class="fa fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body p-0 text-center" style="height:400px;top:50px;background-color:black;color:white;">
+                    <div class="row mt-4">
+                        <div class="col-md-10 col-10 px-0 py-2 mx-auto border border-black text-center">
+                            <span>Já processamos as informações do seu perfil.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="~/node_modules/popper.js/dist/umd/popper.min.js"></script>
+    <script src="~/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/node_modules/chart.js/dist/Chart.min.js"></script>
+    <script src="~/node_modules/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.min.js"></script>
+
+    <script>
+        function checkLoginState() {
+            FB.getLoginStatus(function (response) {
+                statusChangeCallback(response);
+            });
+        }
+        var accessToken = '';
+        function statusChangeCallback(response) {
+            if (response.status == 'connected') {
+                accessToken = response.authResponse.accessToken;
+                FB.api('/me/accounts?fields=instagram_business_account,name', function (dataface) {
+                    var tokens = $.grep(dataface.data, function (p) { return p.category != ''; });
+                    var tokensName = tokens.map(function (p) { 
+							return { 'instagram_business_account': p.instagram_business_account, 'name': p.name } 
+						});
+                    console.log(tokensName);
+
+                    var str = "<select id='ddlPage' onchange='selectPage()'>";
+                    str += "<option value=''>Escolha a sua conta Instagram</option>";
+                    $(tokensName).each(function () {
+						if (this.instagram_business_account != "" && this.instagram_business_account != null){
+							str += '<option value=' + this.instagram_business_account.id + '>' + this.name + '</option>';
+						}
+                    });
+                    str += "</select>";
+                    $('#cbxPaginas').html(str);
+                    $('#divPaginas').css({ display: "block" });
+                    str = "";
+                });
+            }
+            //    window.location = "https://www.influencersmetrics.com/relatorios/visualizar?usuarioinstagram=danieljromualdo";
+        }
+
+        var instagram_business_account = '';
+        function selectPage() {
+            var e = document.getElementById("ddlPage");
+            var idPage = e.options[e.selectedIndex].value;
+            /*FB.api('/' + idPage + '?fields=instagram_business_account', {
+                access_token: accessToken
+            }, function (dataface) {
+                if (dataface.instagram_business_account == null) {
+                    alert('Pagina selecionada não é de uma conta  Instagram ou ' + dataface.error.message);
+                    return;
+                }
+                instagram_business_account = dataface.instagram_business_account.id;
+                GetData();
+            });
+			*/
+			instagram_business_account = idPage;
+			GetData();
+        }
+
+        var qtdData = 0;
+        function GetData() {
+            if (instagram_business_account != '') {
+                FindData('insights?metric=audience_gender_age&period=lifetime');
+                FindData('insights?metric=audience_city&period=lifetime');
+				FindData('tags?fields=caption,owner,username,media_url,comments_count,like_count&limit=25')
+            }
+        }
+
+        function FindData(_url) {
+            $('#loading-modal').modal('show');
+            qtdData = qtdData + 1;
+            FB.api('/' + instagram_business_account + '/' + _url, function (dataface) {
+                //Enviar para o MongoDB
+                saveData(JSON.stringify(dataface));
+                console.log(dataface);
+            });
+        }
+
+        var usuarioInstagram = "";
+        function saveData(jsonString) {
+            $.ajax({
+                url: "https://www.influencersmetrics.com/facedata/loadData",
+                type: 'post',
+                data: {
+                    json: jsonString,
+                    usuario: '',
+                    key: _key
+                },
+                beforeSend: function () {
+                    $("#resultado").html("ENVIANDO...");
+                }
+            })
+                .done(function (msg) {
+                    qtdData = qtdData - 1;
+                    $("#resultado").html(msg);
+                    if (msg.indexOf('usuario:') > -1) {
+                        //alert('Pronto: ' + msg);
+                        usuarioInstagram = msg.replace("usuario:", "").replace("'", "");
+                        VerificarQtdData();
+                    } else {
+                        alert('Não pronto, ' + msg);
+                    }
+                })
+                .fail(function (jqXHR, textStatus, msg) {
+                    qtdData = qtdData - 1;
+                    alert(msg);
+                });
+        }
+
+        function VerificarQtdData() {
+            if (qtdData == 0 && usuarioInstagram != "") {
+                $.ajax({
+                    url: "https://www.influencersmetrics.com/facedata/Processado",
+                    type: 'post',
+                    data: {
+                        usuario: '',
+                        key: _key
+                    },
+                    beforeSend: function () {
+                        $("#resultado").html("ENVIANDO...");
+                    }
+                })
+                    .done(function (msg) {
+                        $("#resultado").html(msg);
+                        $('#loading-modal').modal('hide');
+                        $('#como-funciona-modal').modal('show');
+                    })
+                    .fail(function (jqXHR, textStatus, msg) {
+                        alert(msg);
+                        $('#loading-modal').modal('hide');
+                    });
+            }
+        }
+
+        function teste() {
+            qtdData = 1;
+            $('#loading-modal').modal('show');
+            var jsonString = "{'data':[{'name':'audience_gender_age','period':'lifetime','values':[{'value':{'F.13 - 17':7,'F.18 - 24':78,'F.25 - 34':170,'F.35 - 44':68,'F.45 - 54':12,'F.55 - 64':5,'M.13 - 17':4,'M.18 - 24':49,'M.25 - 34':72,'M.35 - 44':49,'M.45 - 54':11,'M.55 - 64':6,'M.65 + ':2},'end_time':'2018 - 10 - 14T07: 00: 00 + 0000'}],'title':'Gender and Age','description':'The gender and age distribution of this profiles followers','id':'17841406048369563/insights/audience_gender_age/lifetime'}]}";
+            saveData(jsonString);
+        }
+    </script>
+
+		<!--Start of Tawk.to Script-->
+	<script type="text/javascript">
+		var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+		(function(){
+			var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+			s1.async=true;
+			s1.src='https://embed.tawk.to/5ca9005553f1e453fb8c767a/default';
+			s1.charset='UTF-8';
+			s1.setAttribute('crossorigin','*');
+			s0.parentNode.insertBefore(s1,s0);
+		})();
+	</script>
+	<!--End of Tawk.to Script-->
+</body>
+</html>

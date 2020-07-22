@@ -1,0 +1,25 @@
+.pagination-sm .page-link {
+  padding: 0!important;
+  border-radius: 100%!important;
+  min-width: 20px;
+  text-align: center;
+  margin-right: 5px;
+  color:#6babde !important;
+}
+.pagination-sm .page-link {
+  padding: .25rem .5rem;
+  font-size: .875rem;
+  line-height: 1.5;
+}
+
+.page-item.active a {
+  background:#6babde !important;
+  color:#fff !important;
+}
+.pagination-sm .page-link {
+  padding: 0!important;
+  border-radius: 100%!important;
+  min-width: 20px;
+  text-align: center;
+  margin-right: 5px;
+}

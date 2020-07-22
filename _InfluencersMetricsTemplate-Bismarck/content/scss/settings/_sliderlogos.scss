@@ -1,0 +1,84 @@
+/*.carousel-control {
+  width: 0px;
+  opacity: 1;
+}
+.carousel-control.left {
+  left: 92%;
+  top: -60px;
+}
+.carousel-control.right {
+  right: 3%;
+  top: -60px;
+}*/
+
+$size-c-indicator: 16px;
+$active-size-indicator: -1px;
+
+.carousel{
+	////padding-bottom: 48px;
+	padding-bottom: 12px;
+	
+	& *{
+		@extend %basic-animation-slow;
+	}
+	
+	/*.carousel-inner{
+		
+	}*/
+	
+	.carousel-item{
+		.row > div[class*='col']{
+			///padding: 3rem;
+			padding: 3%;
+		}
+		
+		img{
+			width: auto !important;
+			///height: 100%;
+			max-height: 180px;
+			object-fit: contain;
+		}
+	}
+	
+	.carousel-indicators{
+		@extend %margin-bottom-0;
+		
+		li{
+			@extend %bg-transparent;
+			@extend %opacity-1;
+			@extend %border-radius-50;
+			@extend %border-none;
+			@extend %p-relative;
+			@extend %border-gray;
+			
+			width: $size-c-indicator;
+			height: $size-c-indicator;
+			
+			border-width: 1px;
+			border-style: solid;
+			
+			&:before{
+				///@extend %basic-animation;
+				///@extend %bounce-animation-menu-link;
+				@extend %content;
+				@extend %border-radius-50;
+				@extend %p-absolute;
+				
+				@extend %bg-gray;
+				
+				@include scale(0);
+				
+				   left: $active-size-indicator;
+				  right: $active-size-indicator;
+					top: $active-size-indicator;
+				 bottom: $active-size-indicator;
+			}
+			
+			&.active{
+				&:before{
+					@include scale(1);
+				}
+			}
+		}
+	}
+}

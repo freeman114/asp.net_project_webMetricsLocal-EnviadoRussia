@@ -1,0 +1,101 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Testes</title>
+	<script>
+		if (location.protocol != 'https:')
+		{
+			location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+		}
+        var _key = '@ViewBag.key';
+
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '220440968764019',
+                cookie: false,
+                xfbml: true,
+                version: 'v3.1'
+            });
+
+            FB.AppEvents.logPageView();
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) { return; }
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+</head>
+<body>
+	<div class="fb-login-button" width="290px"
+				data-max-rows="1" data-size="large"
+				data-button-type="continue_with"
+				data-scope="instagram_basic,instagram_manage_insights,pages_show_list,read_insights,email"
+				data-show-faces="false" data-auto-logout-link="false"
+				data-use-continue-as="true" onlogin="checkLoginState();"></div>
+	</div>
+
+	<div>
+		<span>url</span>
+		<input type="text" id="txturl" style="width:1000px"
+			value="?fields=business_discovery.username(luisasonza){followers_count,media_count,media{comments_count,like_count}}" >
+	</div>
+
+	<div>
+		<span>Processar</span>
+		<a href="javascript:face();" >click</a>
+	</div>
+
+	<div>
+		<span>resultado</span>
+		<input type="text" id="txtresultado" style="width:1000px">
+	</div>
+
+	<script>
+		function face()
+		{
+			selectPage();	
+		}
+    
+		function checkLoginState() {
+			FB.getLoginStatus(function (response) {
+				statusChangeCallback(response);
+			});
+		}
+    
+		function statusChangeCallback(response) {
+			if (response.status == 'connected') {
+				accessToken = response.authResponse.accessToken;    
+			}
+		}
+
+			//?fields=business_discovery.username(luisasonza){followers_count,media_count,media{comments_count,like_count}}
+			//var instagram_business_account = '17841406048369563';
+        var accessToken = '';
+
+		function selectPage() {
+			FB.api(document.getElementById('txturl').value,function (dataface) {
+                if (dataface == null) {
+                    alert('Não é de uma conta Instagram.');
+                    return;
+                }
+
+				var tst= JSON.stringify(dataface);
+				document.getElementById('txtresultado').value = tst;
+            });
+        }
+	</script>
+
+
+</body>
+</html>

@@ -1,0 +1,180 @@
+/* fonts */
+
+//// font sizes
+$sizes: (
+   "150": 150px,
+	"80": 80px,
+	"60": 60px,
+	"56": 56px,
+	"52": 52px,
+	"48": 48px,
+	"40": 40px,
+	"32": 32px,
+	"30": 30px,
+	"28": 28px,
+	"24": 24px,
+	"22": 22px,
+	"20": 20px,
+	"18": 18px,
+	"16": 16px,
+	"14": 14px,
+	"12": 12px,
+	"10": 10px
+	
+);
+
+@each $varName, $varValue in $sizes {
+	%font-#{$varName} { font-size: $varValue; }
+	%font-#{$varName}-IMP { font-size: $varValue !important; }
+}
+
+//// font weight
+$weight: (
+	"light": 200,
+	"normal": normal,
+	"medium": 500,
+	"bold": 700,
+	"200": 200,
+	"300": 300,
+	"400": 400,
+	"500": 500,
+	"700": 700
+);
+
+@each $varName, $varValue in $weight {
+	%font-#{$varName} { font-weight: $varValue; }
+	%font-#{$varName}-IMP { font-weight: $varValue !important; }
+}
+
+//// font align
+$align: (
+	"center": center,
+	 "right": right,
+	  "left": left
+);
+
+@each $varName, $varValue in $align {
+	%text-#{$varName} { text-align: $varValue; }
+	%text-#{$varName}-IMP { text-align: $varValue !important; }
+
+	///.text-#{$varName}{ text-align: $varValue; }
+}
+
+
+p, .text-default{
+	@extend %font-Montserrat;
+	
+	///@extend %font-24;
+	@extend %font-18;//// temp
+	@extend %font-20-s576;
+	@extend %font-16-s768;
+	@extend %font-18-s1200;
+	@extend %font-24-s1500;
+	
+	@extend %font-normal;
+	@extend %color-gray;
+	
+	line-height: 1.67;
+	
+	& > a:not(.btn){
+		@extend %font-18;
+		@extend %font-20-s576;
+		@extend %font-16-s768;
+		@extend %font-18-s1200;
+		@extend %font-24-s1500;
+	}
+	
+	&.small{
+		font-size: 100%;
+	}
+}
+
+h1,
+.h1{
+	@extend %font-30;
+	@extend %font-40-s576;
+	@extend %font-32-s480;
+	@extend %font-48-s768;
+	@extend %font-52-s1200;
+	@extend %font-60-s1500;
+	
+	@extend %text-uppercase;
+	@extend %font-bold;
+	
+	line-height: 1.2;
+	
+	margin-top: 16px;
+	margin-bottom: 32px;
+}
+
+h3,
+.h3{
+	@extend %font-24;
+	@extend %font-30-s576;
+	@extend %font-40-s1200;
+	@extend %font-48-s1500;
+	
+	@extend %text-uppercase;
+	@extend %font-bold;
+	
+	line-height: 1.2;
+	
+	margin-top: 16px;
+	margin-bottom: 32px;
+}
+
+h4,
+.h4{
+	@extend %font-18;
+	@extend %font-24-s576;
+	@extend %font-30-s1200;
+	@extend %font-32-s1500;
+	
+	@extend %text-uppercase;
+	@extend %font-bold;
+	
+	line-height: 1.2;
+	
+	margin-top: 16px;
+	margin-bottom: 32px;
+}
+
+
+  .font-light, .font-200{ @extend %font-200; }
+			   .font-300{ @extend %font-300; }
+.font-regular, .font-400{ @extend %font-400; }
+ .font-medium, .font-500{ @extend %font-500; }
+   .font-bold, .font-700{ @extend %font-700; }
+
+  .prefix-light, .prefix-200{ &:before{ @extend %font-200; } }
+				 .prefix-300{ &:before{ @extend %font-300; } }
+.prefix-regular, .prefix-400{ &:before{ @extend %font-400; } }
+ .prefix-medium, .prefix-500{ &:before{ @extend %font-500; } }
+   .prefix-bold, .prefix-700{ &:before{ @extend %font-700; } }
+
+  .sufix-light, .sufix-200{ &:after{ @extend %font-200; } }
+				.sufix-300{ &:after{ @extend %font-300; } }
+.sufix-regular, .sufix-400{ &:after{ @extend %font-400; } }
+ .sufix-medium, .sufix-500{ &:after{ @extend %font-500; } }
+   .sufix-bold, .sufix-700{ &:after{ @extend %font-700; } }
+
+
+
+.text-big{
+	@extend %font-18;
+	@extend %font-20-s576;
+	@extend %font-28-s1200-IMP;
+	@extend %font-32-s1500-IMP;
+	
+	line-height: 1.22;
+}
+
+.text-ultra{
+	@extend %font-40-IMP;
+	@extend %font-48-IMP-s480;
+	@extend %font-56-IMP-s768;
+	@extend %font-60-IMP-s992;
+	@extend %font-80-IMP-s1200;
+	
+	line-height: 1.22;
+}

@@ -1,0 +1,51 @@
+/*MENU FIXO NO TOPO APÓS SCROLL*/
+.menu-fixed{
+	border-bottom: 1px solid #000;
+    overflow: hidden; 
+    padding-top: 0!important;
+    height:72px!important;
+    position:fixed;
+    top:0;
+    z-index:9999;
+    background:#fff;
+}
+.menu-fixed .circle{
+	width:auto;
+	height:auto;
+	overflow:initial;
+}
+.menu-fixed .img-user{
+	width:93%;-webkit-filter: blur(13px);
+	-moz-filter: blur(13px);
+	-o-filter: blur(13px);
+	-ms-filter: blur(13px);
+	filter: blur(13px);
+}
+.menu-fixed .user_text_interna{display:none;}
+.menu-fixed .bx_text_user{
+	padding-top: 4px;
+}
+.menu-fixed .bx_text_user .bx_user_interna h1{
+	font-size: 29px;
+}
+.menu-fixed .bx_icons_header{
+	list-style-type: none!important;
+    float: left!important;
+    margin: 0 0 0 15px!important;
+    padding: 0!important;
+}
+.menu-fixed .bx_icons_header li {
+	padding:7px!important;
+}
+
+.menu-fixed .bx_numbers_user{
+	padding-top: 7px;
+}
+.menu-fixed .bx-img-user{
+	width:15%;
+	float:left;
+	padding-right:10px;
+}
+.menu-fixed .bx_numbers_user{
+	display:block;
+}

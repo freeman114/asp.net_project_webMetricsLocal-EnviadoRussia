@@ -1,0 +1,53 @@
+/* Tabs */
+
+.custom-tabs{
+	
+	
+	nav{
+		@extend %display-flex;
+		@extend %justify-content-center;
+	}
+	
+	.nav-tabs{
+		@extend %border-gray;
+		
+		.nav-link{
+			@extend %font-18;
+			@extend %font-24-s576;
+			@extend %font-32-s1200;
+			@extend %font-40-s1500;
+			
+			@extend %font-400;
+			@extend %font-300-s992;
+			
+			@extend %border-transparent;
+			@extend %border-none;
+			@extend %text-decoration-none;
+			@extend %color-gray;
+			
+			border-bottom-width: 3px;
+			border-bottom-style: solid;
+			margin-bottom: -2px;
+			
+			&.active{
+				@extend %color-light-blue;
+				@extend %bg-transparent;
+				///@extend %border-transparent;
+				@extend %border-light-blue;
+				
+				border-bottom-width: 3px;
+				border-bottom-style: solid;
+			}
+			
+			&:hover, 
+			&:focus{
+				///@extend %color-light-blue;
+				@extend %bg-transparent;
+				@extend %border-light-gray;
+				
+				@include opacity(.70);
+			}
+		}
+	}
+	
+}

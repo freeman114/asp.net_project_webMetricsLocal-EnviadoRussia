@@ -1,0 +1,189 @@
+﻿@model webMetrics.Models.DTO.AutorizarMetricaPage
+
+@{
+    ViewData["Title"] = "Autorizar análise";
+    ViewData["Page"] = "AuthorizeAnalysis";
+    Layout = "_LayoutManagement";
+}
+<section class="container-fluid limit-1366 py-2 text-center">
+
+    <h1 class="font-black mb-1 mt-5">Autorização de análise</h1>
+    <p class="font-light mb-5">Compartilhe o seu link</p>
+
+    <p class="font-500">Você pode personalizar o link digitando o nome do cliente no campo abaixo:</p>
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-md-8">
+            <div class="input-group">
+                <input type="text" class="form-control" id="txtClient" placeholder="Nome do Cliente" aria-label="Nome do Cliente" value="">
+                <div class="input-group-append">
+                    <a href="javascript:;" class="btn btn-yellow" type="button" id="client-text" onclick="addClient();">
+                        <i class="fas fa-envelope-open"></i>
+                        Cliente
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p>Para descobrir e ter informações completas como: idade, sexo das pessoas engajadas, melhor local de engajamento, perfis fakes, troca de comentários entre usuários, melhor lugar de audiência, etc.</p>
+
+    <p class="font-bold">Para isso, envio o link abaixo para o influenciador que necessita fazer a consulta:</p>
+
+    <div class="row justify-content-center">
+        <div class="col-auto">
+            <div class="select-icon square">
+                <!-- este select gera um novo html
+                    vc pode dar um id para ele encontra-lo
+                    pelo [data-id] em um button que vai ser gerado
+                    os options vem em uma lista dentro da class [dropdown-menu open]
+                -->
+                <select id="teste-radio-select" class="selectpicker">
+                    <option selected data-active="true" data-content='<span class="social-instagram"></span> instagram'> instagram </option>
+                    <option data-active="false" data-content='<span class="social-youtube"></span> youtube'> youtube </option>
+                    <option data-active="false" data-content='<span class="social-twitter"></span> twitter'> twitter </option>
+                    <option data-active="false" data-content='<span class="social-tiktok"></span> tiktok'> tiktok </option>
+                    <option data-active="false" data-content='<span class="social-linkedin"></span> linkedin'> linkedin </option>
+                    <option data-active="false" data-content='<span class="social-podcast"></span> podcast'> podcast </option>
+                </select>
+            </div>
+        </div>
+
+        @*<div class="input-group mb-3">
+                <input type="text" readonly class="form-control" id="link"
+                       style="border-radius:30px 0 0 30px !important;" value="https://www.influencersmetrics.com/relatorios/MetricasInsights?cd=@ViewBag.MyCode">
+                <div class="input-group-append">
+                    <a href="javascript:;" class="input-group-text bg-blue text-white text-decoration-none"
+                       id="copy-text" onclick="copy();"
+                       style="border-radius:30px !important;margin-left: -15px;z-index: 4;outline: none !important;">
+                        Copiar
+                        <i class="far fa-copy ml-2"></i>
+                    </a>
+                </div>
+            </div>*@
+
+        <div class="col-lg-7 col-md-8">
+            <div class="input-group">
+                <input type="text" id="link" onclick="copy();" readonly class="form-control" id="link" data-page="0" data-ind="0" aria-label="Nome do Cliente" placeholder="URL do Influenciador" value="https://www.influencersmetrics.com/relatorios/MetricasInsights?cd=@ViewBag.MyCode">
+                <div class="input-group-append">
+                    <a href="javascript:;" class="btn btn-yellow" type="button" id="copy-text" onclick="copy();">
+                        <i class="fas fa-copy"></i>
+                        Copiar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <input type="hidden" id="current_page" value="1">
+    <input asp-for="UsuariosInstagram" type="hidden" id="array_inputs" size="70" value="">
+    <input type="hidden" id="total_inputs" value="1">
+    <input type="hidden" id="total_pages" value="0">
+    <input type="hidden" id="nPage" value="0">
+    <input type="hidden" id="nInd" value="0">
+
+    @*<div class="row mt-5 text-center" style="margin-left:30px">
+            Ou compartilhe o seu link com:
+            <a id='mobWhatsapp' href="whatsapp://send?text=A @ViewBag.nomeAgencia precisa descobrir seus resultados como influenciador. O link abaixo, permitirá a ela, analisar  não só apenas o engajamento, como dados mais complexos e relevantes para sua possível contratação. Segue o link: https://www.influencersmetrics.com/relatorios/MetricasInsights?cd=@ViewBag.MyCode"
+               class="ml-1 btn btn-success rounded-circle btn-sm" target="_blank">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+            <a id='pcWhatsapp' style='display:none' href="https://wa.me/?text=A @ViewBag.nomeAgencia precisa descobrir seus resultados como influenciador. O link abaixo, permitirá a ela, analisar  não só apenas o engajamento, como dados mais complexos e relevantes para sua possível contratação. Segue o link: https://www.influencersmetrics.com/relatorios/MetricasInsights?cd=@ViewBag.MyCode"
+               class="ml-1 btn btn-success rounded-circle btn-sm" target="_blank">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+            <a href="#" class="ml-1 btn btn-danger rounded-circle btn-sm"><i class="far fa-envelope"></i></a>
+        </div>*@
+
+    <div class="row justify-content-center mt-4">
+        <div class="col-auto">
+            <p class="font-500 align-self-center">Compartilhe o seu link com:</p>
+        </div>
+        <div style="display: flex;">
+            <a id="mobWhatsapp"
+               href="whatsapp://send?text=A @ViewBag.nomeAgencia precisa descobrir seus resultados como influenciador. O link abaixo, permitirá a ela, analisar  não só apenas o engajamento, como dados mais complexos e relevantes para sua possível contratação. Segue o link: https://www.influencersmetrics.com/relatorios/MetricasInsights?cd=@ViewBag.MyCode"
+               target="_blank" title="WhatsApp" class="btn btn-circle btn-whatsapp">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+            <a id="pcWhatsapp" style='display:none;'
+               href="https://wa.me/?text=A @ViewBag.nomeAgencia precisa descobrir seus resultados como influenciador. O link abaixo, permitirá a ela, analisar  não só apenas o engajamento, como dados mais complexos e relevantes para sua possível contratação. Segue o link: https://www.influencersmetrics.com/relatorios/MetricasInsights?cd=@ViewBag.MyCode"
+               target="_blank" title="WhatsApp" class="btn btn-circle btn-whatsapp">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+
+            @*email*@
+            <a title="E-mail" id="pcEmail"
+               href="mailto:endereco.do.influencer@dominio.com?Subject=Seus%20resultados%20como%20influenciador&Body=A @ViewBag.nomeAgencia precisa descobrir seus resultados como influenciador. O link abaixo, permitirá a ela, analisar  não só apenas o engajamento, como dados mais complexos e relevantes para sua possível contratação. Segue o link: https://www.influencersmetrics.com/relatorios/MetricasInsights?cd=@ViewBag.MyCode"
+               target="_blank" class="btn btn-circle btn-light-blue">
+                <i class="fas fa-envelope"></i>
+            </a>
+        </div>
+    </div>
+</section>
+@section scripts{
+
+
+    <script>
+    window.addClient = function () {
+        $('#link').val("https://www.influencersmetrics.com/relatorios/MetricasInsights?cd=@ViewBag.MyCode" + '&cliente=' + $('#txtClient').val());
+        $("#pcWhatsapp").attr("href", "https://wa.me/?text=A @ViewBag.nomeAgencia precisa descobrir seus resultados como influenciador. O link abaixo, permitirá a ela, analisar  não só apenas o engajamento, como dados mais complexos e relevantes para sua possível contratação. Segue o link: https://www.influencersmetrics.com/relatorios/MetricasInsights?cd=@ViewBag.MyCode" + "%26cliente=" +$('#txtClient').val());
+        $("#mobWhatsapp").attr("href", "whatsapp://send?text=A @ViewBag.nomeAgencia precisa descobrir seus resultados como influenciador. O link abaixo, permitirá a ela, analisar  não só apenas o engajamento, como dados mais complexos e relevantes para sua possível contratação. Segue o link: https://www.influencersmetrics.com/relatorios/MetricasInsights?cd=@ViewBag.MyCode" +"%26cliente="+ $('#txtClient').val());
+
+        $('#txtClient').val("");
+    }
+
+    window.copy = function () {
+        $('#link').select();
+        document.execCommand("copy");
+    }
+
+    $(document).ready(function () {
+        $('.date').mask('00/00/0000');
+        $('.cep').mask('00000-000');
+
+        var SPMaskBehavior = function (val) {
+            return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+        },
+            spOptions = {
+                onKeyPress: function (val, e, field, options) {
+                    field.mask(SPMaskBehavior.apply({}, arguments), options);
+                }
+            };
+
+        $('.phone').mask(SPMaskBehavior, spOptions);
+    });
+
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        document.getElementById('mobWhatsapp').style.display = 'block';
+        document.getElementById('pcWhatsapp').style.display = 'none';
+    } else {
+        document.getElementById('mobWhatsapp').style.display = 'none';
+        document.getElementById('pcWhatsapp').style.display = 'block';
+    }
+    </script>
+
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        (function () {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/5ca9005553f1e453fb8c767a/default';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+    </script>
+    <script>
+        $('#teste-radio-select').change(function () {
+            var option = $('option:selected', this);
+            var data = option.data('active');
+            if (data === false) {
+                //$("#target").val($("#target option:first").val());
+                $('#teste-radio-select').val($('#teste-radio-select option:first').val());
+                building();
+            }
+        });
+    </script>
+    <!--End of Tawk.to Script-->
+}

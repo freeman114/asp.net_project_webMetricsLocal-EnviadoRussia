@@ -1,0 +1,17 @@
+﻿.backcolor {
+    background-color: #4267b2;
+    border-radius: 18px !important;
+}
+
+.stylecolor {
+    color: darkslategray!important;
+}
+
+.btn-light-yellow {
+    background: #ffd800 !important;
+    color: #fff !important;
+}
+
+    .btn-light-yellow:hover {
+        background: #ffd800 !important;
+    }

@@ -1,0 +1,286 @@
+﻿@model webMetrics.Models.Usuario
+
+@{
+    ViewData["Title"] = "Pagamento";
+}
+
+<script type="text/javascript" src="@Html.Raw(ViewBag.jsUrlPagaSeguro)"></script>
+<script type="text/javascript">
+    @Html.Raw(ViewBag.jsExecutar)
+</script>
+<script>
+	if (location.protocol != 'https:')
+		{
+		 location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+		}
+</script>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-10 col-md-10" style="margin-top: 150px;">
+            <div class="col-xs-12 col-md-3">
+                <h2>PAGAMENTO</h2>
+                <small>INSIRA SEUS DADOS DO CARTÃO</small><br />
+                <small>O pagamento será processado pelo <a href="http://www.pagseguro.com.br" class="alert-link">pagseguro</a>*</small><br />
+                <small>Pediremos apenas uma vez esses dados.</small>
+            </div>
+
+            <input type="hidden" id="hddtokenCard" runat="server" />
+            <input type="hidden" id="hddhash" runat="server" />
+            <div class="col-xs-12 col-md-9">
+			
+			@if (Model.Email == null || Model.Email=="")
+			{
+				<div class="col-xs-12 col-md-12">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Email*</label>
+                        <input type="text" id="Email" class="form-control" placeholder="email" /><br />
+                    </div>
+                </div>
+			}
+			else
+			{
+				<input type="hidden" id="Email" class="form-control" placeholder="email" /><br />
+			}
+                <div class="col-xs-12 col-md-12">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Nome*</label>
+                        <input type="text" id="Nome" class="form-control" placeholder="nome" /><br />
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-12">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Sobrenome*</label>
+                        <input type="text" id="Sobrenome" class="form-control" placeholder="sobrenome" /><br />
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-md-12">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Cpf*</label>
+                        <input type="text" id="Cpf" class="form-control" placeholder="cpf" /><br />
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-md-12">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Telefone*</label>
+                        <input type="text" id="Telefone" class="form-control" placeholder="telefone" /><br />
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-md-12">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Logradouro*</label>
+                        <input type="text" id="Street" class="form-control" placeholder="logradouro" /><br />
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-md-12">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Numero*</label>
+                        <input type="text" id="Number" class="form-control" placeholder="numero" /><br />
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-md-12">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Complemento*</label>
+                        <input type="text" id="Complement" class="form-control" placeholder="complemento" /><br />
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-md-12">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Distrito*</label>
+                        <input type="text" id="District" class="form-control" placeholder="distrito" /><br />
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-md-12">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Cidade*</label>
+                        <input type="text" id="City" class="form-control" placeholder="cidade" /><br />
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-md-12">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Estado*</label>
+                        <input type="text" id="State" class="form-control" placeholder="estado" /><br />
+                    </div>
+                </div>
+
+                <input type="hidden" id="Country" class="form-control" value="BRL" placeholder="país" /><br />
+                <!--<input type="hidden" id="Email" class="form-control" value="@Model.Email" /><br /> -->
+                <input type="hidden" id="Tipo" class="form-control" value="@Model.Tipo" /><br />
+
+                <div class="col-xs-12 col-md-12">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">CEP*</label>
+                        <input type="text" id="PostalCode" class="form-control" placeholder="cep" /><br />
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-md-12">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Data de nascimento*</label>
+                        <input type="text" id="DataNascimento" class="form-control" placeholder="dd/mm/aaaa" /><br />
+                    </div>
+                </div>
+                <hr />
+                <div class="col-xs-12 col-md-12">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Número do cartão*</label>
+                        <input type="text" id="txtcardNumber" class="form-control" placeholder="numero do cartão" /><br />
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-12">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">CVV*</label>
+                        <input type="hidden" id="txtbrand" /><br />
+                        <input type="text" id="txtcvv" class="form-control" placeholder="" /><br />
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-12">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Mês e Ano de expiração*</label>
+                        <input type="text" id="txtexpirationMonth" class="form-control" placeholder="" />
+                        <input type="text" id="txtexpirationYear" class="form-control" placeholder="" /><br />
+                    </div>
+                </div>
+                @if (!string.IsNullOrEmpty(ViewBag.Mensagem))
+                {
+                    <div class="col-xs-12 col-md-12">
+                        <div class="form-group">
+                            <span style="color:red;font-size:medium">@ViewBag.Mensagem</span>
+                        </div>
+                    </div>
+                }
+                <div class="col-xs-12 col-md-12">
+                    <div class="form-group">
+                        <input type="button" onclick="javascript:SubmitBrand();" value="Processar pagamento" class="btn-success" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    function SubmitBrand() {
+        PagSeguroDirectPayment.getBrand({
+            cardBin: $("input#txtcardNumber").val(),
+            success: function (response) {
+                //bandeira encontrada
+                $("input#txtbrand").val(response.brand.name);
+                SubmitCard();
+            },
+            error: function (response) {
+                alert("Erro: getBrand, " + response);
+            },
+            complete: function (response) {
+                //tratamento comum para todas chamadas
+            }
+        });
+    }
+    function SubmitCard() {
+        var param = {
+            cardNumber: $("input#txtcardNumber").val(),
+            cvv: $("input#txtcvv").val(),
+            expirationMonth: $("input#txtexpirationMonth").val(),
+            expirationYear: $("input#txtexpirationYear").val(),
+            success: function (response) {
+                //token gerado, esse deve ser usado na chamada da API do Checkout Transparente
+                $('input#hddtokenCard').val(response.card.token);
+                GetHash();
+                //$("input#btn").css("", "");
+            },
+            error: function (response) {
+                //tratamento do erro
+                alert("Erro: create card token, " + response);
+            },
+            complete: function (response) {
+                //tratamento comum para todas chamadas
+            }
+        }
+        //parâmetro opcional para qualquer chamada
+        if ($("input#txtbrand").val() != '') {
+            param.brand = $("input#txtbrand").val();
+        }
+        PagSeguroDirectPayment.createCardToken(param);
+    };
+
+    function GetHash() {
+        PagSeguroDirectPayment.onSenderHashReady(function (response) {
+            if (response.status == 'error') {
+                console.log(response.message);
+                alert("Erro: onSenderHashReady, " + response.message);
+                return false;
+            } else {
+                var hash = response.senderHash; //Hash estará disponível nesta variável.
+                $("input#hddhash").val(hash);
+                GetInstallment();
+            }
+        });
+    }
+
+    var _urlSandBox = '';
+    function GetInstallment() {
+        _amount = ($('input#Tipo').val() == "1" ? "119.00" : ($('input#Tipo').val() == "2" ? "3119.00" : "6119.00"));
+        _brand = $("input#txtbrand").val();
+
+        /*PagSeguroDirectPayment.getInstallments({
+            amount: _amount,
+            brand: _brand,
+            maxInstallmentNoInterest: 2,
+            success: function (response) {
+            */
+                _urlCreate = _urlSandBox+ '/relatorios/CreatePay?token=' + $('input#hddtokenCard').val() + "&hash=" + $('input#hddhash').val() +
+                    "&Cpf=" + $('input#Cpf').val() +
+                    "&Nome=" + $('input#Nome').val() +
+                    "&Sobrenome=" + $('input#Sobrenome').val() +
+                    "&Telefone=" + $('input#Telefone').val() +
+                    "&Street=" + $('input#Street').val() +
+                    "&Number=" + $('input#Number').val() +
+                    "&Complement=" + $('input#Complement').val() +
+                    "&District=" + $('input#District').val() +
+                    "&City=" + $('input#City').val() +
+                    "&State=" + $('input#State').val() +
+                    "&Country=" + $('input#Country').val() +
+                    "&PostalCode=" + $('input#PostalCode').val() +
+                    "&Tipo=" + $('input#Tipo').val() +
+                    "&InstallmentValue=" + _amount +
+                    "&DataNascimento=" + $('input#DataNascimento').val() +
+                    "&Email=" + $('input#Email').val();
+
+                $.ajax
+                    ({
+                        url: _urlCreate,
+                        type: 'GET',
+                        success: function (dados) {
+                            if (dados == "") {
+                                alert('Deu certo, aguarde a confirmação do pagamento e comemore!');
+                                window.location.href = _urlSandBox + "/relatorios/Consultar";
+                            }
+                            else {
+                                var resultado = dados; // Caso vá retornar alguma coisa
+                                alert(dados);
+                            }
+                        },
+                        error: function (erro) {
+                            alert("Erro: getinstallments," + erro);
+                        }
+                    });
+            /*},
+            error: function (response) {
+                //tratamento do erro
+            },
+            complete: function (response) {
+                //tratamento comum para todas chamadas
+            }
+        });*/
+    }
+</script>
+
+

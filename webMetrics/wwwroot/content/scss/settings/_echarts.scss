@@ -1,0 +1,68 @@
+/* Scss Document */
+
+.echarts{
+	@extend %w-100;
+	@extend %h-100;
+	@extend %min-h-100;
+	
+	///overflow: auto;
+	
+	height: 300px;
+	
+	@include tablet{
+		height: 392px;
+	}
+	
+	@include desktop{
+		height: 450px;
+	}
+	
+	
+	/*canvas{
+		width: 100% !important;
+    	height: 100% !important;
+	}*/
+	
+	&.pie-gender{
+		height: 280px;
+		
+		@include mobile{
+			height: 220px;
+		}
+		
+		@include tablet{
+			height: 312px;
+		}
+
+		@include desktop{
+			height: 350px;
+		}
+	}
+	
+	&.pie-content{
+		height: 300px;
+		
+		
+		@include mobile{
+			height: 220px;
+		}
+		
+		@include mobile-480{
+			height: 180px;
+			height: 12rem;
+		}
+		
+		
+		@include notebook{
+			height: 280px;
+		}
+
+		@include desktop{
+			height: 350px;
+		}
+		
+		@include desktop-1500{
+			height: 400px;
+		}
+	}
+}

@@ -1,0 +1,310 @@
+﻿@model webMetrics.Models.Usuario
+@{
+    ViewData["Title"] = "Perfil";
+    ViewData["Page"] = "Perfil";
+    Layout = "_LayoutManagement";
+}
+
+<section class="container-fluid limit-1366 py-2 text-center">
+
+    <h1 class="font-black mb-1 mt-5">Perfil</h1>
+    <p class="mb-5 text-uppercase">Edite os seus dados de perfil e consulte o plano assinado</p>
+
+    <form>
+        <div class="container-1200">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <!--
+                        para utilizar mensagens de erro, informações ou sucesso....
+                        basta colocar os textos dentre do [data-] correspondente e acrescentar as classes:
+
+                        form-info    - > informações
+                        form-success - > validado
+                        form-error   - > informações
+                        para funcionar precisa primeiro ter a classe [info-text]
+                    -->
+                    <div class="group material-form  info-text" data-info="Informações de preenchimento" data-success="Validado" data-error="Campo inválido">
+                        <input type="text" asp-for="Nome" id="name" name="name" required />
+                        <span class="bar"></span>
+                        <label>Nome</label>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="group material-form  info-text" data-info="Informações de preenchimento" data-success="Validado" data-error="Campo inválido">
+                        <input type="text" asp-for="DataNascimento" id="birthday" name="birthday" required />
+                        <span class="bar"></span>
+                        <label>Data de nascimento</label>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-5">
+                    <div class="group material-form  info-text" data-info="Informações de preenchimento" data-success="Validado" data-error="Campo inválido">
+                        <input type="text" asp-for="Email" id="email" name="email" required />
+                        <span class="bar"></span>
+                        <label>E-mail</label>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="group material-form  info-text" data-info="Informações de preenchimento" data-success="Validado" data-error="Campo inválido">
+                        <input type="text" asp-for="Telefone" id="phone" name="phone" required />
+                        <span class="bar"></span>
+                        <label>Telefone</label>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="group material-form  info-text" data-info="Informações de preenchimento" data-success="Validado" data-error="Campo inválido">
+                        <input type="text" asp-for="UsuarioInstagram" id="instagram" name="instagram" required />
+                        <span class="bar"></span>
+                        <label>Perfil do Instagram</label>
+                    </div>
+                </div>
+
+                <div class="col-lg-2">
+                    <div class="group material-form  info-text" data-info="Informações de preenchimento" data-success="Validado" data-error="Campo inválido">
+                        <input type="text" asp-for="PostalCode" cep" id="cep" name="cep" required />
+                        <span class="bar"></span>
+                        <label>CEP</label>
+                    </div>
+                </div>
+
+                <div class="col-lg-5">
+                    <div class="group material-form  info-text" data-info="Informações de preenchimento" data-success="Validado" data-error="Campo inválido">
+                        <input type="text" asp-for="Street" id="address" name="address" required />
+                        <span class="bar"></span>
+                        <label>Endereço</label>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="group material-form  info-text" data-info="Informações de preenchimento" data-success="Validado" data-error="Campo inválido">
+                        <input type="text" asp-for="Number" id="number" name="number" required />
+                        <span class="bar"></span>
+                        <label>Número</label>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="group material-form  info-text" data-info="Informações de preenchimento" data-success="Validado" data-error="Campo inválido">
+                        <input type="text" asp-for="Complement" id="complement" name="complement" required />
+                        <span class="bar"></span>
+                        <label>Complemento</label>
+                    </div>
+                </div>
+
+                <div class="col-lg-5">
+                    <div class="group material-form  info-text" data-info="Informações de preenchimento" data-success="Validado" data-error="Campo inválido">
+                        <input type="text" id="form-name1" name="form-namecard" required />
+                        <span class="bar"></span>
+                        <label>Bairro</label>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="group material-form  info-text" data-info="Informações de preenchimento" data-success="Validado" data-error="Campo inválido">
+                        <input type="text" asp-for="City" id="city" name="city" required />
+                        <span class="bar"></span>
+                        <label>Cidade</label>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="group material-form  info-text" data-info="Informações de preenchimento" data-success="Validado" data-error="Campo inválido">
+                        @Html.DropDownList("State", new SelectList(new List<string>()
+                           {
+                               "Acre", "Alagoas", "Amapá", "Amazonas", "Bahia", "Ceará", "Espírito Santo", "Goiás", "Maranhão", "Mato Grosso",
+                               "Mato Grosso do Sul", "Minas Gerais", "Pará", "Paraíba", "Paraná", "Pernambuco", "Piauí", "Rio de Janeiro", "Rio Grande do Norte",
+                               "Rio Grande do Sul", "Rondônia", "Roraima", "Santa Catarina", "São Paulo", "Sergipe", "Tocantins", "Distrito Federal"
+                           }), "Selecione o estado", new { @id = "state", @name = "state" })
+                        <span class="bar"></span>
+                        <label>Estado</label>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row justify-content-end row-buttons">
+                <button title="" class="link link-btn" id="btnChangePassword"> alterar senha </button>
+                <button title="" role="button" class="btn btn-secondary expanded-btn em-contrucao"> cancelar </button>
+                <button title="" role="button" class="btn btn-light-blue expanded-btn em-contrucao"> confirmar </button>
+            </div>
+        </div>
+    </form>
+
+    <div class="container-1200 my-5">
+        <div class="row border-20 bg-light-gray p-2">
+            @{
+                var userType = Microsoft.AspNetCore.Http.SessionExtensions.GetString(Context.Session, "userType");
+                if (userType == "Agency")
+                {
+                    <div class="col-lg-8 col-12 text-left">
+                        <h4 class="my-3">Assinatura</h4>
+                        <p class="text-uppercase font-500 my-1">PLANO MEDIA KIT COM AS INFORMAÇÕES ATUALIAZADAS TODA SEMANA PARA VOCê MOSTRAR PARA MARCAS E AGÊNCIAS</p>
+                        <p class="small">R$ 249,00 por mês</p>
+                    </div>
+                    <div class="col-lg col-12 text-right pt-md-5">
+                        <button title="" class="link-secondary text-initial link-text-big mb-3 display em-contrucao"> Fazer upgrade </button>
+                        <br />
+                        <button id="btnPauseAccount" title="" class="link-secondary text-initial link-text-big"> Pausar assinatura </button>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-lg-8 col-12 text-left">
+                        <h4 class="my-3">Assinatura</h4>
+                        <p class="text-uppercase font-500 my-1">Plano para marcas e agências - 30 perfis sociais</p>
+                        <p class="small">R$ 2.799,00 por mês</p>
+                    </div>
+                    <div class="col-lg col-12 text-right pt-md-5">
+                        <button title="" class="link-secondary text-initial link-text-big mb-3 display em-contrucao"> Fazer upgrade </button>
+                        <br />
+                        <button id="btnPauseAccount" title="" class="link-secondary text-initial link-text-big"> Pausar assinatura </button>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+
+</section>
+
+<!-- Modal -->
+<div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">ALTERAR SENHA</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="alert p-0 m-0 text-center" id="alert"></div>
+                    <div class="form-group">
+                        <label for="old_password" class="col-form-label">Senha Anterior:</label>
+                        <input type="password" name="oldPass" class="form-control" id="oldPass">
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="col-form-label">Nova senha:</label>
+                        <input type="password" name="newPass" class="form-control" id="newPass">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm_password" class="col-form-label">Confirmar Senha:</label>
+                        <input type="password" name="confirm_password" class="form-control" id="confirm_password">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
+                <button type="button" class="btn btn-black text-white" onclick="changePass();">ATUALIZAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="desactiveModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tem certeza que quer desativar sua conta?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Sua assinatura será cancelada também.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="cancelarAssinatura()">Sim, desabilite</button>
+                <button type="button" class="btn btn-black text-white" data-dismiss="modal">Não</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="msgModal" tabindex="-1" role="dialog" aria-labelledby="msgModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <h5 class="modal-title" id="resetPasswordModalLabel">MENSAGEM</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body pt-0">
+                <div class="form-group mb-0">
+                    <span id='lblMensagem'></span>
+                </div>
+            </div>
+            <div class="modal-footer pt-0 border-0">
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Style{
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css" />
+    <link href="~/content/css/custom.css" rel="stylesheet" />
+}
+@section Plugins{
+}
+@section Scripts{
+    <!-- ## plugins -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+    <!-- masonry -->
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+    <script>
+        $('#btnChangePassword').on('click', function () {
+            $('#passwordModal').appendTo("body").modal('show');
+        });
+        $('#btnPauseAccount').on('click', function () {
+            $('#desactiveModal').appendTo("body").modal('show');
+        });
+
+        var _url = '/relatorios/';
+        function changePass() {
+            $.ajax({
+                url: _url + 'ChangePassword',
+                type: 'post',
+                data: {
+                    oldPass: document.getElementById('oldPass').value,
+                    newPass: document.getElementById('newPass').value
+                },
+                beforeSend: function () {
+                    //$("#resultado").html("ENVIANDO...");
+                }
+            })
+                .done(function (msg) {
+                    location.href = msg;
+                })
+                .fail(function (jqXHR, textStatus, msg) {
+                    //qtdData = qtdData - 1;
+                    alert(msg);
+                });
+        }
+
+        function cancelarAssinatura() {
+            $.ajax({
+                url: _url + 'CancelarAssinatura',
+                type: 'post',
+                data: {
+                },
+                beforeSend: function () {
+                    //$("#resultado").html("ENVIANDO...");
+                }
+            })
+                .done(function (msg) {
+                    location.href = msg;
+                })
+                .fail(function (jqXHR, textStatus, msg) {
+                    //qtdData = qtdData - 1;
+                    alert(msg);
+                });
+        }
+
+	    function abrirModal(name, msg)
+		{
+			$('#lblMensagem').html(msg);
+            $(name).appendTo("body").modal('show');
+		}
+
+		@Html.Raw(@ViewBag.ExecutarJS);
+    </script>
+}

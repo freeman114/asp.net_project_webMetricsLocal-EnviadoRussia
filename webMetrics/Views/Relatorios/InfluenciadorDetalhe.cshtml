@@ -1,0 +1,117 @@
+﻿@{
+    ViewData["Title"] = "Detalhes do Influenciador";
+    ViewData["Page"] = "InfluencerDetail";
+    Layout = "_LayoutManagement";
+    ViewBag.HideMenu = true;
+}
+@model webMetrics.Models.InfluencerDetailInfo
+
+<section class="container-fluid bg-white-gray">
+    <div class="container-big mb-4">
+
+        <div class="row">
+            <div class="col-xl-6 order-xl-2">
+                <div class="influencer-header">
+                    <img class="avatar" alt="" src="@Model?.ImageProfile" onerror="this.onerror=null;this.src='/images/no-photo-icon.jpg'">
+                    <h4>
+                        @if (Model?.Origin != null)
+                        {
+                            @switch (Model.Origin)
+                            {
+                                case "I":
+                                    <span class="social-instagram"></span>
+                                    break;
+                                case "Y":
+                                    <span class="social-youtube"></span>
+                                    break;
+                                case "T":
+                                    <span class="social-twitter"></span>
+                                    break;
+                                case "TK":
+                                    <span class="social-tiktok"></span>
+                                    break;
+                                case "L":
+                                    <span class="social-linkedin"></span>
+                                    break;
+                                case "P":
+                                    <span class="social-podcast"></span>
+                                    break;
+                            }
+                        }
+                        @Model?.UserName
+                    </h4>
+                    <p class="text">@Model?.Description</p>
+                    <p class="email">@Model?.Contacts</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-4 col-6 microcard">
+                        <h5 class="title">Posts</h5>
+                        <span class="value">@Model?.PostsCount</span>
+                    </div>
+                    <div class="col-md-4 col-6 microcard">
+                        <h5 class="title">Seguidores</h5>
+                        <span class="value">@Model?.Followers</span>
+                    </div>
+                    <div class="col-md-4 col-6 microcard">
+                        <h5 class="title">Seguindo</h5>
+                        <span class="value">@Model?.Following</span>
+                    </div>
+                    <div class="col-md-4 col-6 microcard">
+                        <h5 class="title">Engajamento</h5>
+                        <span class="value">@Model?.Engagement</span>
+                    </div>
+                    <div class="col-md-4 col-6 microcard">
+                        <h5 class="title">Impressões</h5>
+                        <span class="value">@Model?.Impressions</span>
+                    </div>
+                    <div class="col-md-4 col-6 microcard">
+                        <h5 class="title">Alcance</h5>
+                        <span class="value">@Model?.Reach</span>
+                    </div>
+                    <div class="col-12 microcard">
+                        <h5 class="title">Alcance</h5>
+                        <div class="categories">
+                            @if (@Model?.ReachTags != null)
+                            {
+                                @foreach (var item in @Model?.ReachTags)
+                                {
+                                    <div class="item">@item</div>
+                                }
+                            }
+                        </div>
+                        <div class="container-analise  sys-1 py-3 py-md-5 py-xl-0 px-3 px-md-5 px-xl-0">
+                            <h4 class="font-black my-0 pt-5 mb-4">Quer obter a análise completa?</h4>
+                            <p class="font-black font-500 my-4">Assine um de nossos planos e tenha acesso à relatórios que incluem análise de autenticidade e engajamento, informações de contato, análise de branded post, custo estimado e mais!</p>
+
+                            <a href="/News/PesquisasPlanos" title="Mais influenciadores" class="btn btn-text-big btn-yellow btn-full-auto my-2 py-md-4 py-3">
+                                Obter análise completa
+                            </a>
+
+                            <a title="Eu sou esse influenciador" class="btn btn-red btn-cicle btn-float-button-big mt-3 mb-1">
+                                <i class="fas fa-id-card-alt"></i>
+                                Eu sou esse influenciador
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 order-xl-1 grid-mini-posts">
+                <div class="mini-posts row">
+                    @if (Model?.Posts != null)
+                    {
+                        @foreach (var item in Model?.Posts)
+                        {
+                            <div class="img-content col-6 col-sm-4">
+                                <img class="" alt="" src="@item.UrlImg" onerror="this.onerror=null;this.src='/images/noavailable.jpg'" />
+                                <div class="caption">
+                                    <div class="total-likes">@item.Likes</div>
+                                    <div class="total-comments">@item.Comments</div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

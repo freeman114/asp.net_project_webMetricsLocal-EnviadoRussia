@@ -1,0 +1,50 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>
+    <script type='text/javascript'>
+     google.charts.load('current', {
+       'packages': ['geochart'],
+       // Note: you will need to get a mapsApiKey for your project.
+       // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
+       'mapsApiKey': 'AIzaSyDIDcw3VuLRqxv9TY9Xf0sLjHcf3fQSsW4'
+     });
+     google.charts.setOnLoadCallback(drawMarkersMap);
+
+      function drawMarkersMap() {
+      var data = google.visualization.arrayToDataTable([
+        ['City',   'Population', 'Area'],
+        ['São Paulo',      2761477,    1285.31],
+        ['Curitiba',     1324110,    181.76],
+        ['Belo Horizonte',    959574,     117.27],
+        ['Campinas',     907563,     130.17],
+        ['Guarulhos',   655875,     158.9],
+        ['Cotia',     607906,     243.60],
+        ['Belem',   380181,     140.7],
+        ['Tocantins',  371282,     102.41],
+        ['Brasilia', 67370,      213.44],
+        ['Acre',     52192,      43.43],
+        ['Chapecó',  38262,      11]
+      ]);
+
+      var options = {
+        region: ['BR','BS'],
+        displayMode: 'markers',
+        colorAxis: {colors: ['red', 'blue']}
+      };
+
+      var chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+    };
+    </script>
+  </head>
+  <body>
+    <div id="chart_div" style="width: 900px; height: 500px;"></div>
+  </body>
+</html>

@@ -1,0 +1,1053 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br" class="no-js">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <title>@ViewData["Title"] - INFLUENCERS INC. Metrics</title>
+    <meta name="description" content="descrição da pagina" />
+    <meta name="keywords" content="palavras chaves" />
+    <meta property="og:site_name" content="INFLUENCERS INC. Metrics" />
+    <meta property="og:title" content="Influencers marketing Management by I.a." />
+    <meta property="og:description" content="Auditoria de influenciadores e resultados de campanha. Inteligência Artificial e pesquisa de influenciadores Em mais de 251.000 categorias em 36 países." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="http://www.influencers.com.br/" />
+    <meta property="og:image" content="http://www.influencers.com.br/social_logo.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="fb:admins" content="0000000000000" />
+    <link rel="canonical" href="http://www.influencers.com.br/" />
+    <link href="~/content/css/custom-adjusts.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.2/css/bootstrap-select.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css" />
+    <script>
+        var _userId = "";
+        if (location.protocol != 'https:') {
+            location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+        }
+
+        function verifyFacebookToken() {
+            $('#facebookPagesModal').modal('show');
+        }
+    </script>
+    <!--- style layout -->
+    <link href="~/content/css/custom.css" rel="stylesheet" />
+    @RenderSection("Style", required: false)
+    @RenderSection("PluginsCss", required: false)
+    @RenderSection("PluginsJs", required: false)
+    <meta name="robots" content="all" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <link rel="shortcut icon" href="~/favicon.ico" />
+    <!-- <script src="content/plugins/GridGallery/js/modernizr.custom.js"></script> -->
+</head>
+
+<body id="page-home" class="bg-light-gray">
+    <div id="fb-root"></div>
+    @RenderSection("EspecificBodyScripts", required: false)
+    <header class="fixed-top bg-white container-fluid dash-top">
+        <div class="container-dash">
+            <nav class="navbar navbar-expand-lg navbar-light">
+
+                <h1 class="navbar-brand">
+                    <a class="logo" href="@Url.Action("Index", "Home")">
+                        <img alt="INFLUENCERS INC. Metrics" src="~/content/img/logo.png" />
+                    </a>
+                </h1>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarMenu">
+
+                </div>
+                <div id="menuLogged" class="big-nav-item bg-light-gray justify-content-end">
+                    <a class="color-gray nav-link"
+                       href="#"
+                       id="navbarDropdown"
+                       data-toggle="dropdown"
+                       aria-haspopup="true"
+                       aria-expanded="false" title="">
+                        @{
+                            var picture = Microsoft.AspNetCore.Http.SessionExtensions.GetString(Context.Session, "ProfilePicture");
+                            var name = Microsoft.AspNetCore.Http.SessionExtensions.GetString(Context.Session, "userNameTitle");
+                            var route = Context.Request.Path.Value;
+                        }
+                        @*<span class="etc">@ViewBag.NameUser</span>*@
+                        <span class="etc">@name</span>
+                        @*<img class="avatar" src="@(string.IsNullOrWhiteSpace(@ViewBag.ProfilePicture)==false?@ViewBag.ProfilePicture : @ViewBag.ProfileFotoURI)" alt="icone de perfil" onerror="this.src='../content/img/noimg.jpg'" />*@
+                        <img class="avatar" src="@picture" alt="icone de perfil" onerror="this.src='../content/img/noimg.jpg'" />
+                    </a>
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item dropdown">
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="left: -200px;top: 72px;">
+                                <a class="dropdown-item stylecolor" href="@Url.Action("Perfil","Relatorios")">
+                                    Editar perfil
+                                </a>
+                                <a class="dropdown-item stylecolor" href="@Url.Action("HistoricoMetricas","Relatorios")">
+                                    Histórico de métricas
+                                </a>
+                                @if (Context.Request.Path.Value.ToLower() == "/Relatorios/HistoricoMetricas".ToLower())
+                                {
+                                    <a class="dropdown-item stylecolor" href="RefreshToken?onde=historicometricas">
+                                        Refresh token
+                                    </a>
+                                }
+                                <a class="dropdown-item stylecolor" href="javascript:;" onclick="logout();">
+                                    Sair
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+
+                <button id="dropdownMenu2" class="navbar-toggler" type="button" data-toggle="collapse" data-target=".page-sidebar" aria-controls="page-sidebar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+            </nav>
+        </div>
+    </header>
+
+    <!--- content --->
+    @*<div class="dash-content fullscreen">*@
+    <div class="dash-content">
+        @if (ViewBag?.HideMenu == null || ViewBag?.HideMenu != true)
+        {
+            <!--- sidebar --->
+            <div class="page-sidebar bg-light-gray nav-collapse collapse">
+                <div class="keep-side customs-crollbar">
+
+                    <!-- alteração 	 25/10 [ são os mesmos links do topo, mas precisa repetir para aprecer no mobile]--->
+                    <ul class="nav-sidebar mobile-show mt-3">
+                        @*<li class="mt-4">
+                                <a class="" href="">Entenda a importância</a>
+                            </li>*@
+                        <li class="mt-4">
+                            <!-- qdo o outro link voltar a ficar ativo, tem que tirar essa classe [mt-4]-->
+                            <a class="" href="#">Consultar</a>
+                        </li>
+                    </ul>
+                    <!-- end alteração 	 25/10 --->
+
+                    <h5>Informações</h5>
+                    <ul class="nav-sidebar">
+
+                        <!-- para setar o [active] do botão,
+                        vc pode colocar tanto no [a] qto no [li]
+                        como preferir -->
+                        <li>
+                            <a href="@Url.Action("Perfil", "Relatorios")" title="" class="@(ViewData["Page"].ToString() == "Perfil" ? "active" : "")">
+                                <i class="fas fa-user"></i>
+                                Perfil
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("HistoricoMetricas", "Relatorios")" title="" class="@(ViewData["Page"].ToString() == "MetricsHistory" ? "active" : "")">
+                                <i class="fas fa-chart-pie"></i>
+                                Histórico de métricas
+                            </a>
+                        </li>
+
+                        @{
+                            var userType = Microsoft.AspNetCore.Http.SessionExtensions.GetString(Context.Session, "userType");
+                            if (userType == "Agency")
+                            {
+                                <li>
+                                    <a href="@Url.Action("MeuLinkParaInsights", "Relatorios")" title="" class="@(ViewData["Page"].ToString() == "AuthorizeAnalysis" ? "active" : "")">
+                                        <i class="fas fa-poll-h"></i>
+                                        Autorização de análise
+                                    </a>
+                                </li>
+                            }
+                        }
+                        <li>
+                            <a href="@Url.Action("BuscaInfluenciadores", "Relatorios")" title="" class="@(ViewData["Page"].ToString() == "BuscaInfluenciadores" ? "active" : "")">
+                                <i class="fas fa-search"></i>
+                                Encontrar influenciadores
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("SugestaoRecurso", "Relatorios")" title="" class="@(ViewData["Page"].ToString() == "SugestaoRecurso" ? "active" : "")">
+                                <i class="fas fa-tasks"></i>
+                                Solicitar um recurso
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="divider"></div>
+
+
+                    <h5>Configurações</h5>
+                    <ul class="nav-sidebar">
+                        <li>
+                            <a href="@Url.Action("Perfil", "Relatorios")" title="" class="@(ViewData["Page"].ToString() == "AccountSecurity" ? "active" : "")">
+                                <i class="fas fa-lock"></i>
+                                Segurança e conta
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Perfil", "Relatorios")" title="" class="@(ViewData["Page"].ToString() == "[[PageName]]" ? "active" : "")">
+                                <i class="fas fa-credit-card"></i>
+                                Assinatura e pagamento
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="divider"></div>
+
+                    <div class="avatar-container color-gray">
+                        <img class="avatar" alt=" " src="@(string.IsNullOrWhiteSpace(@ViewBag.ProfilePicture) == false ? @ViewBag.ProfilePicture : @ViewBag.ProfileFotoURI)" onerror="this.src='../content/img/noimg.jpg'" />
+                        <span class="etc">@ViewBag.NameUser</span>
+                        <a id="changeImage" title="Alterar imagem" class="link">Alterar imagem</a>
+                    </div>
+
+                    <a title="Sair do sistema" class="font-red logoff" href="javascript:;" onclick="window.logout();">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Sair
+                    </a>
+                </div>
+            </div>
+        }
+
+        <!--- dash content--->
+        <div class="page-content">
+            @RenderBody()
+        </div>
+
+    </div>
+    <!--- END content --->
+    <!--- footer --->
+    <footer class="bg-black">
+
+        <div class="container-fluid">
+
+            <div class="container-big">
+
+                <nav>
+                    <div class="footer-logo">
+                        <a title="INFLUENCERS INC. Metrics" class="logo" href="@Url.Action("Index", "Home")">
+                            <img alt="INFLUENCERS INC. Metrics" src="~/content/img/logo-white.png" />
+                        </a>
+                    </div>
+
+                    <div class="row divider-top">
+                        <div class="col-lg-3 col-sm-6">
+                            <ul class="footer-nav">
+                                <li>
+                                    Influencers Metrics
+                                </li>
+                                <li>
+                                    <a class="" title="" href="~/home/sobrenos"> Sobre nós </a>
+                                </li>
+                                <li>
+                                    <a class="" title="" href="javascript:building();"> Entenda a importância </a>
+                                </li>
+                                <li>
+                                    <a class="" title="" href="javascript:building();"> team </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-3  col-sm-6">
+                            <ul class="footer-nav">
+                                <li>
+                                    Descubra
+                                </li>
+                                <li>
+                                    <a class="" title="" href="javascript:building();"> Problemas que já resolvemos </a>
+                                </li>
+                                <li>
+                                    <a class="" title="" href="~/home/influencersguide"> Influencers guide </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-3 col-sm-6">
+                            <ul class="footer-nav">
+                                <li>
+                                    Curiosidades
+                                </li>
+                                <li>
+                                    <a class="" title="" href="~/home/ConsulteEngajamento"> Consulte o engajamento </a>
+                                </li>
+                                <li>
+                                    <a class="" title="" href="javascript:building();"> Relatório de campanhas </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-3  col-sm-6">
+                            <ul class="footer-nav">
+                                <li>
+                                    produtos
+                                </li>
+                                <li>
+                                    <a class="" title="" href="~/Relatorios/Planos"> Análise de informações </a>
+                                </li>
+                                <li>
+                                    <a class="" title="" href="~/News/PesquisasPlanos"> Pesquisa de influenciador </a>
+                                </li>
+                                <li>
+                                    <a class="" title="" href="~/News/PlanosInfluenciadores"> Mídia Kit </a>
+                                </li>
+                                <li>
+                                    <a class="" title="" href="javascript:building();"> faq </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </nav>
+
+                <div class="row adjust-cols">
+                    <div class="col-lg-5 col-md-12">
+                        <p><i class="fas fa-map-marker-alt"></i> 2333 brickell avenue, suite 1 - Miami, fl 33129</p>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 col-sm-8">
+                        <a href="mailto:hello@influencersmetrics.com">
+                            <p><i class="fas fa-envelope"></i> hello@influencersmetrics.com </p>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 col-sm-4">
+                        <nav class="social-media">
+                            <a class="" title="intagram" href="#"><i class="fab fa-instagram"></i></a>
+                            <a class="" title="facebook" href="#"><i class="fab fa-facebook-square"></i></a>
+                            <a class="" title="youtube" href="#"><i class="fab fa-youtube"></i></a>
+                        </nav>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="container-fluid copyright">
+            <div class="container-big">
+
+                <div class="row">
+                    <div class="col-md-3 col-sm-6">
+                        INFLUENCERS INC.
+                    </div>
+                    <div class="col-md-3 col-sm-6 order-2 order-md-12">
+                        <a class="" title="Termos e Condições" href="">Termos e Condições</a>
+                    </div>
+                    <div class="col-md-6 order-md-2 order-12">
+                        ALL RIGHTS RESERVED INFLUENCERS INC. © 2019.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </footer>
+    <div class="modal fade" id="building" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body" align="center">
+                    <h4>Em breve</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="story-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content modal-content-center rounded-3 border-0" style="background-color:#424242;">
+                <div class="modal-header pb-0 border-0 text-center position-absolute w-100 z-index-top">
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <i class="fa fa-times"></i>
+                    </button>
+                </div>
+                <div id="divPreviewStory" class="modal-body p-0 text-center">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Sumário -->
+    <div class="modal fade" id="sumarioModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">SUMÁRIO</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.<br><br>
+
+                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Emotional Resume -->
+    <div class="modal fade" id="emotionalResumeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Emotional Resume</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.<br><br>
+
+                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal EMOTIONAL PROFILE ANALYSIS  -->
+    <div class="modal fade" id="emotionalProfileAnalysisModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">EMOTIONAL PROFILE ANALYSIS</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.<br><br>
+
+                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Ajuda -->
+    <div class="modal fade" id="AjudaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">SOBRE CONSULTA by Influencers Metrics</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 px-md-4">
+                            <br class="d-block">
+                            <h5 class="text-secondary font-weight-bold">INFLUENCERS METRICS - INSTAGRAM INSIGHTS - GLOSSÁRIO</h5>
+                            <br class="d-block">
+                            <img style="width:100%;" src="~/images/ajuda.jpg" alt="ajuda">
+                            <ul class="help-list ml-md-4 ml-3 mr-2 mt-3">
+                                <li>
+                                    <b>SEGUIDORES: </b> É a quantidade definida de pessoas que o seguem
+                                </li>
+                                <li>
+                                    <b>SEGUINDO:</b> É a quantidade de pessoas que você esta seguindo
+                                </li>
+                                <li>
+                                    <b>MÉDIA DE ENGAJAMENTO NA INFLUENCERS METRICS:</b> É a média
+                                    de pessoas que engajaram-se com suas publicações nos últimos 7 dias. Os valores de engajamento
+                                    mensuram pessoas que realmente prendem-se as suas publicações, calculando não o total de
+                                    curtidas + comentários + view relacionados ao número de seguidores. E sim, views completas +
+                                    recorrência de interações com publicações.
+                                    <br class="d-block"><br class="d-block">
+                                    <img style="width:600px;max-width:100%;" src="/images/ex_post.png" alt="exemplo">
+                                    <br class="d-block"><br class="d-block">
+
+                                    * Descobrimos engajamento fake muito usados e combinados através de grupos de whats app.
+                                    Além de medirmos recorrência de comentários, likes e views. Mensuramos também troca de
+                                    comentários sem conteúdo entre amigos e através de sistemas de automatização de
+                                    comentários.
+                                </li>
+                                <li>
+                                    <b>MÉDIA DE ALCANCE NA INFLUENCERS METRICS:</b> É a média de
+                                    pessoas que foram alcançadas com suas publicações nos últimos 7 dias.
+                                    * A taxa de alcance de uma determinada postagem é o número de pessoas que viram a
+                                    postagem dividida pelo seu número de seguidores.
+                                    * A taxa média de alcance por postagem é a taxa média de alcance de todas as suas postagens
+                                    publicadas no período de tempo selecionado.
+                                </li>
+                                <li>
+                                    <b>VIEWS DE PERFIL:</b> Indica quantas vezes o seu perfil foi
+                                    visitado nos últimos 7 dias.
+                                </li>
+                                <li>
+                                    <b>REACH:</b> É a quantidade total de pessoas alcançadas nos
+                                    últimos 7 dias.
+                                </li>
+                                <li>
+                                    <b>MÉDIA DE IMPRESSÕES:</b> As impressões são um número de vezes
+                                    que sua postagem é visualizada. Uma pessoa pode ver sua postagem várias vezes e ser contada a cada vez.
+                                    <br class="d-block"><br class="d-block">
+                                    Por exemplo: 200 pessoas veem sua postagem uma vez e 100 pessoas veem sua postagem
+                                    duas vezes, portanto, sua postagem teve 400 impressões.
+                                    <br class="d-block"><br class="d-block">
+                                    * As impressões médias de uma história são as impressões divididas pelo alcance. Ou seja, o
+                                    número médio de visualizações dividido pelos espectadores para essa história.
+                                </li>
+                                <li>
+                                    <b>AUDIÊNCIA / CRESCIMENTO:</b> Mede a evolução de influência dos últimos 7 dias.
+                                </li>
+                                <li>
+                                    <b>MÉDIA STORIES:</b> Média de conteúdo postado no stories das últimas 24 horas para frente.
+                                </li>
+                                <li>
+                                    <b>% VIDEO NO STORIES:</b> % de conteúdo vídeos postados no stories das últimas 24 horas
+                                    para frente.
+                                </li>
+                                <li>
+                                    <b>% FOTOS NO STORIES:</b> % de conteúdo fotos postadas no stories das últimas 24 horas
+                                    para frente.
+                                </li>
+                                <li>
+                                    <b>POSTS:</b> Quantidade de posts dos últimos 7 dias.
+                                </li>
+                                <li>
+                                    <b>AVG POSTS DIÁRIOS:</b> Média de postagens diárias.
+                                </li>
+                                <li>
+                                    <b>AVG POSTS SEMANAL:</b> Média de postagem por semana.
+                                </li>
+                                <li>
+                                    <b>AVG POSTS MENSAL:</b> Média de posts mensal.
+                                </li>
+                                <li>
+                                    <b>TOTAL DE LIKES:</b> Total de likes dos últimos 7 dias.
+                                </li>
+                                <li>
+                                    <b>MÉDIA DE LIKES / POST:</b> Médias de likes dos últimos 7 dias.
+                                </li>
+                                <li>
+                                    <b>TOTAL DE COMENTÁRIOS:</b> Total de comentários dos últimos 7 dias.
+                                </li>
+                                <li>
+                                    <b>MÉDIA DE COMENTÁRIOS / POST:</b> É a média de comentários por post. Por exemplo: nos
+                                    últimos 30 dias, fiz 5 posts e coletei 200 comentários. Minha média de comentários é 40.
+                                </li>
+                                <li>
+                                    <b>SEGUINDO / SEGUIDORES:</b> Número de pessoas que esta seguindo e número de pessoas
+                                    que o seguem o perfil.
+                                </li>
+                                <li>
+                                    <b>INTERAÇÕES STORIES:</b> Número de interações com conteúdos postados no stories, seja foto
+                                    ou video. Os tipos de interações são, comentários, perguntas, tags, mentions e
+                                    compartilhamentos.
+                                </li>
+                                <li>
+                                    <b>% VIDEOS POST NO FEED:</b> % de vídeos postados no feed nos últimos 7 dias.
+                                </li>
+                                <li>
+                                    <b>% FOTOS POST NO FEED:</b> % de fotos postadas no feed nos últimos 7 dias.
+                                </li>
+                                <li>
+                                    <b>EMOTIONAL PROFILE:</b> Através de learn machine conseguimos mensurar tipos de emoções
+                                    a cada post e também de forma geral para que possa ser analisado para determinadas marcas,
+                                    esportes, produtos e serviços.
+                                    <br class="d-block"><br class="d-block">
+                                    <img src="/images/emotional.png" alt="emotional">
+                                </li>
+                                <li>
+                                    <b>TOP POST AND WORST POST:</b> Melhor post e pior post, com relação ao pior e melhor
+                                    número de engajamento + alcance.
+                                    <br class="d-block"><br class="d-block">
+                                    <img class="img-fluid" src="/images/options_help.png" alt="emotional">
+                                </li>
+                                <b>POST:</b> Conteúdo criado e postado no feed do instagram.
+                                <br class="d-block">
+                                <br class="d-block">
+                                IMPRESSIONS:</b> As impressões são um número de vezes que sua postagem é visualizada. Uma
+                                pessoa pode ver sua postagem várias vezes e ser contada a cada vez.
+                                Por exemplo: 200 pessoas veem sua postagem uma vez e 100 pessoas veem sua postagem
+                                duas vezes, portanto, sua postagem teve 400 impressões.
+                                Por exemplo: em 9 de junho, meu perfil e meus posts reuniram 58 393 impressões.
+
+                                < br class="d-block">
+                                <br class="d-block">
+
+                                REACH:</b> Alcance refere-se ao número de pessoas diferentes que veem sua postagem.Uma
+                                pessoa pode ver sua postagem 5 vezes, mas é contada apenas uma vez em direção a Reach.
+                                Por exemplo: se 100 pessoas diferentes virem sua postagem duas vezes, seu alcance nessa
+                                postagem ainda será 100.
+                                <br class="d-block">
+                                <br class="d-block">
+                                ENGAGEMENT:</b> A taxa de engajamento é baseada nos gostos, comentários e salvamentos *
+                                divididos pelo número de seguidores no momento da postagem.
+                                <br class="d-block">
+                                <br class="d-block">
+                                SAVED:</b> O número médio de salva suas postagens reunidas durante o período de tempo
+                                selecionado.
+                                Por exemplo: nos últimos 30 dias, fiz 5 posts e coletei 30 saves.
+                                <br class="d-block">
+                                <br class="d-block">
+
+                                <li>
+                                    <b>HASHTAGS:</b> A hashtag é uma palavra-chave precedida pelo
+                                    símbolo #, que as pessoas incluem em suas mensagens. Essencialmente, ela faz com que o conteúdo do seu post seja
+                                    acessível a todas as pessoas com interesses semelhantes, mesmo que eles não sejam seus
+                                    seguidores ou fãs.Por exemplo, digamos que você seja um fã da Apple e que você esteja
+                                    pensando em comprar um iPhone 6. Ao pesquisar por “#iPhone6″ em qualquer rede social irá
+                                    mostrar os posts e fotos de todos os usuários que usaram “#iPhone6″ em suas mensagens.
+                                    <br class="d-block"><br class="d-block">
+                                    <img class="img-fluid" src="/images/hashtag.png" alt="hashtag">
+                                </li>
+                                REACH:</b> Alcance refere-se ao número de pessoas diferentes que veem sua postagem.Uma
+                                pessoa pode ver sua postagem 5 vezes, mas é contada apenas uma vez em direção a Reach.
+                                Por exemplo: se 100 pessoas diferentes virem sua postagem duas vezes, seu alcance nessa
+                                postagem ainda será 100.
+                                <br class="d-block">
+                                <br class="d-block">
+                                ENGAGEMENT:</b> A taxa de engajamento é baseada nos gostos, comentários e salvamentos *
+                                divididos pelo número de seguidores no momento da postagem.
+                                <br class="d-block">
+                                <br class="d-block">
+                                SAVED:</b> O número médio de salva suas postagens reunidas durante o período de tempo
+                                selecionado.
+                                Por exemplo: nos últimos 30 dias, fiz 5 posts e coletei 30 saves.
+                                <br class="d-block">
+                                <br class="d-block">
+                                <li>
+                                    <b>RECENT MEDIA:</b> Veja sua mídia mais recente.Novos filtros foram adicionados nos ícones
+                                    quadrado e relógio no canto superior direito do gráfico.O ícone quadrado permite filtrar sua
+                                    Hashtag Impressions Reach Engagement Saved Engajamento %
+                                    mídia por tipo de conteúdo: todos, foto, vídeo, carrossel.O ícone de relógio permite que você
+                                    filtre sua mídia por meio de métricas de engajamento: curtidas, comentários, engajamento,
+                                    impressões, alcance, visualizações, salvamentos.O número de visualizações agora é indicado
+                                    abaixo dos vídeos.
+                                    <br class="d-block"><br class="d-block">
+                                    <img class="img-fluid" src="/images/description.png" alt="description">
+                                </li>
+                                DESCRIÇÃO:</b> É a descrição da mídia postada.
+                                <br class="d-block">
+                                <br class="d-block">
+                                IMPRESSIONS:</b> As impressões são um número de vezes que sua postagem é visualizada.Uma
+                                pessoa pode ver sua postagem várias vezes e ser contada a cada vez.
+                                Por exemplo: 200 pessoas veem sua postagem uma vez e 100 pessoas veem sua postagem
+                                duas vezes, portanto, sua postagem teve 400 impressões.
+                                Por exemplo: em 9 de junho, meu perfil e meus posts reuniram 58 393 impressões.
+                                <br class="d-block">
+                                <br class="d-block">
+                                REACH:</b> Alcance refere-se ao número de pessoas diferentes que veem sua postagem.Uma
+                                pessoa pode ver sua postagem 5 vezes, mas é contada apenas uma vez em direção a Reach.
+                                Por exemplo: se 100 pessoas diferentes virem sua postagem duas vezes, seu alcance nessa
+                                postagem ainda será 100.
+                                <br class="d-block">
+                                <br class="d-block">
+                                ENGAGEMENT:</b> A taxa de engajamento é baseada nos gostos, comentários e salvamentos *
+                                divididos pelo número de seguidores no momento da postagem.
+                                <br class="d-block">
+                                <br class="d-block">
+                                SAVED:</b> O número médio de salva suas postagens reunidas durante o período de tempo
+                                selecionado.
+                                Por exemplo: nos últimos 30 dias, fiz 5 posts e coletei 30 saves.
+                                <br class="d-block">
+                                <br class="d-block">
+                                <img class="img-fluid" src="/images/stories.png" alt="description">
+                                <br class="d-block">
+                                <br class="d-block">
+                                DATE:</b> Data em que foi feito o video no stories.
+                                <br class="d-block">
+                                <br class="d-block">
+                                EXITS:</b> A taxa de saída está levando em consideração:
+                                - os usuários que fecharam o aplicativo enquanto visualizam sua mídia
+                                - os usuários que clicaram na cruz(X) no canto superior direito das histórias
+                                - os usuários que saíram da mídia que leva a voltar ao seu feed principal
+                                <br class="d-block">
+                                <br class="d-block">
+                                IMPRESSIONS:</b> As impressões são um número de vezes que sua postagem é visualizada.Uma
+                                pessoa pode ver sua postagem várias vezes e ser contada a cada vez.
+                                Por exemplo: 200 pessoas veem sua postagem uma vez e 100 pessoas veem sua postagem
+                                duas vezes, portanto, sua postagem teve 400 impressões.Por exemplo: em 9 de junho, meu perfil e meus posts reuniram 58 393 impressões.
+                                <br class="d-block">
+                                <br class="d-block">
+                                REPLIES:</b> Quantas vezes ou porcentagem a história foto ou vídeo foi replicada.
+                                <br class="d-block">
+                                <br class="d-block">
+                                TAPS BACK:</b> É tanto o número de usuários que voltam a mídia sem completar a visualização por
+                                inteiro do vídeo, como o número de toques para ver a foto ou o vídeo anterior. (mesmo usuário).
+                                Esta funcionalidade permite que você entenda se os usuários assistem à sua história até o final
+                                ou se saem antes que ela termine, ajudando também a calcularmos a taxa de saída em uma
+                                história, que é o número de saídas dividido pelo número de impressões.
+                                <br class="d-block">
+                                <br class="d-block">
+                                TAPS FORWARD:</b> É o número de usuários que avançam a mídia sem ter a visualização completa
+                                do vídeo, como, o número de toques para ver a próxima foto ou vídeo(mesmo usuário)
+                                . Esta funcionalidade permite que você entenda se os usuários assistem à sua história até o final
+                                ou se avançam antes que ela termine.
+                                <br class="d-block">
+                                <br class="d-block">
+                                ENGAGEMENT:</b> A fórmula da taxa de conclusão de uma história é o engajamento.Ele permite
+                                que você entenda qual porcentagem de usuários assistiu à sua história até o final = complete
+                                views.
+                                <br class="d-block">
+                                <br class="d-block">
+                                <li>
+                                    <b>GENDER AND AGE:</b> Descubra o gênero e faixa etária de seus seguidores. Por exemplo:
+                                    37,3% dos meus seguidores têm entre 35 e 44 anos, e 48,1% dos meus seguidores são
+                                    homens.
+                                </li>
+                                <li>
+                                    <b>CITIES RANKING:</b> Descubra a melhor cidade de engajamento através da quantidade de
+                                    pessoas engajadas com o seu conteúdo.
+                                    <br class="d-block"><br class="d-block">
+                                    MELHOR HORA DE POSTAR<br class="d-block">
+                                    Descubra quando suas postagens acionam o maior engajamento. Quanto mais escuro o
+                                    quadrado, melhor o engajamento é. Novos filtros foram adicionados ao ícone do ER no canto
+                                    superior direito do gráfico: exibir impressões, mostrar alcance.
+                                    Por exemplo: nos últimos três meses, minha mídia alcança o maior número de seguidores
+                                    quando eu postar às sextas-feiras às 17h.
+                                    <br class="d-block"><br class="d-block">
+                                    CLIQUES DE E-MAIL<br class="d-block">
+                                    O volume de toques para enviar e-mails para sua empresa no seu perfil do Instagram durante o
+                                    período de tempo selecionado.
+                                    <br class="d-block"><br class="d-block">
+                                    EMAIL CLICK RATE<br class="d-block">
+                                    Essa porcentagem representa o número de toques para enviar por e-mail para sua empresa
+                                    dividido pelo número total de visualizações de perfil durante o período de tempo selecionado.
+                                    Por exemplo: meu endereço de e-mail foi gravado 23 vezes nos últimos 30 dias. Meus perfis
+                                    foram vistos 35 945 vezes nos últimos 30 dias. A taxa de cliques do meu e-mail é de 0,06%.
+                                    <br class="d-block"><br class="d-block">
+                                    OBTER DIREÇÕES CLIQUE<br class="d-block">
+                                    no volume de toques para obter rotas para sua empresa a partir do
+                                    seu perfil do Instagram durante o período de tempo selecionado.
+                                    <br class="d-block"><br class="d-block">
+                                    OBTENHA DIREÇÕES CLICK RATE<br class="d-block">
+                                    Essa porcentagem representa o número de toques para obter rotas para sua empresa, dividido
+                                    pelo número total de visualizações de perfil durante o período de tempo selecionado.
+                                    Por exemplo: meu botão Obter direções foi tocado 147 vezes nos últimos 30 dias. O meu perfil
+                                    foi visto 35 945 vezes nos últimos 30 dias. A taxa de cliques do Get Get Directions é de 0,41%.
+                                    <br class="d-block"><br class="d-block">
+                                    IDIOMAS DOS SEUS SEGUIDORES<br class="d-block">
+                                    Descubra os idiomas mais comuns entre seus seguidores.
+                                    Por exemplo: 7.93% dos meus seguidores falam espanhol. Representa 56 680 pessoas.
+                                    <br class="d-block"><br class="d-block">
+                                    TAXA DE ALCANCE<br class="d-block">
+                                    A taxa de alcance de uma determinada postagem é o número de pessoas que viram a postagem
+                                    dividida pelo seu número de seguidores no momento da postagem.
+                                    Por exemplo: meu post chegou a 2 mil pessoas e eu tinha 20 mil seguidores no momento da
+                                    postagem. Minha taxa de alcance é de 10%.
+                                    <br class="d-block"><br class="d-block">
+                                    TAXA DE VISITA<br class="d-block">
+                                    A taxa de visualização é o número de vezes que o vídeo foi visualizado, dividido pelo número de
+                                    impressões que a postagem recebeu.
+                                    Nota: alguém pode ver sua postagem, mas não necessariamente assistiu ao vídeo. Isso contaria
+                                    como uma impressão, mas não como uma visualização.
+                                    <br class="d-block"><br class="d-block">
+                                    WEBSITE CLICK<br class="d-block">
+                                    O número de toques no site em seu perfil do Instagram durante o período selecionado.
+                                    <br class="d-block"><br class="d-block">
+                                    WEBSITE CLICK RATE
+                                    Essa porcentagem representa o número de toques no website em seu perfil dividido pelo número
+                                    total de visualizações de perfil durante o período de tempo selecionado.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 pl-4 pl-md-5 ml-2">
+                            <p>Adquira já o seu plano de consulta ! </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Modal - Facebook Pages -->
+    <div class="modal fade" id="facebookPagesModal" tabindex="-1" role="dialog" aria-labelledby="facebookPagesModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title" id="imagemModalLabel">SELECIONE UMA PAGINA</h5>
+                </div>
+                <div class="modal-body pt-10">
+                    <div class="row">
+                        <div class="col-sm-2">
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="row">
+                                <div class="fb-login-button btn btn-block btn-purple btn-fb rounded text-left" width="100%"
+                                     data-max-rows="1" data-size="large"
+                                     data-button-type="continue_with" id='btnFacebook'
+                                     data-scope="email,instagram_basic,instagram_manage_insights,read_insights,manage_pages,instagram_manage_comments"
+                                     data-show-faces="false" data-auto-logout-link="false"
+                                     data-use-continue-as="true" onlogin="checkLoginState();"></div>
+                            </div>
+                            <div class="row">
+                                Qual página que você vinculou a sua conta Instagram?<p>
+                            </div>
+                            <div class="row">
+                                <span name="cbxPaginas" class="form-control" id="cbxPaginas" />
+                            </div>
+                            <div class="row">
+                                <hr />
+                            </div>
+                            <div class="row" style='align:center'>
+                                <a id='btnPermitir' class='btn btn-success btn-sm px-3' href='javascript:setToken();'>Permitir geração de métricas</a>
+                                <img src='~/images/loading.gif' height="50px" id='loading' style='display:none' />
+                            </div>
+                            <!--<div class="row" style='align:center'>
+                                <div class="col-10">
+                                    Informações do Usuário...
+                                </div>
+                                <div class="col-2">
+                                    <span id='okUsuario' class="btn-success" style="display:none;font-size:8pt;height:15px;width:26px;text-align:center;">
+                                        <i class="glyphicon glyphicon-ok"></i>
+                                        OK
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row" style='align:center'>
+                                <div class="col-10">
+                                    Informações de Mídia...
+                                </div>
+                                <div class="col-2">
+                                    <span id='okMedia' class="btn-success" style="display:none;font-size:8pt;height:15px;width:26px;text-align:center;">
+                                        <i class="glyphicon glyphicon-ok"></i>
+                                        OK
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row" style='align:center'>
+                                <div class="col-10">
+                                    Informações de Tags...
+                                </div>
+                                <div class="col-2">
+                                    <span id='oktags' class="btn-success" style="display:none;font-size:8pt;height:15px;width:26px;text-align:center;">
+                                        <i class="glyphicon glyphicon-ok"></i>
+                                        OK
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row" style='align:center'>
+                                <div class="col-10">
+                                    Insigths - Gênero e Idade...
+                                </div>
+                                <div class="col-2">
+                                    <span id='okInsightsGenderAge' class="btn-success" style="display:none;font-size:8pt;height:15px;width:26px;text-align:center;">
+                                        <i class="glyphicon glyphicon-ok"></i>OK
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row" style='align:center'>
+                                <div class="col-10">
+                                    Insigths - Engajamento por Cidades...
+                                </div>
+                                <div class="col-2">
+                                    <span id='okInsightsCity' class="btn-success" style="display:none;font-size:8pt;height:15px;width:26px;text-align:center;">
+                                        <i class="glyphicon glyphicon-ok"></i>OK
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row" style='align:center'>
+                                <div class="col-10">
+                                    Informações de Stories...
+                                </div>
+                                <div class="col-2">
+                                    <span id='okStories' class="btn-success" style="display:none;font-size:8pt;height:15px;width:26px;text-align:center;">
+                                        <i class="glyphicon glyphicon-ok"></i>
+                                        OK
+                                    </span>
+                                </div>
+                            </div>-->
+                        </div>
+                        <div class="col-sm-2">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="imagemModal" tabindex="-1" role="dialog" aria-labelledby="imagemModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title" id="imagemModalLabel">SELECIONE UMA FOTO</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body pt-0">
+                    <form action="javascript:;" method="GET" class="form demo_form">
+                        <div class="upload py-4 text-center">
+                        </div>
+                        <div class="filelists mb-0 pb-0" style="display:none;">
+                            <h5>FOTOS CARREGADA</h5>
+                            <ol class="filelist queue mb-0 pb-0"></ol>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="planosModal" tabindex="-1" role="dialog" aria-labelledby="planosModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title" id="imagemModalLabel">Você ainda não tem o crédito para visualizar a consulta</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body pt-0">
+                    <div class="py-4 text-center">
+                        <h5>Veja os planos disponíveis</h5>
+                        <p>
+                            <a href="~/relatorios/planos" class="btn btn-blue btn-sm">Clique aqui</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="como-funciona-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content modal-content-center rounded-3 border-0">
+                <div class="modal-header pb-0 border-0 text-center position-absolute w-100 z-index-top">
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <i class="fa fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body p-0 text-center">
+                    <img class="img-fluid" src="~/resources/assets/images/como-funciona-1.jpg" alt="como funciona">
+                    <img width="80%" class="img-fluid mt-5" src="~/resources/assets/images/como-funciona-2.png" alt="como funciona">
+                    <div class="row m-0 py-5"><div class="col-11 mx-auto border border-top-0 border-left-0 border-right-0 border-1"></div></div>
+                    <img width="80%" class="img-fluid" src="~/resources/assets/images/como-funciona-3.png" alt="como funciona">
+                    <div class="row m-0 py-5"><div class="col-11 mx-auto border border-top-0 border-left-0 border-right-0 border-1"></div></div>
+                    <div class="row mb-4">
+                        <div class="col-lg-10 col-10 px-0 py-2 mx-auto border border-black text-center">
+                            <div class="text-dark font-weight-semi-bold" style="font-size:1rem;">
+                                ENSINAMOS INFLUENCIADORES E MARCAS, ESTRATÉGIAS DE VERTICALIZAÇÃO DE MARKETING DE CONTEÚDO
+                                JÁ QUE ATRAVÉS DE TODOS OS DADOS, CONSEGUIMOS ENTENDER O QUE NÃO FOI FEITO,
+                                O QUE FOI FEITO ERRADO, O QUE FUNCIONA, E O QUE PODERÁ FUNCIONAR
+                            </div>
+                        </div>
+                    </div>
+                    <img width="80%" class="img-fluid" src="~/resources/assets/images/como-funciona-4.png" alt="como funciona">
+                    <div class="row m-0 py-5"><div class="col-11 mx-auto border border-top-0 border-left-0 border-right-0 border-1"></div></div>
+                    <div class="row pb-5">
+                        <div class="col-lg-10 col-10 px-0 py-2 mx-auto text-center">
+                            <div class="text-dark font-weight-semi-bold" style="font-size:1rem;">
+                                MÉTRICAS DE PUBLICAÇÕES NO STORIES
+                            </div>
+                        </div>
+                    </div>
+                    <img width="80%" class="img-fluid" src="~/resources/assets/images/como-funciona-5.png" alt="como funciona">
+                    <div class="row m-0 py-5"><div class="col-11 mx-auto border border-top-0 border-left-0 border-right-0 border-1"></div></div>
+                    <div class="row pb-5">
+                        <div class="col-lg-10 col-10 px-0 py-2 mx-auto text-center">
+                            <div class=" text-dark font-weight-semi-bold" style="font-size:1rem;">
+                                MÉTRICAS APROFUNDADAS DE LIKES POR BAIRRO EM CADA CIDADE E NÚMERO DE HABITANTES, PERFIL EMOCIONAL, ETC…
+                            </div>
+                        </div>
+                    </div>
+                    <img width="80%" class="img-fluid" src="~/resources/assets/images/como-funciona-6.png" alt="como funciona">
+                    <div class="row m-0 py-5"><div class="col-11 mx-auto border border-top-0 border-left-0 border-right-0 border-1"></div></div>
+                    <div class="row pb-5">
+                        <div class="col-lg-10 col-10 px-0 py-2 mx-auto text-center">
+                            <div class=" text-dark font-weight-semi-bold" style="font-size:1rem;">
+                                ENTREGA DE RELATÓRIO DE ENGAJAMENTO INDIVIDUAL OU EM LOTE PARA SABER QUEM MELHOR CONTRATAR E COMO
+                            </div>
+                        </div>
+                    </div>
+                    <img width="80%" class="img-fluid mb-5" src="~/resources/assets/images/como-funciona-7.png" alt="como funciona">
+                    <img class="img-fluid" src="~/resources/assets/images/como-funciona-8.jpg" alt="como funciona">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- scripts -->
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>*@
+    <script src="https://www.influencersmetrics.com/content/js/jquery/jquery.3.4.1.js"></script>
+    <script>
+        if ($.isFunction(this.checkLoginState)) {
+            window.fbAsyncInit = function () {
+                FB.init({
+                    appId: '220440968764019',
+                    cookie: true,
+                    xfbml: true,
+                    status: true,
+                    version: 'v3.1'
+                });
+                FB.AppEvents.logPageView();
+                FB.Event.subscribe('auth.authResponseChange', function (response) {
+                    if (response.status === 'connected') {
+                        checkLoginState();
+                    } else if (response.status === 'not_authorized') {
+                        FB.login();
+                    } else {
+                        FB.login();
+                    }
+                });
+            };
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) { return; }
+                js = d.createElement(s); js.id = id;
+                js.src = "https://connect.facebook.net/pt_Br/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- ## plugins -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.2/js/bootstrap-select.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+    <!-- masonry -->
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+    @RenderSection("Plugins", required: false)
+    <!-- configs -->
+    <script src="~/content/js/config.js"></script>
+    @RenderSection("Scripts", required: false)
+    <script>
+        function logout() {
+            location.href = 'login';
+        }
+    </script>
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        (function () {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/5ca9005553f1e453fb8c767a/default';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+    </script>
+    <!--End of Tawk.to Script-->
+    <script>
+        function building() {
+            //alert('Em construção!');
+            $('#building').modal('show');
+        }
+        $(document).ready(function () {
+            $('.em-contrucao').on('click', function () {
+                building();
+            });
+            $('#changeImage').on('click', function () {
+                $('#imagemModal').appendTo("body").modal('show');
+            });
+
+        });
+    </script>
+</body>
+</html>

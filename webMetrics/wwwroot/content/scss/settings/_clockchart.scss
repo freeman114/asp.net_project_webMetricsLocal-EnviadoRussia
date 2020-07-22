@@ -1,0 +1,556 @@
+/* chart de tempo */
+
+$TC-around-space: 8px;
+
+$TC-right-space: ($TC-around-space * 4);
+$TC-right-space-992: ($TC-around-space * 3);
+$TC-right-space-1200: ($TC-around-space * 6);
+
+///$week-space: 174px;
+$week-space: /*124px*/ 108px;
+$weekS-992: ($week-space + 16px);
+$weekS-1200: ($week-space + 26px);
+$weekS-1500: ($week-space + 76px);
+
+$col-24hours: (100% / 24);
+$TC-circle-size: 40px;
+
+
+$heat-level:(
+	 "1": #D51313,
+	 "2": #D82311,
+	 "3": #DC3310,
+	 "4": #DF440E,
+	 "5": #E3540D,
+	 "6": #E6650B,
+	 "7": #EA750A,
+	 "8": #ED8509,
+	 "9": #F19607,
+	"10": #F4A606,
+	"11": #F8B704,
+	"12": #FFD802,
+	"13": #FFD802,
+	"14": #F0DB01,
+	"15": #E2DE01,
+	"16": #D4E101,
+	"17": #C5E401,
+	"18": #B7E701,
+	"19": #A9EA01,
+	"20": #9AED00,
+	"21": #8CF000,
+	"22": #7EF300,
+	"23": #6FF600,
+	"24": #61F900,
+	"25": #45FF00
+);
+
+@each $varName, $varValue in $heat-level {
+	%heat-#{$varName} { background-color: $varValue; }
+}
+
+
+///%max-w-100{ max-width: 100%; }
+///%max-h-100{ max-height: 100%; }
+
+.time-chart{
+	@extend %display-flex;
+	@extend %max-w-100;
+	///@include flexType(flex-flow, row nowrap);
+	///@include flexType(justify-content, center);
+	///@include flexType(align-items, flex-end);
+	@include flexType(flex-wrap, nowrap);
+	
+	///padding-bottom: 32px;
+	padding: 4px $TC-right-space 32px $TC-around-space;
+	
+	
+	& > div {
+		///@include flexType(flex, 0 1 auto);
+		-ms-flex-preferred-size: 0;
+		flex-basis: 0;
+		-ms-flex-positive: 1;
+		flex-grow: 1;
+		
+		///@extend %p-relative;
+		@extend %max-w-100;
+		@extend %w-100;
+	}
+	
+	
+	.weekdays{
+		@extend %display-flex;
+		
+		@include flexType(flex, 0 0 auto);
+		@include flexType(align-items, flex-end);
+		@include flexType(flex-direction, column);
+		
+		@extend %w-100;
+		max-width: $week-space /*($week-space - 24px)*/;
+		
+		position: initial;
+		
+		& > p{
+			
+			@extend %font-14;
+			@extend %font-16-s992;
+			///@extend %font-16-s1200;
+			@extend %font-24-s1500;
+			
+			
+			@extend %display-flex;
+			
+			@include flexType(align-items, center);
+			
+			padding-right: $TC-around-space;
+			
+			&:before{
+				@extend %content;
+				@extend %bg-gray;
+				@extend %p-absolute;
+				
+				@include opacity(.24);
+				
+				height: 1px;
+				right: ($TC-right-space + 6px);
+				left: ($week-space + $TC-around-space + 6px)/*+12px*/;
+				margin-top: 3px;
+			}
+		}
+	}
+
+
+	.chart-content{
+		@extend %max-w-100;
+		@extend %w-100;
+		@extend %p-relative;
+		
+		/*-ms-flex: 0 0 auto;
+    	flex: 0 0 auto;
+		width: auto;*/
+	}
+	
+	
+	.clock{
+		///@extend %display-inline-flex;
+		@extend %display-flex;
+		@extend %max-w-100;
+		
+		@include flexType(flex-wrap, nowrap);
+		
+		margin-top: -12px;
+		
+		span{
+			///@extend %display-flex;
+			@extend %p-relative;
+			@extend %w-100;
+			@extend %text-center;
+			
+			@include flexType(flex, 0 0 $col-24hours);
+			max-width: $col-24hours;
+			
+			padding: 2px;
+			line-height: 14px;
+			
+			&:before{
+				@extend %font-10;
+				@extend %font-12-s992;
+				///@extend %font-12-s1200;
+				@extend %font-14-s1500;
+			}
+			&:after{
+				@extend %font-10-s992;
+				///@extend %font-10-s1200;
+				
+				///@extend %font-10;
+				font-size: 8px;
+				///@extend %color-light-blue;
+				///@extend %color-gray;
+				@include opacity(.74);
+				
+				///margin-left: 0.2rem;
+				margin-left: 0.09rem;
+			}
+		}
+
+		&[data-type-horario="12"],
+		&[data-type-horario="12h"]{
+			span{
+				&:before{
+					///@extend %font-10-s992;
+					///@extend %font-10-s1200;
+					
+					content: attr(data-12h);
+				}
+				&:after{
+					///@extend %font-10-s1500;
+					
+					content: 'PM';
+					@extend %display-block;
+					///margin-top: -4px;
+				}
+				&:nth-child(-n+12){
+					&:after{
+						content: 'AM';
+					}
+				}
+			}
+		}
+		
+		&[data-type-horario="24"],
+		&[data-type-horario="24h"]{
+			span{
+				&:before{
+					content: attr(data-24h);
+				}
+				&:after{
+					@extend %font-12-s992;
+					///@extend %font-12-s1200;
+					///@extend %font-12-s1500
+					
+					content: 'h'
+				}
+
+			}
+		}
+	}
+	
+	
+	.results{
+		@extend %display-flex;
+		@extend %h-100;
+		
+		@include flexType(flex-direction, column);
+		
+		///height: 100%;
+		@extend %h-100;
+		
+		
+		span{
+			@extend %p-absolute;
+			@extend %display-flex;
+			@extend %w-100;
+			
+			@include flexType(align-items, center);
+			@include flexType(justify-content, center);
+			
+			top: 0;
+			left: 0;
+			
+			///margin-top: -0.13%;
+			margin-top: -0.37%;
+			max-width: $col-24hours;
+			///width: ($TC-circle-size - 8px);
+			///height: ($TC-circle-size - 8px);
+			///height: ($TC-circle-size - 4px);
+			height: ($TC-circle-size - 7px);
+			
+			
+			&:before{
+				@extend %font-14;
+				///@extend %font-14-s992;
+				@extend %font-16-s1200;
+				@extend %font-18-s1500;
+				
+				@extend %color-black;
+				@extend %font-bold;
+				@extend %border-radius-200;
+				@extend %display-flex;
+				@extend %margin-LR-auto;
+				
+				@include flexType(align-items, center);
+				@include flexType(justify-content, center);
+				
+				content: attr(data-value);
+				
+				/*width: ($TC-circle-size - 8px);
+				height: ($TC-circle-size - 8px);*/
+				
+				width: ($TC-circle-size - 13px);
+				height: ($TC-circle-size - 13px);
+				
+				/*width: 32px;
+				height: 32px;*/
+				/*width: $TC-circle-size;
+				height: $TC-circle-size;*/
+				@extend %w-100;
+				@extend %h-100;
+				
+				
+				background: #ccc;
+				
+			}
+			&[data-value="0"]{
+				@extend %display-none;
+			}
+			
+		}
+		
+		
+		/// valores e modificar cores
+		$hi: 1;
+		$heat-colors: 126;
+		
+		@while $hi < $heat-colors {
+
+						   @if $hi <= 5   { [data-value="#{$hi}"]:before{ @extend %heat-1; } }
+			@if $hi >= 6   and $hi <= 10  { [data-value="#{$hi}"]:before{ @extend %heat-2; } } 
+			@if $hi >= 11  and $hi <= 15  { [data-value="#{$hi}"]:before{ @extend %heat-3; } } 
+			@if $hi >= 16  and $hi <= 20  { [data-value="#{$hi}"]:before{ @extend %heat-4; } } 
+			@if $hi >= 21  and $hi <= 25  { [data-value="#{$hi}"]:before{ @extend %heat-5; } } 
+			@if $hi >= 26  and $hi <= 30  { [data-value="#{$hi}"]:before{ @extend %heat-6; } } 
+			@if $hi >= 31  and $hi <= 35  { [data-value="#{$hi}"]:before{ @extend %heat-7; } }
+			@if $hi >= 36  and $hi <= 40  { [data-value="#{$hi}"]:before{ @extend %heat-8; } } 
+			@if $hi >= 41  and $hi <= 45  { [data-value="#{$hi}"]:before{ @extend %heat-9; } } 
+			@if $hi >= 46  and $hi <= 50  { [data-value="#{$hi}"]:before{ @extend %heat-10; } } 
+			@if $hi >= 51  and $hi <= 55  { [data-value="#{$hi}"]:before{ @extend %heat-11; } } 
+			@if $hi >= 56  and $hi <= 60  { [data-value="#{$hi}"]:before{ @extend %heat-12; } } 
+			@if $hi >= 61  and $hi <= 65  { [data-value="#{$hi}"]:before{ @extend %heat-13; } } 
+			@if $hi >= 66  and $hi <= 70  { [data-value="#{$hi}"]:before{ @extend %heat-14; } } 
+			@if $hi >= 71  and $hi <= 75  { [data-value="#{$hi}"]:before{ @extend %heat-15; } }
+			@if $hi >= 76  and $hi <= 80  { [data-value="#{$hi}"]:before{ @extend %heat-16; } }
+			@if $hi >= 81  and $hi <= 85  { [data-value="#{$hi}"]:before{ @extend %heat-17; } } 
+			@if $hi >= 86  and $hi <= 90  { [data-value="#{$hi}"]:before{ @extend %heat-18; } } 
+			@if $hi >= 91  and $hi <= 95  { [data-value="#{$hi}"]:before{ @extend %heat-19; } } 
+			@if $hi >= 96  and $hi <= 100 { [data-value="#{$hi}"]:before{ @extend %heat-20; } } 
+			@if $hi >= 101 and $hi <= 105 { [data-value="#{$hi}"]:before{ @extend %heat-21; } } 
+			@if $hi >= 106 and $hi <= 110 { [data-value="#{$hi}"]:before{ @extend %heat-22; } }
+			@if $hi >= 111 and $hi <= 115 { [data-value="#{$hi}"]:before{ @extend %heat-23; } } 
+			@if $hi >= 116 and $hi <= 120 { [data-value="#{$hi}"]:before{ @extend %heat-24; } } 
+			@if $hi >= 121 and $hi <= 125 { [data-value="#{$hi}"]:before{ @extend %heat-25; } } 
+			///@else {}
+			$hi: $hi + 1;
+		}
+		
+		
+		//// dias da semana
+		$days-line: 7;
+		$force-adjust: 100% / $days-line;
+		
+		@for $i from 1 through $days-line{
+			$value: 100% / $days-line * $i;
+			
+			span[data-week="#{$i}"]{
+				top: $value - $force-adjust;
+			}
+		}
+		
+		//// dias da semana
+		$hours-line: 24;
+		
+		
+		@for $h from 1 through $hours-line{
+			$value: 100% / $hours-line;
+			
+			span[data-hour="#{$h}"]{
+				left: $value  * $h;
+			}
+		}
+		
+	}
+
+	
+	
+	///// for desktop
+	@include notebook() {
+		
+		padding: 4px $TC-right-space-992 32px $TC-around-space;
+		
+		.weekdays{
+			max-width: $weekS-992;
+			& > p{
+				
+				///@extend %font-16-s992;
+				
+				&:before{
+					left: ($weekS-992 + $TC-around-space + 8px)/*+12px*/;
+					right: ($TC-right-space-992 + 6px );
+				}
+			}
+		}
+		
+		
+		.results{
+			span{
+				///margin-top: -0.37%;
+				///margin-left: 0.33%;
+				///padding: 4px;
+				height: ($TC-circle-size - 2px);
+				
+				&:before{
+					///@extend %font-14-s992;
+					
+					width: ($TC-circle-size - 8px);
+					height: ($TC-circle-size - 8px);
+					line-height: ($TC-circle-size - 8px);
+				}
+
+			}
+		}
+		
+	}
+		
+	
+	
+	@include desktop() {
+		
+		
+		padding: 4px $TC-right-space-1200 32px $TC-around-space;
+		
+		.weekdays{
+			max-width: $weekS-1200;
+			& > p{
+				
+				///@extend %font-16-s1200;
+				
+				&:before{
+					left: ($weekS-1200 + $TC-around-space + 8px)/*+12px*/;
+					right: ($TC-right-space-1200 + 6px );
+				}
+			}
+		}
+		
+		.clock{
+			margin-top: 0px;
+			
+			span{
+				&:after{
+					///@extend %font-10-s1200;
+					@include opacity(.54);
+					///margin-left: 0.09rem;
+				}
+			}
+
+		}
+		
+		.results{
+			span{
+				///margin-top: -0.37%;
+				///margin-left: 0.33%;
+				///padding: 4px;
+				height: $TC-circle-size;
+				
+				&:before{
+					///@extend %font-16-s1200;
+					
+					width: ($TC-circle-size - 4px);
+					height: ($TC-circle-size - 4px);
+					line-height: ($TC-circle-size - 4px);
+				}
+
+			}
+		}
+		
+	}
+	
+	@include desktop-1500() {
+		
+		.weekdays{
+			max-width: $weekS-1500;
+			& > p{
+				///@extend %font-24-s1500;
+				&:before{
+					left: ($weekS-1500 + $TC-around-space + 8px)/*+12px*/;
+				}
+			}
+		}
+		
+		.clock{
+			span{
+				&:after{
+					@include opacity(.74);
+					///margin-left: 0.09rem;
+				}
+			}
+		}
+		
+		.results{
+			span{
+				margin-top: /*0.2%*/ 0.17%;
+				padding: 0;
+				
+				/*width: $TC-circle-size;
+				height: $TC-circle-size;*/
+
+				&:before{
+					///@extend %font-18-s1500;
+					
+					width: $TC-circle-size;
+					height: $TC-circle-size;
+					line-height: $TC-circle-size;
+				}
+
+			}
+		}
+		
+	}
+	
+}
+
+///// solucao temporaria para mobile
+
+@media all and (max-width: 840px) {
+	
+	$week-space-XS: 96px;
+	
+	
+	.time-chart{
+		overflow: hidden;
+		overflow-x: auto;
+		padding: 8px 0 32px;
+		margin: 0 8px;
+
+		.weekdays{
+			/*** responsive ***/
+
+			max-width: 96px;
+			position: sticky !important;
+			left: 0;
+			z-index: 5;
+
+			&:before{
+				content: '';
+				background: #fff;
+				left: -8px;
+				right: 0;
+				top: 0;
+				bottom: -40px;
+				position: absolute;
+				z-index: 2;
+			}
+
+			p{
+				/*margin-right: 0; */
+				z-index: 5;
+				font-size: 13px;
+
+				&:before{
+					@include opacity(.08);
+					left: $week-space-XS /*($week-space-XS + $TC-around-space) - 2px /*+12px*/;
+					right: -400%;
+					width: 78vw;
+					z-index: 1;
+				}
+			}
+		}
+
+		.chart-content{
+			width: 100%;
+			max-width: 640px;
+			min-width: 610px;
+			z-index: 4;
+		}
+		
+		.results{
+			span{
+				height: 32px;
+				
+				&:before{
+					width: 22px;
+					height: 22px;
+					font-size: 11px;
+				}
+			}
+		}
+
+	}
+}

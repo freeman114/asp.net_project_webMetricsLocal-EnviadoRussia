@@ -1,0 +1,132 @@
+﻿@model IEnumerable<webMetrics.Models.UsuarioCredito>
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Agencias</title>
+    <link rel="stylesheet" href="~/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/node_modules/@@fortawesome/fontawesome-free/css/all.css">
+    <link rel="stylesheet" href="~/node_modules/formstone/dist/css/upload.css">
+    <link rel="stylesheet" href="~/resources/assets/styles/fonts.css">
+    <link rel="stylesheet" href="~/resources/assets/styles/global.css">
+    <link rel="stylesheet" href="~/resources/assets/styles/mobile.css">
+    <script>
+		var id="";
+		if (location.protocol != 'https:') {
+			location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+		}
+    </script>
+</head>
+<body>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Nome da agência
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Telefone)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nome)
+                </th>
+                <th>
+                    Data de criação
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    Quantidade
+                </th>
+                <th>
+                    Uso
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NomeAgencia)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Telefone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DataCriacao)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Qtd)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Debito)
+                    </td>
+                    <td>
+                        <a href="javascript:setIdOpenModal('@item._id.ToString()');" >Credito</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <!-- Modal - Creditos -->
+    <div class="modal fade" id="CreditosModal" tabindex="-1" role="dialog" aria-labelledby="CreditosModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title" id="imagemModalLabel">Créditos - Uso</h5>
+                </div>
+                <div class="modal-body pt-10">
+                    <div class="row">
+                        <div class="col-sm-2">
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="row">
+                                Autorize o crédito para a agência.<p>
+                                <input type="number" name="qtd" id="qtd" value="1" />
+                            </div>
+                            <div class="row">
+                                <hr />
+                            </div>
+                            <div class="row" style='align:center'>
+                                <a id='btnCreditar' class='btn btn-success btn-sm px-3' href='javascript:setCredito();'>Creditar</a>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="~/node_modules/popper.js/dist/umd/popper.min.js"></script>
+    <script src="~/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/node_modules/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
+    <script src="~/node_modules/formstone/dist/js/core.js"></script>
+    <script src="~/node_modules/formstone/dist/js/upload.js"></script>
+    <script src="~/resources/assets/javascripts/upload.js"></script>
+
+    <script >
+        function setIdOpenModal(_id) {
+            id = _id;
+            $('#CreditosModal').modal('show');
+        }
+
+        function setCredito() {
+            window.location = "Creditar?id=" + id + "&qtd=" + $('#qtd').val();
+        }
+    </script>
+</body>
+</html>

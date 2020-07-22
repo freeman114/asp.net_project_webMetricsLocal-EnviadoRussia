@@ -1,0 +1,167 @@
+﻿@{
+    ViewData["Title"] = "Resultado de checagem de disastres";
+    ViewData["Page"] = "DisasterCheckResult";
+    Layout = "_LayoutM2";
+}
+
+<section class="bg-white-gray py-2">
+
+    <div class="container-fluid container-big">
+        <h1 class="font-black my-5 mx-auto text-center" style="max-width: 1018px;">
+            Resultado de busca - Disaster check
+        </h1>
+
+        <div class="microcard-border mb-4 search-result">
+            <div class="row px-3 py-2">
+                <div class="col-12 col-lg-3 d-flex flex-column justify-content-between">
+                    <h4 class="font-light-blue font-500 mt-md-1 mb-2">Parâmetros De busca:</h4>
+                    <a title=""  href="javascript:building();" class="link-secondary text-initial mb-4 mb-lg-1 mb-xl-2">Redefinir</a>
+                </div>
+                <div class="col-12 col-lg d-flex flex-column justify-content-between">
+                    <p class="prefix-bold mb-1 mt-1" data-prefix="Palavras ou frases:">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent auctor mi in elit finibus rutrum. Nunc consequat ante nec dolor pulvinar molestie.</p>
+                    <p class="prefix-bold mb-1 mt-1" data-prefix="Marcas ou empresas:">Microsoft, Coca-Cola, Budweiser, Pão de Açúcar, Itaú</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="type-table striped-row-invert no-sticky basic-metrics disaster">
+        <div class="table-header">
+            <div class="row container-big">
+                <div class="col">
+                    Post
+                </div>
+                <div class="col">
+                    Mentions
+                </div>
+                <div class="col">
+                    Impressions
+                </div>
+                <div class="col">
+                    Reach
+                </div>
+                <div class="col">
+                    Engagement
+                </div>
+                <div class="col">
+
+                </div>
+            </div>
+        </div>
+        <div id="line1">
+            <div class="row container-big">
+                <div class="col mini-posts">
+                    <!-- <i class="fas fa-check-circle icon-big font-green"></i> -->
+                    <!-- status controlado pelo [data-icon-status]
+                        1- "verde/bom" | 2- "ruim/vermelho" | 3- "atenção/amarelo" -->
+                    <i class="icon-status icon-big" data-icon-status="1"></i>
+
+                    <div class="img-content">
+                        <img class="" alt="" src="~/content/img/testes/img6.jpg">
+                        <img src="~/content/img/testes/img6.jpg" />
+                    </div>
+                    <div class="text comment">
+                        🚨 Alerta Onda Gigante! Espírito Santo com ondas de 8 a 10 metros. E uma das maiores ondas surfadas no Brasil! Parabéns @("@")iangebaravaz! @("@")caiogebaravaz @("@")lucasmedeiros92! Arrebentaram!!! Photo: @("@")gh.imagens #surf #bigriders #Brazil #gigantesdenazare
+                    </div>
+                </div>
+                <div class="col">
+                    @("@")iangebaravaz! @("@")caiogebaravaz @("@")lucasmedeiros92 @("@")gh.imagens
+                </div>
+                <div class="col">
+                    6.094
+                </div>
+                <div class="col">
+                    3.455
+                </div>
+                <div class="col">
+                    298
+                </div>
+                <div class="col">
+                    <a title=""  href="javascript:building();" class="btn btn-light-blue btn-auto expanded-btn my-0 px-3">
+                        ver
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="line2">
+            <div class="row container-big">
+                <div class="col mini-posts">
+                    <!-- <i class="fas fa-check-circle icon-big font-green"></i> -->
+                    <!-- status controlado pelo [data-icon-status]
+                        1- "verde/bom" | 2- "ruim/vermelho" | 3- "atenção/amarelo" -->
+                    <i class="icon-status icon-big" data-icon-status="2"></i>
+
+                    <div class="img-content">
+                        <img class="" alt="" src="~/content/img/testes/img2.jpg">
+                    </div>
+                    <div class="text comment">
+                        🚨 Alerta Onda Gigante! Espírito Santo com ondas de 8 a 10 metros. E uma das maiores ondas surfadas no Brasil! Parabéns @("@")iangebaravaz! @("@")caiogebaravaz @("@")lucasmedeiros92! Arrebentaram!!! Photo: @("@")gh.imagens #surf #bigriders #Brazil #gigantesdenazare
+                    </div>
+                </div>
+                <div class="col">
+                    @("@")iangebaravaz! @("@")caiogebaravaz @("@")lucasmedeiros92 @("@")gh.imagens
+                </div>
+                <div class="col">
+                    6.094
+                </div>
+                <div class="col">
+                    3.455
+                </div>
+                <div class="col">
+                    298
+                </div>
+                <div class="col">
+                    <a title=""  href="javascript:building();" class="btn btn-light-blue btn-auto expanded-btn my-0 px-3">
+                        ver
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div id="line3">
+            <div class="row container-big">
+                <div class="col mini-posts">
+                    <!-- <i class="fas fa-check-circle icon-big font-green"></i> -->
+                    <!-- status controlado pelo [data-icon-status]
+                        1- "verde/bom" | 2- "ruim/vermelho" | 3- "atenção/amarelo" -->
+                    <i class="icon-status icon-big" data-icon-status="3"></i>
+
+                    <div class="img-content">
+                        <img class="" alt="" src="~/content/img/testes/img9.jpg">
+                    </div>
+                    <div class="text comment">
+                        🚨 Alerta Onda Gigante! Espírito Santo com ondas de 8 a 10 metros. E uma das maiores ondas surfadas no Brasil! Parabéns @("@")iangebaravaz! @("@")caiogebaravaz @("@")lucasmedeiros92! Arrebentaram!!! Photo: @("@")gh.imagens #surf #bigriders #Brazil #gigantesdenazare
+                    </div>
+                </div>
+                <div class="col">
+                    @("@")iangebaravaz! @("@")caiogebaravaz @("@")lucasmedeiros92 @("@")gh.imagens
+                </div>
+                <div class="col">
+                    6.094
+                </div>
+                <div class="col">
+                    3.455
+                </div>
+                <div class="col">
+                    298
+                </div>
+                <div class="col">
+                    <a title=""  href="javascript:building();" class="btn btn-light-blue btn-auto expanded-btn my-0 px-3">
+                        ver
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- se houver mais do que 10 resultados incluir isso no final e carregar de 10 em 10 -->
+        <div class="table-footer py-3 py-lg-5">
+            <div class="row justify-content-center">
+
+                <a  href="javascript:building();" title="" data-toggle-step="2" class="btn btn-secondary expanded-btn btn-smaller"> carregar mais </a>
+
+            </div>
+        </div>
+
+    </div>
+</section>

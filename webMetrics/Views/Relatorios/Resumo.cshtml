@@ -1,0 +1,832 @@
+﻿@model webMetrics.Models.DTO.InfluencersResumo
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Influencers Inc</title>
+
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="node_modules/@@fortawesome/fontawesome-free/css/all.css">
+    <link rel="stylesheet" href="resources/assets/styles/fonts.css">
+    <link rel="stylesheet" href="resources/assets/styles/global.css">
+    <link rel="stylesheet" href="resources/assets/styles/mobile.css">
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white card-resume shadow-sm py-0 py-md-2 px-md-3 px-2">
+        <a class="navbar-brand" href="#">
+            <img src="resources/assets/images/logo.png" alt="logo">
+        </a>
+        <button class="navbar-toggler px-1 py-0" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav flex-row ml-auto justify-content-between align-items-center">
+                <li class="nav-item">
+                    <a href="javascript:;" class="nav-link btn btn-sm btn-success text-white py-0 px-2" onclick="window.print();">IMPRIMIR</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#">Sair</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <nav class="nav bg-white card-resume fixed sidebar-mobile w-100 justify-content-between d-md-none" id="sidebar">
+        <a class="nav-link active" href="#"><i class="far fa-user"></i></a>
+        <a class="nav-link" href="javascript:;" data-link="#hashtags"><i class="fa fa-hashtag"></i></a>
+        <a class="nav-link" href="javascript:;" data-link="#mentions"><i class="fa fa-at"></i></a>
+        <a class="nav-link" href="javascript:;" data-link="#mentioned"><i class="fa fa-comments"></i></a>
+        <a class="nav-link" href="javascript:;" data-link="#places"><i class="fa fa-map-marker-alt"></i></a>
+        <a class="nav-link" href="javascript:;" data-link="#maps-places"><i class="fa fa-map-marked-alt"></i></a>
+        <a class="nav-link" href="javascript:;" data-link="#photo"><i class="fa fa-tags"></i></a>
+        <a class="nav-link" href="javascript:;" data-link="#recent"><i class="far fa-images"></i></a>
+        <a class="nav-link" href="javascript:;" data-link="#emotional"><i class="far fa-images"></i></a>
+    </nav>
+
+    <div class="row bg-white card-resume fixed w-100 m-0 p-0 shadow-sm" id="row-fixed" style="display:none;">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row d-flex align-items-center py-2" id="row-info">
+                        <div class="col-md-1 col-2 pr-1 pr-md-3 order-1">
+                            <img width="90%" src="resources/assets/images/coca-cola-circle-logo-A9EBD3B00A-seeklogo.com.png" alt="logo">
+                        </div>
+                        <div class="col-md-3 col-7 pr-0 pr-md-3 order-2 d-none d-md-block">
+                            <h5 class="mb-0" style="font-weight:600">Hugo Gloss</h5>
+                            <span>@@cocacola</span><br>
+                        </div>
+
+                        <div class="col-md-2 col-3 ml-auto text-right order-md-3 order-4 pr-0 pr-md-3">
+                            <small>Seguidores</small><br>
+                            <h5 class="mb-0">1.456.345</h5>
+                        </div>
+
+                        <div class="col-md-4 col-5 text-left order-md-4 order-5">
+                            <small>Média de alcance dos posts</small><br>
+                            <h5 class="mb-0">71.650</h5>
+                        </div>
+
+                        <div class="col-md-1 col-2 order-md-5 pl-0 order-6">
+                            <span class="badge badge-danger d-block"><h5 class="mb-0 p-0 title-percentage">0,61%</h5></span>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container mt-5 mt-md-3 mb-5" id="profile">
+        <div class="row">
+            <div class="col-md-9 pr-md-0 pr-3 col-12 order-2 order-md-1" id="printdivs">
+
+                <div class="row d-flex align-items-center" id="row-info">
+                    <div class="col-md-2 col-3 ml-auto order-1">
+                        <img width="100%" src="resources/assets/images/coca-cola-circle-logo-A9EBD3B00A-seeklogo.com.png" alt="logo">
+                    </div>
+                    <div class="col-md-3 col-5 order-2 pl-0 pl-md-3 pr-0 pr-md-3">
+                        <h5 class="mb-0" style="font-weight:600">Hugo Gloss</h5>
+                        <span>@@cocacola</span><br>
+                        <span>#ShareaCoke</span>
+                    </div>
+
+                    <div class="col-md-2 col-5 text-right order-md-3 order-4 pr-0 pr-md-3 mt-md-4 mt-3">
+                        <small>Seguidores</small><br>
+                        <h5>1.456.345</h5>
+                    </div>
+
+                    <div class="col-md-3 col-7 text-left order-md-4 order-5 mt-md-4 mt-3">
+                        <small>Média de alcance dos posts</small><br>
+                        <h5>71.650</h5>
+                    </div>
+
+                    <div class="col-md-2 col-3 order-3 order-md-5 pr-0 pr-md-3 mr-auto">
+                        <span class="badge badge-danger d-block"><h5 class="mb-0 p-0">0,61%</h5></span>
+                    </div>
+
+                </div>
+
+                <div class="row mt-md-5 mt-3">
+                    <div class="col">
+                        <h3 class="">SUMÁRIO</h3>
+                    </div>
+                </div>
+
+                <div class="row mb-md-2 mb-3">
+                    <div class="col-md col-6 pr-0 mb-3 mb-md-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative">
+                            <span class="text-muted small">Seguidores</span>
+                            <h5 class="mb-0">2.444.413</h5>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 mb-3 mb-md-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative">
+                            <span class="text-muted small">Seguindo</span>
+                            <h5 class="mb-0">580</h5>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 pr-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative">
+                            <span class="text-muted small">Seguindo / Seguidores</span>
+                            <h5 class="mb-0">2.444.413</h5>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 pr-md-3">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative">
+                            <span class="text-muted small">Unicos</span>
+                            <h5 class="mb-0">2.444.413</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-md-2 mb-3">
+                    <div class="col-md col-6 pr-0 mb-3 mb-md-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative">
+                            <span class="text-success float-left small text-number">+ 0.5%</span>
+                            <span class="text-muted small">Posts</span>
+                            <h5 class="mb-0">649</h5>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 mb-3 mb-md-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative">
+                            <span class="text-muted small">Avg. posts diário</span>
+                            <h5 class="mb-0">0.18</h5>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 pr-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative">
+                            <span class="text-muted small">Avg. posts semanal</span>
+                            <h5 class="mb-0">1.26</h5>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 pr-md-3">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative">
+                            <span class="text-muted small">Avg. posts mensal</span>
+                            <h5 class="mb-0">5.4</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-md-2 mb-3">
+                    <div class="col-md col-6 pr-0 mb-3 mb-md-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative">
+                            <span class="text-danger float-left small text-number">- 26.4%</span>
+                            <span class="text-muted small">Likes</span>
+                            <h5 class="mb-0">1.302.744</h5>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 mb-3 mb-md-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative">
+                            <span class="text-muted small">Avg. Likes</span>
+                            <h5 class="mb-0">13.159</h5>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 pr-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative">
+                            <span class="text-muted small">Comentários</span>
+                            <h5 class="mb-0">17.842</h5>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 pr-md-3">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative">
+                            <span class="text-muted small">Avg. Comentários</span>
+                            <h5 class="mb-0">180</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-md-2 mb-3">
+                    <div class="col-md col-6 pr-0 mb-3 mb-md-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative">
+                            <span class="text-muted small">Comentários / Seguidores</span>
+                            <h5 class="mb-0">0.01%</h5>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 mb-3 mb-md-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative">
+                            <span class="text-muted small">Range de engajamento</span>
+                            <h5 class="mb-0">0.29% - 1.24%</h5>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 pr-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative">
+                            <span class="text-muted small">Engajamento %</span>
+                            <h5 class="mb-0">0.55%</h5>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 pr-md-3">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative">
+                            <span class="text-danger float-left small text-number">- 24.8%</span>
+                            <span class="text-muted small">Avg. alcance post</span>
+                            <h5 class="mb-0">13.339</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-md col-6 pr-0 mb-3 mb-md-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative">
+                            <span class="text-success float-left small text-number">+ 0.2%</span>
+                            <span class="text-muted small">Mencionado por</span>
+                            <h5 class="mb-0">2.506</h5>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 mb-3 mb-md-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative">
+                            <span class="text-success float-left small text-number">+ 451.1%</span>
+                            <span class="text-muted small">Posts amplificados</span>
+                            <h5 class="mb-0">3.078</h5>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 pr-0">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative">
+                            <span class="text-success float-left small text-number">+ 247.3%</span>
+                            <span class="text-muted small">Alcance amplificado</span>
+                            <h5 class="mb-0">3.984.563</h5>
+                        </div>
+                    </div>
+                    <div class="col-md col-6 pl-md-2 pr-md-3">
+                        <div class="w-100 bg-white card-resume rounded text-right p-2 position-relative">
+                            <span class="text-muted float-right small mb-1">Avg. alcance do post amplificado</span>
+                            <span class="text-success float-left small text-number">+ 29.2%</span>
+                            <h5 class="mb-0 mt-3">1.590</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-5" id="hashtags">
+                    <div class="col">
+                        <h3 class="">HASHTAGS</h3>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card border-0">
+                            <div class="table-responsive">
+                                <table class="table-sm table table-hover text-center mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Hastag</th>
+                                            <th>Usada</th>
+                                            <th>Usada %</th>
+                                            <th>Alcance do Combo</th>
+                                            <th>Alcance / Post</th>
+                                            <th>Engajamento %</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="align-middle"><img width="32" src="resources/assets/images/post.jpg" alt=""></td>
+                                            <td class="align-middle">#aquaman</td>
+                                            <td class="align-middle">400</td>
+                                            <td class="align-middle">25%</td>
+                                            <td class="align-middle">35.550</td>
+                                            <td class="align-middle">34.900</td>
+                                            <td class="align-middle"><span class="text-danger">0.0304%</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="align-middle"><img width="32" src="resources/assets/images/post.jpg" alt=""></td>
+                                            <td class="align-middle">#aquaman</td>
+                                            <td class="align-middle">400</td>
+                                            <td class="align-middle">25%</td>
+                                            <td class="align-middle">35.550</td>
+                                            <td class="align-middle">34.900</td>
+                                            <td class="align-middle"><span class="text-danger">0.0304%</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="align-middle"><img width="32" src="resources/assets/images/post.jpg" alt=""></td>
+                                            <td class="align-middle">#aquaman</td>
+                                            <td class="align-middle">400</td>
+                                            <td class="align-middle">25%</td>
+                                            <td class="align-middle">35.550</td>
+                                            <td class="align-middle">34.900</td>
+                                            <td class="align-middle"><span class="text-danger">0.0304%</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-5" id="mentions">
+                    <div class="col">
+                        <h3 class="">MENÇÕES</h3>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card border-0">
+                            <div class="table-responsive">
+                                <table class="table-sm table table-hover text-center mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Nome do usuário</th>
+                                            <th>Usada</th>
+                                            <th>Usada %</th>
+                                            <th>Alcance do Combo</th>
+                                            <th>Alcance / Post</th>
+                                            <th>Engajamento %</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="align-middle"><img width="32" src="resources/assets/images/post.jpg" alt=""></td>
+                                            <td class="align-middle"><div class="d-flex align-items-center"><div class="box-thumb-rounded mr-2"><img width="32" src="resources/assets/images/post.jpg" alt=""></div>@@sylviomarinho</div></td>
+                                            <td class="align-middle">400</td>
+                                            <td class="align-middle">25%</td>
+                                            <td class="align-middle">35.550</td>
+                                            <td class="align-middle">34.900</td>
+                                            <td class="align-middle"><span class="text-danger">0.0304%</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="align-middle"><img width="32" src="resources/assets/images/post.jpg" alt=""></td>
+                                            <td class="align-middle"><div class="d-flex align-items-center"><div class="box-thumb-rounded mr-2"><img width="32" src="resources/assets/images/post.jpg" alt=""></div> @@sylviomarinho</div></td>
+                                            <td class="align-middle">400</td>
+                                            <td class="align-middle">25%</td>
+                                            <td class="align-middle">35.550</td>
+                                            <td class="align-middle">34.900</td>
+                                            <td class="align-middle"><span class="text-danger">0.0304%</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="align-middle"><img width="32" src="resources/assets/images/post.jpg" alt=""></td>
+                                            <td class="align-middle"><div class="d-flex align-items-center"><div class="box-thumb-rounded mr-2"><img width="32" src="resources/assets/images/post.jpg" alt=""></div> @@sylviomarinho</div></td>
+                                            <td class="align-middle">400</td>
+                                            <td class="align-middle">25%</td>
+                                            <td class="align-middle">35.550</td>
+                                            <td class="align-middle">34.900</td>
+                                            <td class="align-middle"><span class="text-danger">0.0304%</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-5" id="mentioned">
+                    <div class="col">
+                        <h3 class="">MENTIONED BY</h3>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card border-0">
+                            <div class="table-responsive">
+                                <table class="table-sm table table-hover text-center mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Username</th>
+                                            <th>Usada</th>
+                                            <th>Usada %</th>
+                                            <th>Alcance do Combo</th>
+                                            <th>Alcance / Post</th>
+                                            <th>Engajamento %</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="align-middle"><img width="32" src="resources/assets/images/post.jpg" alt=""></td>
+                                            <td class="align-middle"><div class="d-flex align-items-center"><div class="box-thumb-rounded mr-2"><img width="32" src="resources/assets/images/post.jpg" alt=""></div> @@sylviomarinho</div></td>
+                                            <td class="align-middle">400</td>
+                                            <td class="align-middle">25%</td>
+                                            <td class="align-middle">35.550</td>
+                                            <td class="align-middle">34.900</td>
+                                            <td class="align-middle"><span class="text-danger">0.0304%</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="align-middle"><img width="32" src="resources/assets/images/post.jpg" alt=""></td>
+                                            <td class="align-middle"><div class="d-flex align-items-center"><div class="box-thumb-rounded mr-2"><img width="32" src="resources/assets/images/post.jpg" alt=""></div> @@sylviomarinho</div></td>
+                                            <td class="align-middle">400</td>
+                                            <td class="align-middle">25%</td>
+                                            <td class="align-middle">35.550</td>
+                                            <td class="align-middle">34.900</td>
+                                            <td class="align-middle"><span class="text-danger">0.0304%</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="align-middle"><img width="32" src="resources/assets/images/post.jpg" alt=""></td>
+                                            <td class="align-middle"><div class="d-flex align-items-center"><div class="box-thumb-rounded mr-2"><img width="32" src="resources/assets/images/post.jpg" alt=""></div> @@sylviomarinho</div></td>
+                                            <td class="align-middle">400</td>
+                                            <td class="align-middle">25%</td>
+                                            <td class="align-middle">35.550</td>
+                                            <td class="align-middle">34.900</td>
+                                            <td class="align-middle"><span class="text-danger">0.0304%</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-5" id="places">
+                    <div class="col">
+                        <h3 class="">PLACES</h3>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card border-0">
+                            <div class="table-responsive">
+                                <table class="table-sm table table-hover text-center mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Localization</th>
+                                            <th>City</th>
+                                            <th>Country</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="align-middle"><img width="32" src="resources/assets/images/post.jpg" alt=""></td>
+                                            <td class="align-middle">Prefeitura Municipal de São Paulo</td>
+                                            <td class="align-middle">São Paulo</td>
+                                            <td class="align-middle">Brasil</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="align-middle"><img width="32" src="resources/assets/images/post.jpg" alt=""></td>
+                                            <td class="align-middle">Prefeitura Municipal de São Paulo</td>
+                                            <td class="align-middle">São Paulo</td>
+                                            <td class="align-middle">Brasil</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-5" id="maps-places">
+                    <div class="col">
+                        <h3 class="">MAPS PLACES</h3>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card border-0">
+                            <div class="table-responsive">
+                                <table class="table-sm table table-hover text-center mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Localization</th>
+                                            <th>City</th>
+                                            <th>Country</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="align-middle"><img width="32" src="resources/assets/images/post.jpg" alt=""></td>
+                                            <td class="align-middle">Prefeitura Municipal de São Paulo</td>
+                                            <td class="align-middle">São Paulo</td>
+                                            <td class="align-middle">Brasil</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="align-middle"><img width="32" src="resources/assets/images/post.jpg" alt=""></td>
+                                            <td class="align-middle">Prefeitura Municipal de São Paulo</td>
+                                            <td class="align-middle">São Paulo</td>
+                                            <td class="align-middle">Brasil</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-5" id="photo">
+                    <div class="col">
+                        <h3 class="">PHOTO TAG</h3>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card border-0">
+                            <div class="table-responsive">
+                                <table class="table-sm table table-hover text-center mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Username</th>
+                                            <th>Usada</th>
+                                            <th>Usada %</th>
+                                            <th>Alcance do Combo</th>
+                                            <th>Alcance / Post</th>
+                                            <th>Engajamento %</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="align-middle"><img width="32" src="resources/assets/images/post.jpg" alt=""></td>
+                                            <td class="align-middle"><div class="d-flex align-items-center"><div class="box-thumb-rounded mr-2"><img width="32" src="resources/assets/images/post.jpg" alt=""></div> @@sylviomarinho</div></td>
+                                            <td class="align-middle">400</td>
+                                            <td class="align-middle">25%</td>
+                                            <td class="align-middle">35.550</td>
+                                            <td class="align-middle">34.900</td>
+                                            <td class="align-middle"><span class="text-danger">0.0304%</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="align-middle"><img width="32" src="resources/assets/images/post.jpg" alt=""></td>
+                                            <td class="align-middle"><div class="d-flex align-items-center"><div class="box-thumb-rounded mr-2"><img width="32" src="resources/assets/images/post.jpg" alt=""></div> @@sylviomarinho</div></td>
+                                            <td class="align-middle">400</td>
+                                            <td class="align-middle">25%</td>
+                                            <td class="align-middle">35.550</td>
+                                            <td class="align-middle">34.900</td>
+                                            <td class="align-middle"><span class="text-danger">0.0304%</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="align-middle"><img width="32" src="resources/assets/images/post.jpg" alt=""></td>
+                                            <td class="align-middle"><div class="d-flex align-items-center"><div class="box-thumb-rounded mr-2"><img width="32" src="resources/assets/images/post.jpg" alt=""></div> @@sylviomarinho</div></td>
+                                            <td class="align-middle">400</td>
+                                            <td class="align-middle">25%</td>
+                                            <td class="align-middle">35.550</td>
+                                            <td class="align-middle">34.900</td>
+                                            <td class="align-middle"><span class="text-danger">0.0304%</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-5" id="recent">
+                    <div class="col">
+                        <h3 class="">RECENT MEDIA</h3>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card border-0">
+                            <div class="table-responsive">
+                                <table class="table-sm table table-hover text-center mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th>Lorem ipsum</th>
+                                            <th>Lorem ipsum</th>
+                                            <th>Lorem ipsum</th>
+                                            <th>Lorem ipsum</th>
+                                            <th>Lorem ipsum</th>
+                                            <th>Lorem ipsum</th>
+                                            <th>Lorem ipsum</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="align-middle"><a href="#" class="btn btn-sm btn-success">Lorem ipsum</a></td>
+                                            <td class="align-middle"><img width="32" src="resources/assets/images/post.jpg" alt=""></td>
+                                            <td class="align-middle">Lorem ipsum</td>
+                                            <td class="align-middle">Lorem ipsum</td>
+                                            <td class="align-middle">Lorem ipsum</td>
+                                            <td class="align-middle">Lorem ipsum</td>
+                                            <td class="align-middle">Lorem ipsum</td>
+                                            <td class="align-middle">Lorem ipsum</td>
+                                            <td class="align-middle">Lorem ipsum</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="align-middle"><a href="#" class="btn btn-sm btn-success">Lorem ipsum</a></td>
+                                            <td class="align-middle"><img width="32" src="resources/assets/images/post.jpg" alt=""></td>
+                                            <td class="align-middle">Lorem ipsum</td>
+                                            <td class="align-middle">Lorem ipsum</td>
+                                            <td class="align-middle">Lorem ipsum</td>
+                                            <td class="align-middle">Lorem ipsum</td>
+                                            <td class="align-middle">Lorem ipsum</td>
+                                            <td class="align-middle">Lorem ipsum</td>
+                                            <td class="align-middle">Lorem ipsum</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="align-middle"><a href="#" class="btn btn-sm btn-success">Lorem ipsum</a></td>
+                                            <td class="align-middle"><img width="32" src="resources/assets/images/post.jpg" alt=""></td>
+                                            <td class="align-middle">Lorem ipsum</td>
+                                            <td class="align-middle">Lorem ipsum</td>
+                                            <td class="align-middle">Lorem ipsum</td>
+                                            <td class="align-middle">Lorem ipsum</td>
+                                            <td class="align-middle">Lorem ipsum</td>
+                                            <td class="align-middle">Lorem ipsum</td>
+                                            <td class="align-middle">Lorem ipsum</td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-5" id="emotional">
+                    <div class="col">
+                        <h3 class="">EMOTIONAL PROFILE ANALYSIS</h3>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card border-0">
+                            <div class="row">
+                                <div class="col-md-6 col-12">
+                                    <div class="table-responsive">
+                                        <table class="table-sm table table-hover text-center mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>Alegria</th>
+                                                    <th>Surpresa</th>
+                                                    <th>Raiva</th>
+                                                    <th>Tristeza</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="align-middle"><img width="32" src="resources/assets/images/post.jpg" alt=""></td>
+                                                    <td class="align-middle">1</td>
+                                                    <td class="align-middle">1</td>
+                                                    <td class="align-middle">1</td>
+                                                    <td class="align-middle">1</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="align-middle"><img width="32" src="resources/assets/images/post.jpg" alt=""></td>
+                                                    <td class="align-middle">1</td>
+                                                    <td class="align-middle">0</td>
+                                                    <td class="align-middle">1</td>
+                                                    <td class="align-middle">1</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="align-middle"><img width="32" src="resources/assets/images/post.jpg" alt=""></td>
+                                                    <td class="align-middle">1</td>
+                                                    <td class="align-middle">0</td>
+                                                    <td class="align-middle">0</td>
+                                                    <td class="align-middle">1</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="pt-3 pl-2 pr-2 pb-2"><canvas id="chart1" width="100%" height="250"></canvas></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-3 col-12 position-relative order-1 order-md-2 p-0 sidebar-fixed d-none">
+                <nav class="ml-md-3 nav flex-md-column flex-row justify-content-between bg-white card-resume rounded fixed" id="sidebar">
+                    <a class="nav-link active" href="#"><i class="far fa-user mr-2"></i> <span class="d-none d-md-inline-block">PERFIL</span></a>
+                    <a class="nav-link" href="javascript:;" data-link="#hashtags"><i class="fa fa-hashtag mr-2"></i> <span class="d-none d-md-inline-block">HASTAGS</span></a>
+                    <a class="nav-link" href="javascript:;" data-link="#mentions"><i class="fa fa-at mr-2"></i> <span class="d-none d-md-inline-block">MENÇÕES</span></a>
+                    <a class="nav-link" href="javascript:;" data-link="#mentioned"><i class="fa fa-comments mr-2"></i> <span class="d-none d-md-inline-block">MENCIONADO POR</span></a>
+                    <a class="nav-link" href="javascript:;" data-link="#places"><i class="fa fa-map-marker-alt mr-2"></i> <span class="d-none d-md-inline-block">LUGARES</span></a>
+                    <a class="nav-link" href="javascript:;" data-link="#maps-places"><i class="fa fa-map-marked-alt mr-2"></i> <span class="d-none d-md-inline-block">MAPAS DE LUGARES</span></a>
+                    <a class="nav-link" href="javascript:;" data-link="#photo"><i class="fa fa-tags mr-2"></i> <span class="d-none d-md-inline-block">FOTO TAGS</span></a>
+                    <a class="nav-link" href="javascript:;" data-link="#recent"><i class="far fa-images mr-2"></i> <span class="d-none d-md-inline-block">MEDIA RECENTE</span></a>
+                    <a class="nav-link" href="javascript:;" data-link="#emotional"><i class="far fa-images mr-2"></i> <span class="d-none d-md-inline-block">ANALISE EMOCIONAL</span></a>
+                </nav>
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <script src="node_modules/chart.js/dist/Chart.min.js"></script>
+    <script src="node_modules/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.min.js"></script>
+
+</body>
+</html>
+
+<script>
+
+  var ctx = document.getElementById("chart1");
+
+  var myChart = new Chart(ctx, {
+    type: 'bar',
+    responsive: true,
+    data: {
+      labels: ["Alegria", "Surpresa", "Raiva", "Tristeza"],
+      datasets: [
+      {
+        data: [20,15,10,50,100],
+        fill:false,
+        backgroundColor: [
+        'green',
+        '#ffcc00',
+        'red',
+        'silver',
+
+        ],
+        borderWidth: 1
+      },
+      ]
+    },
+    options: {
+      plugins: {
+        datalabels: {
+          color:'#fff',
+          formatter: function(value) {
+            return value + '%';
+          }
+        }
+      },
+      maintainAspectRatio: false,
+      tooltips: false,
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero:true
+          }
+        }]
+      },
+      legend: {
+        display: false
+      },
+    }
+  });
+
+  $(window).scroll(function(){
+    if($(window).width() > 992)
+    {
+      if($(window).scrollTop() > 100)
+      {
+        $('#row-fixed').show();
+        $('#row-fixed').addClass('t-0');
+
+      }
+      else
+      {
+        $('#row-fixed').hide();
+        $('#row-fixed').removeClass('t-0');
+      }
+    }
+    else
+    {
+      if($(window).scrollTop() > 15)
+      {
+        $('#row-fixed').show();
+        $('#row-fixed').addClass('t-0');
+
+      }
+      else
+      {
+        $('#row-fixed').hide();
+        $('#row-fixed').removeClass('t-0');
+      }
+    }
+  });
+
+  $('#sidebar a').click(function(){
+    $('html, body').animate({
+      scrollTop: $( $.attr(this, 'data-link') ).offset().top - 100
+    }, 500);
+    return false;
+  });
+
+</script>
+	<!--Start of Tawk.to Script-->
+	<script type="text/javascript">
+		var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+		(function(){
+			var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+			s1.async=true;
+			s1.src='https://embed.tawk.to/5ca9005553f1e453fb8c767a/default';
+			s1.charset='UTF-8';
+			s1.setAttribute('crossorigin','*');
+			s0.parentNode.insertBefore(s1,s0);
+		})();
+	</script>
+	<!--End of Tawk.to Script-->

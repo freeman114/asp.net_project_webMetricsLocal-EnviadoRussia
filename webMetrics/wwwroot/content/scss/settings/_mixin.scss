@@ -1,0 +1,194 @@
+// Responsive Breakpoint
+
+@mixin mobile() {
+    @media all and (max-width: 576px) {
+        @content;
+    }
+}
+@mixin mobile-480() {
+    @media all and (max-width: 480px) {
+        @content;
+    }
+}
+@mixin tablet() {
+    @media all and (min-width: 768px) {
+        @content;
+    }
+}
+@mixin notebook() {
+    @media all and (min-width: 992px) {
+        @content;
+    }
+}
+@mixin desktop() {
+    @media all and (min-width: 1200px) {
+        @content;
+    }
+}
+
+@mixin desktop-1500() {
+    @media all and (min-width: 1500px) {
+        @content;
+    }
+}
+
+@mixin desktop-fullhd() {
+    @media all and (min-width: 1720px) {
+        @content;
+    }
+}
+
+@mixin desktop-4k() {
+    @media all and (min-width: 1921px) {
+        @content;
+    }
+}
+
+
+
+@mixin flexType($type, $value) {
+	
+	@if $type == flex {
+		-ms-#{$type}: $value;
+		#{$type}: $value;
+	}@else{
+		-webkit-#{$type}: $value;
+		-moz-#{$type}: $value;
+		-ms-#{$type}: $value;
+		#{$type}: $value;
+	}
+	
+}
+		    ////sepia / 100% / #5E2612
+			////saturate / 0% / #000
+@mixin imgefect($type, $value, $color){
+	$set-bg: $color;
+	$efect-ie: $value * 100;
+	$efect-100: $value * 100%;
+	
+	-webkit-filter: $type($value);
+    -moz-filter: $type($efect-100);
+    -ms-filter: $type($efect-100);
+    -o-filter: $type($efect-100);
+    background-color: $set-bg;
+    filter: alpha(opacity=$efect-ie);
+}
+
+
+// Browser Prefixes
+@mixin transform($transforms) {
+	-webkit-transform: $transforms;
+	-moz-transform: $transforms;
+	///-ms-transform: $transforms;
+	transform: $transforms;
+}
+
+// Rotate
+@mixin rotate ($deg) { 
+	@include transform(rotate(#{$deg}deg));
+}
+
+// Scale
+@mixin scale($scale) {
+	@include transform(scale($scale));
+}
+
+
+// Skew
+@mixin skew ($x, $y) {
+	@include transform(skew(#{$x}deg, #{$y}deg));
+}
+@mixin skewY ($y) {
+	@include transform(skewY(#{$y}deg));
+}
+@mixin skewX ($x) {
+	@include transform(skewY(#{$x}deg));
+}
+
+
+// Transform Origin
+@mixin transform-origin ($origin) {
+    -webkit-transform-origin: $origin;
+    -moz-transform-origin: $origin;
+	////-ms-transform-origin: $origin;
+	transform-origin: $origin;
+}
+
+// Translate
+@mixin translate ($x, $y) {
+	@include transform(translate($x, $y));
+}
+
+// TranslateY
+@mixin translateY ($y) {
+	@include transform(translateY($y));
+}
+
+// TranslateX
+@mixin translateX ($x) {
+	@include transform(translateX($x));
+}
+
+
+// opacity
+@mixin opacity($opacity) {
+  $opacity-ie: $opacity * 100;
+  filter: alpha(opacity=$opacity-ie); //IE8
+  opacity: $opacity;
+}
+
+
+@mixin box-shadow($shadow) {
+	-webkit-box-shadow: $shadow;
+	-moz-box-shadow: $shadow;
+	box-shadow: $shadow;
+}
+
+/*@mixin transition($property, $duration, $easing: linear) {
+	transition: $property $duration $easing;
+	-webkit-transition: $property $duration $easing;
+	-moz-transition: $property $duration $easing;
+}*/
+
+@mixin border-radius($radius) {
+	-webkit-border-radius: $radius;
+	-moz-border-radius: $radius;
+	border-radius: $radius;
+}
+
+
+
+// transition
+@mixin transition($args...) {
+  -webkit-transition: $args;
+  -moz-transition: $args;
+  /*-ms-transition: $args;
+  -o-transition: $args;*/
+  transition: $args;
+}
+
+
+// animations
+@mixin keyframes($animation-name) {
+    @-webkit-keyframes #{$animation-name} {
+        @content;
+    }
+    @-moz-keyframes #{$animation-name} {
+        @content;
+    }  
+    @-ms-keyframes #{$animation-name} {
+        @content;
+    } 
+    @keyframes #{$animation-name} {
+        @content;
+    }
+}
+
+
+@mixin animation($str) {
+  -webkit-animation: #{$str};
+  -moz-animation: #{$str};
+  -ms-animation: #{$str};
+  animation: #{$str};      
+}
+

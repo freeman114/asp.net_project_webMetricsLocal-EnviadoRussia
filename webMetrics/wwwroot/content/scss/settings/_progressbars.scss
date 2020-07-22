@@ -1,0 +1,324 @@
+/* progress bars */
+
+.progress-container{
+	@extend %display-flex;
+	@extend %w-100;
+	///@extend %overflow-hidden;
+	
+	@extend %justify-content-start;
+	///@extend %align-items-center;
+	@extend %p-relative;
+	
+	
+	flex-direction: column;
+	align-items: flex-start;
+	height: 100%;
+	min-height: 32px;
+	
+	///display: flex;
+	
+    ////height: /*24px*/ 48px;
+	
+	&.bg-black{
+		background: rgba(0, 0, 0, 0.032);
+	}
+	
+	
+	.bar{
+		@extend %basic-animation;
+		@extend %display-flex;
+		@extend %h-100;
+		@extend %align-items-center;
+		@extend %p-relative;
+		///display: flex;
+		///width: 60%;
+		
+		///background: rebeccapurple;
+		min-width: 0%;
+		min-width: -webkit-fit-content;
+		min-width: -moz-fit-content;
+		min-width: fit-content;
+		
+		@extend %max-w-100;
+		///max-width: 100%;
+		
+		&:after{
+			///position: absolute;
+			@extend %p-absolute;
+			@extend %text-right;
+			@extend %text-uppercase;
+			@extend %no-wrap;
+			
+			@extend %max-w-100;
+			
+			content: attr(data-value);
+			width: auto;
+			min-width: 0;
+			///max-width: 100%;
+			right: 0;
+			
+			
+			
+			@extend %font-bold;
+			@extend %font-16;
+			@extend %font-18-s768;
+			@extend %font-24-s992;
+			///@extend %font-30-s1200;
+			@extend %font-32-s1500;
+		}
+		
+		p{
+			@extend %margin-all-0;
+		}
+		
+	}
+	
+	&.value-in{
+		padding-right: 0;
+		
+		.bar{
+			&:after{
+				@extend %color-white;
+				@extend %p-relative;
+
+				///left: 0;
+				margin-left: auto;
+				padding-right: 0.8rem;
+				padding-left: 0.25rem;
+			}
+			p, span, small{
+				@extend %color-white;
+			}
+		}
+	}
+	&.value-out{
+		padding-right: 5.9rem;
+		
+		.bar:after{
+			left: 100%;
+			
+			padding-left: /*16px*/ 0.5rem;
+		}
+		
+		//// media querie
+		@include tablet{
+			///padding-right: 24%;
+			padding-right: 7.6rem;
+		}
+		@include notebook{
+			padding-right: 9.2rem;
+
+			.bar:after{ padding-left: /*16px*/ 0.8rem; }
+
+		}
+		@include desktop-1500{
+			padding-right: 14%;
+		}
+		/*@include desktop-fullhd{
+			padding-right: 0;
+		}*/
+	}
+	
+	
+	&.progress-vertical{
+		///width: 100%;
+		max-width: 100%;
+		min-height: 200px;
+		height: 100%;
+		display: flex;
+		flex-flow: row nowrap;
+		align-items: flex-end;
+		padding-bottom: 1.7rem;
+
+
+		.bar{
+			@extend %basic-animation;
+			@extend %p-relative;
+			align-items: flex-start;
+
+			height: auto;
+			width: 100%;
+			max-width: 100%;
+			max-height: 100%;
+			///min-height: 0%;
+			min-height: 2.3rem; ////////////// sem solução ainda
+			///margin-top: auto;
+			///display: inline-table;
+			text-align: center;
+
+			margin-left: 0.5rem;
+			margin-right: 0.5rem;
+
+			&:after{
+				content: attr(data-value);
+				height: 100%;
+				text-align: center;
+				///margin: 0 auto auto;
+
+				color: #fff;
+				height: 36px;
+				display: block;
+
+				width: 100%;
+				text-align: center;
+
+				@extend %p-relative;
+				///@extend %p-absolute;
+				///@extend %text-right;
+				@extend %text-uppercase;
+				@extend %no-wrap;
+
+				///@extend %max-w-100;
+
+				/*width: auto;
+				min-width: 0;
+				///max-width: 100%;
+				right: 0;*/
+
+				@extend %font-bold;
+				@extend %font-14;
+				@extend %font-16-s768;
+				@extend %font-20-s992;
+				///@extend %font-30-s1200;
+				@extend %font-30-s1500;
+			}
+
+			&:before{
+				@extend %font-14;
+				@extend %font-16-s768;
+				@extend %font-18-s1200;
+				@extend %font-24-s1500;
+				@extend %font-300;
+				@extend %left-right-0;
+
+				content: attr(data-label);
+				position: absolute;
+				///width: 100%;
+				text-align: center;
+				text-transform: uppercase;
+				top: 100%;
+			}
+		}
+
+
+		&.value-in{
+			padding-right: 0;
+
+			.bar{
+				&:after{
+					@extend %margin-LR-auto;
+					padding-right: 0.25rem;
+					padding-left: 0.25rem;
+				}
+			}
+		}
+
+
+		@include mobile{
+			.bar{
+
+				margin-left: 0.1rem;
+				margin-right: 0.1rem;
+
+				&:after,
+				&:before{
+					padding-left: 0;
+					padding-right: 0;
+
+					///font-size: 14px;
+				}
+
+				&:before{
+					font-weight: 400;
+				}
+			}
+		}
+
+		@include mobile-480 {
+			.bar{
+
+				margin-left: 0;
+				margin-right: 0;
+
+				&:after{ font-size: 12px; }
+				&:before{ font-size: 11px; }
+			}
+		}
+
+	}
+	
+	
+	
+	
+}
+
+.multi-progress{
+	.bar{
+		
+		min-height: 24px;
+		
+		&:after{
+			
+			@extend %font-14;
+			@extend %font-16-s768;
+			@extend %font-20-s992;
+			///@extend %font-30-s1200;
+			@extend %font-24-s1500;
+			
+		}
+	}
+}
+
+
+
+/*.horizontal{
+	width: 100%;
+	min-height: 200px;
+    ///justify-content: flex-end;
+	align-items: center;
+	height: 90%;
+	
+	
+	.bar{
+		width: 100%;
+		max-height: 100%;
+		min-height: 0;
+		min-width: fit-content;
+		
+		margin-top: auto;
+		
+		&:after{
+			height: 100%;
+			text-align: center;
+			margin: 0 auto auto;
+			
+			color: #fff;
+		}
+		
+		&:before{
+			@extend %font-24-s1500;
+			@extend %font-300;
+			
+			content: attr(data-label);
+			position: absolute;
+			width: 100%;
+			text-align: center;
+			text-transform: uppercase;
+			top: 100%;
+		}
+	}
+	
+	
+	&.value-in{
+		padding-right: 0;
+		
+		.bar{
+			&:after{
+				@extend %margin-LR-auto;
+				padding-right: 0.25rem;
+				padding-left: 0.25rem;
+			}
+		}
+	}
+	
+}*/

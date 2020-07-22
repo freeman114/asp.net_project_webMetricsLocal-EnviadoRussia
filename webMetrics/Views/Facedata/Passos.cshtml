@@ -1,0 +1,91 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Passos</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script>
+        if (location.protocol != 'https:') {
+            location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+        }
+		var _key = "";//		
+    </script>
+</head>
+<body>
+    <div class="modal fade" id="loading-modal" tabindex="-1" role="dialog" 
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+    </div>
+	<div class='row' style='margin: 10px'>
+	
+	<div class="panel panel-default">
+		<div class="panel-heading">Primeiro passo</div>
+		  <div class="panel-body">
+				<div class="fb-login-button" width="290px"
+					data-max-rows="1" data-size="large"
+					data-button-type="continue_with"
+					data-scope="instagram_basic,instagram_manage_insights,pages_show_list"
+					data-show-faces="false" data-auto-logout-link="false"
+					data-use-continue-as="true" onlogin="checkLoginState();">
+				</div>		
+			</div>
+		</div>
+	</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">Segundo passo</div>
+				<div class="panel-body">
+					<a href="javascript:listPages();" >Carregar páginas</a>
+					<div class="row m-0 mt-4 mb-3 py-2" style="display:none" id="divPaginas">
+						<div class="col-12 border border-bottom-0 border-left-0 border-right-0 border-grey"></div>
+						<span id="cbxPaginas" class="bg-secondary rounded-circle text-white font-weight-bold py-2 px-2 mx-auto"
+								style="margin-top: -15px !important;z-index: 2;"></span>
+					</div>
+					<br />
+					<a href='javascript:GetData(1, "");'>Processar dados</a>
+					<span> Os perfis listados são os que permitem acesso aos dados de insigths.</span>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">Terceiro passo</div>
+				<div class="panel-body">
+					<input type="text" style='width:200px' value='' placeholder='@@usuarioinstagram' 
+						id='txtusuarioinstagram' name='txtusuarioinstagram' > </input>
+					<br />
+					<a href="javascript:GetData(2, document.getElementById('txtusuarioinstagram').value);">Processar dados</a>
+					<span> Os perfis solicitados aqui nós não temos acesso aos insigths.</span>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">Resultados</div>
+			<div class="panel-body">
+				<input type='text' id='resultado' name='resultado' />
+				<br />
+				<textarea rows="30" cols="60" id='txtresultado' name='txtresultado' ></textarea>
+				<br />				
+			</div>
+		</div>
+	</div>
+	<script src="~/js/site.js"></script>
+	<script src="~/node_modules/popper.js/dist/umd/popper.min.js"></script>
+    <script src="~/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>    
+	
+	<link rel="stylesheet" href="~/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/node_modules/@@fortawesome/fontawesome-free/css/all.css">
+    <link rel="stylesheet" href="~/resources/assets/styles/fonts.css">
+    <link rel="stylesheet" href="~/resources/assets/styles/global.css">
+    <link rel="stylesheet" href="~/resources/assets/styles/mobile.css">
+	
+	<script src="~/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="~/node_modules/popper.js/dist/umd/popper.min.js"></script>
+    <script src="~/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
