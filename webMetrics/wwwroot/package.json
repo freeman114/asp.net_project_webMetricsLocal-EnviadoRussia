@@ -11,7 +11,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.3.1",
     "bootstrap": "^4.3.1",
-    "chart.js": "^2.7.2",
+    "chart.js": "^2.9.4",
     "chartjs-plugin-datalabels": "^0.4.0",
     "formstone": "^1.4.13-1",
     "jquery": "^3.4.1",
